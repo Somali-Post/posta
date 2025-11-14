@@ -25,7 +25,7 @@ export const Navbar = () => {
             />
           </div>
           <span className="text-xl font-bold text-somali-blue hidden sm:block">
-            Posta
+            Posta.so
           </span>
         </Link>
 
