@@ -4,7 +4,7 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { TrackIcon } from '@/components/icons/TrackIcon';
+import TrackIcon from '@/components/icons/TrackIcon';
 
 // Define the structure of our tracking data
 interface TrackingEvent {

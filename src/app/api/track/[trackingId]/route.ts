@@ -9,11 +9,13 @@ const eventCodeMap: { [key: string]: string } = {
   EMI: 'Delivered',
 };
 
-export async function GET(
-  request: Request,
-  { params }: { params: { trackingId: string } }
-) {
-  const trackingId = params.trackingId.toUpperCase();
+type RouteContext = {
+  params: Promise<{ trackingId: string }>;
+};
+
+export async function GET(request: Request, context: RouteContext) {
+  const { trackingId: rawTrackingId } = await context.params;
+  const trackingId = rawTrackingId.toUpperCase();
   const token = process.env.UPU_PTT_TOKEN;
 
   if (!token) {
