@@ -19,6 +19,8 @@ interface TrackingData {
   status: string;
   origin: string;
   destination: string;
+  originCode?: string;
+  destinationCode?: string;
   history: TrackingEvent[];
   message?: string; // For "Not Found" messages
 }
@@ -37,6 +39,13 @@ const formatTimestamp = (ts: string) => {
   } catch (e) {
     return ts; // Fallback if the date is invalid
   }
+};
+
+const formatCountry = (name: string, code?: string) => {
+  if (code) {
+    return `${name} (${code})`;
+  }
+  return name;
 };
 
 const TrackPage: NextPage = () => {
@@ -126,11 +135,15 @@ const TrackPage: NextPage = () => {
                     <div className="grid grid-cols-2 gap-4 text-center mb-8">
                       <div>
                         <p className="text-sm text-gray-500">Origin</p>
-                        <p className="text-2xl font-bold">{data.origin}</p>
+                        <p className="text-2xl font-bold">
+                          {formatCountry(data.origin, data.originCode)}
+                        </p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-500">Destination</p>
-                        <p className="text-2xl font-bold">{data.destination}</p>
+                        <p className="text-2xl font-bold">
+                          {formatCountry(data.destination, data.destinationCode)}
+                        </p>
                       </div>
                     </div>
 

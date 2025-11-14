@@ -2,11 +2,44 @@ import { NextResponse } from 'next/server';
 
 // This is a mapping for common UPU event codes to make them more readable.
 // You can expand this list over time.
-const eventCodeMap: { [key: string]: string } = {
+const eventCodeMap: Record<string, string> = {
+  // --- Export Events (Origin Country) ---
+  EMA: 'Posting/collection',
+  EMB: 'Arrival at outward office of exchange',
   EMC: 'Departure from outward office of exchange',
+  EXA: 'Item presented to export customs/security',
+  EXB: 'Item held by export customs/security',
+  EXC: 'Item returned from export customs/security',
+  EXD: 'Item held at outward office of exchange',
+  EXX: 'Export cancellation',
+
+  // --- Transit Events ---
+  EMJ: 'Arrival at transit office of exchange',
+  EMK: 'Departure from transit office of exchange',
+
+  // --- Import & Customs Events (Destination Country) ---
   EMD: 'Arrival at inward office of exchange',
-  EMH: 'Arrival at delivery office',
-  EMI: 'Delivered',
+  EDA: 'Held at inward office of exchange',
+  EDB: 'Item presented to import customs',
+  EME: 'Held by import customs',
+  EDC: 'Item returned from customs (import)',
+  EMF: 'Departure from inward office of exchange',
+
+  // --- Domestic Processing Events (Destination Country) ---
+  EDD: 'Item into sorting centre',
+  EDE: 'Item out of sorting centre',
+  EMG: 'Arrival at delivery office',
+  EDF: 'Item held at delivery depot',
+  EDG: 'Item out for physical delivery',
+  EDH: 'Item arrival at collection point for pick-up (by recipient)',
+
+  // --- Final Delivery Events ---
+  EMI: 'Final delivery',
+  EMH: 'Unsuccessful (physical) delivery',
+  EDX: 'Import terminated',
+
+  // Legacy/uncommon
+  EMX: 'Item out of sorting centre',
 };
 
 const stateCodeMap: Record<string, string> = {
@@ -14,6 +47,11 @@ const stateCodeMap: Record<string, string> = {
   '2': 'In Transit',
   '3': 'Delivered',
 };
+
+const regionDisplayNames =
+  typeof Intl !== 'undefined' && typeof Intl.DisplayNames === 'function'
+    ? new Intl.DisplayNames(['en'], { type: 'region' })
+    : null;
 
 type RouteContext = {
   params: Promise<{ trackingId: string }>;
@@ -90,15 +128,19 @@ export async function GET(request: Request, context: RouteContext) {
     const latestEvent = history[history.length - 1];
 
     // Normalize the successful response into our clean format
+    const originCode = record.OriginCountryCd || '';
+    const destinationCode = record.DestinationCountryCd || '';
+
     const normalizedData = {
       trackingId: record.ID,
       status:
         latestEvent?.status ||
         stateCodeMap[String(record.State)] ||
         `Status code ${record.State ?? 'Unknown'}`,
-      origin: record.OriginCountryNm || record.OriginCountryCd || 'Unknown',
-      destination:
-        record.DestinationCountryNm || record.DestinationCountryCd || 'Unknown',
+      origin: getCountryName(originCode, record.OriginCountryNm),
+      destination: getCountryName(destinationCode, record.DestinationCountryNm),
+      originCode: originCode || undefined,
+      destinationCode: destinationCode || undefined,
       history,
     };
 
@@ -138,4 +180,29 @@ function sortByTimestamp(first: string, second: string): number {
   }
 
   return firstTime - secondTime;
+}
+
+function getCountryName(code?: string, fallbackName?: string): string {
+  if (fallbackName) {
+    return fallbackName;
+  }
+
+  if (!code) {
+    return 'Unknown';
+  }
+
+  const normalized = code.toUpperCase();
+
+  if (regionDisplayNames) {
+    try {
+      const displayName = regionDisplayNames.of(normalized);
+      if (displayName) {
+        return displayName;
+      }
+    } catch {
+      // Ignore display name failures and fall back to the code.
+    }
+  }
+
+  return normalized;
 }
