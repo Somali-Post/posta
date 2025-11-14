@@ -12,6 +12,7 @@ interface TrackingEvent {
   location: string;
   code: string;
   timestamp: string;
+  explanation?: string;
 }
 
 interface TrackingData {
@@ -156,6 +157,9 @@ const TrackPage: NextPage = () => {
                           <p className="font-bold text-lg text-dark-text">{event.status}</p>
                           <p className="text-gray-600">{event.location}</p>
                           <p className="text-sm text-gray-500">{formatTimestamp(event.timestamp)}</p>
+                          {event.explanation && (
+                            <p className="text-sm text-gray-500 italic mt-1">{event.explanation}</p>
+                          )}
                         </div>
                       ))}
                     </div>

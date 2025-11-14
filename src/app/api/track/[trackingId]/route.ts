@@ -1,45 +1,131 @@
 import { NextResponse } from 'next/server';
 
+type EventInfo = {
+  label: string;
+  explanation: string;
+};
+
 // This is a mapping for common UPU event codes to make them more readable.
 // You can expand this list over time.
-const eventCodeMap: Record<string, string> = {
+const eventCodeMap: Record<string, EventInfo> = {
   // --- Export Events (Origin Country) ---
-  EMA: 'Posting/collection',
-  EMB: 'Arrival at outward office of exchange',
-  EMC: 'Departure from outward office of exchange',
-  EXA: 'Item presented to export customs/security',
-  EXB: 'Item held by export customs/security',
-  EXC: 'Item returned from export customs/security',
-  EXD: 'Item held at outward office of exchange',
-  EXX: 'Export cancellation',
+  EMA: {
+    label: 'Posting/collection',
+    explanation: 'The postal operator received the parcel from the sender.',
+  },
+  EMB: {
+    label: 'Arrival at outward office of exchange',
+    explanation:
+      'The parcel reached the main export processing facility in the origin country.',
+  },
+  EMC: {
+    label: 'Departure from outward office of exchange',
+    explanation:
+      'The parcel left the origin-country export hub and is en route to the next leg.',
+  },
+  EXA: {
+    label: 'Item presented to export customs/security',
+    explanation: 'Export customs or security authorities are inspecting the parcel.',
+  },
+  EXB: {
+    label: 'Item held by export customs/security',
+    explanation: 'Export customs/security temporarily retained the parcel for checks.',
+  },
+  EXC: {
+    label: 'Item returned from export customs/security',
+    explanation: 'Export customs/security cleared the parcel and returned it to the postal operator.',
+  },
+  EXD: {
+    label: 'Item held at outward office of exchange',
+    explanation: 'The parcel is waiting at the export facility before it can depart.',
+  },
+  EXX: {
+    label: 'Export cancellation',
+    explanation: 'Export processing was cancelled, usually because shipping plans changed.',
+  },
 
   // --- Transit Events ---
-  EMJ: 'Arrival at transit office of exchange',
-  EMK: 'Departure from transit office of exchange',
+  EMJ: {
+    label: 'Arrival at transit office of exchange',
+    explanation: 'The parcel arrived in a transit country’s exchange office.',
+  },
+  EMK: {
+    label: 'Departure from transit office of exchange',
+    explanation: 'The parcel departed the transit hub toward the destination country.',
+  },
 
   // --- Import & Customs Events (Destination Country) ---
-  EMD: 'Arrival at inward office of exchange',
-  EDA: 'Held at inward office of exchange',
-  EDB: 'Item presented to import customs',
-  EME: 'Held by import customs',
-  EDC: 'Item returned from customs (import)',
-  EMF: 'Departure from inward office of exchange',
+  EMD: {
+    label: 'Arrival at inward office of exchange',
+    explanation: 'The parcel reached the destination country’s import facility.',
+  },
+  EDA: {
+    label: 'Held at inward office of exchange',
+    explanation: 'The parcel is on hold at the import facility for operational reasons.',
+  },
+  EDB: {
+    label: 'Item presented to import customs',
+    explanation: 'The parcel was handed to destination customs for clearance.',
+  },
+  EME: {
+    label: 'Held by import customs',
+    explanation: 'Destination customs are inspecting or processing the parcel.',
+  },
+  EDC: {
+    label: 'Item returned from customs (import)',
+    explanation: 'Customs finished processing and released the parcel back to the postal operator.',
+  },
+  EMF: {
+    label: 'Departure from inward office of exchange',
+    explanation:
+      'The parcel left the import facility and is moving into the domestic delivery network.',
+  },
 
   // --- Domestic Processing Events (Destination Country) ---
-  EDD: 'Item into sorting centre',
-  EDE: 'Item out of sorting centre',
-  EMG: 'Arrival at delivery office',
-  EDF: 'Item held at delivery depot',
-  EDG: 'Item out for physical delivery',
-  EDH: 'Item arrival at collection point for pick-up (by recipient)',
+  EDD: {
+    label: 'Item into sorting centre',
+    explanation: 'The parcel arrived at a local sorting centre in the destination country.',
+  },
+  EDE: {
+    label: 'Item out of sorting centre',
+    explanation: 'Sorting is complete and the parcel left the sorting centre.',
+  },
+  EMG: {
+    label: 'Arrival at delivery office',
+    explanation: 'The parcel reached the local delivery post office.',
+  },
+  EDF: {
+    label: 'Item held at delivery depot',
+    explanation: 'The parcel is waiting at the local delivery depot.',
+  },
+  EDG: {
+    label: 'Item out for physical delivery',
+    explanation: 'A courier has the parcel and is attempting delivery.',
+  },
+  EDH: {
+    label: 'Item arrival at collection point for pick-up (by recipient)',
+    explanation: 'The parcel is ready for the recipient to pick up at a collection point.',
+  },
 
   // --- Final Delivery Events ---
-  EMI: 'Final delivery',
-  EMH: 'Unsuccessful (physical) delivery',
-  EDX: 'Import terminated',
+  EMI: {
+    label: 'Final delivery',
+    explanation: 'The parcel has been delivered to the recipient.',
+  },
+  EMH: {
+    label: 'Unsuccessful (physical) delivery',
+    explanation: 'A delivery attempt failed; typically a notice will be left.',
+  },
+  EDX: {
+    label: 'Import terminated',
+    explanation: 'The import process was stopped; the parcel may be returning to sender.',
+  },
 
   // Legacy/uncommon
-  EMX: 'Item out of sorting centre',
+  EMX: {
+    label: 'Item out of sorting centre',
+    explanation: 'The parcel left a sorting centre (legacy code).',
+  },
 };
 
 const stateCodeMap: Record<string, string> = {
@@ -113,16 +199,27 @@ export async function GET(request: Request, context: RouteContext) {
     }
 
     const history = (Array.isArray(record.Events) ? record.Events : [])
-      .map((event: any) => ({
-        status:
+      .map((event: any) => {
+        const eventInfo = eventCodeMap[event.EventCd] || null;
+        const friendlyStatus =
           event.EventNm ||
-          eventCodeMap[event.EventCd] ||
+          eventInfo?.label ||
           event.EventCd ||
-          'Unknown event',
-        location: event.EventLocation || 'N/A',
-        code: event.EventCd || 'N/A',
-        timestamp: normalizeEventDate(event.EventDT),
-      }))
+          'Unknown event';
+        const friendlyExplanation =
+          eventInfo?.explanation ||
+          (event.EventNm
+            ? 'Status provided directly by the postal operator.'
+            : 'The postal operator reported this status.');
+
+        return {
+          status: friendlyStatus,
+          explanation: friendlyExplanation,
+          location: event.EventLocation || 'N/A',
+          code: event.EventCd || 'N/A',
+          timestamp: normalizeEventDate(event.EventDT),
+        };
+      })
       .sort((a, b) => sortByTimestamp(a.timestamp, b.timestamp));
 
     const latestEvent = history[history.length - 1];

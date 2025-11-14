@@ -1,5 +1,5 @@
-import ArrowRightIcon from "@/src/components/icons/ArrowRightIcon";
-import Reveal from "@/src/components/Reveal";
+import ArrowRightIcon from "@/components/icons/ArrowRightIcon";
+import Reveal from "@/components/Reveal";
 
 function RugPudo() {
   return (

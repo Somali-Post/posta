@@ -1,12 +1,12 @@
 // src/pages/index.tsx
 import type { NextPage } from 'next';
-import { Navbar } from '@/src/components/layout/Navbar';
-import { Footer } from '@/src/components/layout/Footer';
-import { Hero } from '@/src/components/Hero';
-import { HomeServices } from '@/src/components/HomeServices';
-import { SixDAddress } from '@/src/components/SixDAddress';
-import { RugPudo } from '@/src/components/RugPudo';
-import { LogoCarousel } from '@/src/components/LogoCarousel'; // Import the new component
+import { Navbar } from '@/components/layout/Navbar';
+import { Footer } from '@/components/layout/Footer';
+import { Hero } from '@/components/Hero';
+import { HomeServices } from '@/components/HomeServices';
+import { SixDAddress } from '@/components/SixDAddress';
+import { RugPudo } from '@/components/RugPudo';
+import { LogoCarousel } from '@/components/LogoCarousel'; // Import the new component
 
 const HomePage: NextPage = () => {
   return (
