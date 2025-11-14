@@ -30,7 +30,7 @@ export const LogoCarousel = () => {
       // --- THIS IS YOUR NEW SPEED CONTROL ---
       // We've increased this from 100 to 250.
       // A higher number means a FASTER animation.
-      const pixelsPerSecond = 350;
+      const pixelsPerSecond = 850;
 
       const duration = totalWidth / pixelsPerSecond;
       setAnimationDuration(`${duration.toFixed(2)}s`);
