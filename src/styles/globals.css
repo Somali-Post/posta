@@ -1,0 +1,12 @@
+/* src/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-white text-dark-text;
+}
+
+html {
+  scroll-behavior: smooth;
+}
