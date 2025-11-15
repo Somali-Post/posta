@@ -1,5 +1,6 @@
 // tailwind.config.ts
 import type { Config } from 'tailwindcss'
+const { fontFamily } = require('tailwindcss/defaultTheme') // Make sure to require the default theme
 
 const config: Config = {
   content: [
@@ -10,15 +11,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'somali-blue': '#4189DD',
-        'accent-blue': '#89B9ED',
+        'brand-dark-blue': '#0D47A1',
         'dark-text': '#1E293B',
         'light-gray': '#F8FAFC',
         'border-gray': '#E2E8F0',
+        // Legacy utility names still used across components
+        'somali-blue': '#0D47A1',
+        'accent-blue': '#89B9ED',
       },
+      // --- THIS IS THE FONT FIX ---
+      // This tells the default 'font-sans' class to use our '--font-inter'
+      // variable first, with fallback system fonts.
+      fontFamily: {
+        sans: ['var(--font-inter)', ...fontFamily.sans],
+      },
+      // --------------------------
       animation: {
-        // UPDATED: Duration changed from 40s to a much faster 25s
-        'infinite-scroll': 'infinite-scroll 15s linear infinite',
+        'infinite-scroll': 'infinite-scroll 60s linear infinite',
       },
       keyframes: {
         'infinite-scroll': {

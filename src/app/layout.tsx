@@ -1,21 +1,28 @@
 // src/app/layout.tsx
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css' // Note: Ensure your globals.css is in src/app, not src/styles
 
-import type { ReactNode } from 'react';
-import type { Metadata } from 'next';
-
-import '../styles/globals.css';
+// This configures the Inter font with the subsets we need
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter', // This connects the font to Tailwind CSS
+})
 
 export const metadata: Metadata = {
-  title: 'Somali Post',
-  description: 'Official Somali Post services and information portal.',
-};
+  title: 'Posta.so - Somali Postal Service',
+  description: 'Reconnecting Somalia to the world. Track parcels, rent P.O. Boxes, and more.',
+}
 
-const RootLayout = ({ children }: { children: ReactNode }) => {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      {/* The font variable is applied to the body tag */}
+      <body className={`${inter.variable} font-sans`}>{children}</body>
     </html>
-  );
-};
-
-export default RootLayout;
+  )
+}
