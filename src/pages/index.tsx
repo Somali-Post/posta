@@ -5,7 +5,6 @@ import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/Hero';
 import { POBoxHero } from '@/components/POBoxHero';
 import { ReceivingServiceSection } from '@/components/ReceivingServiceSection';
-import { SixDAddress } from '@/components/SixDAddress';
 import { RugPudo } from '@/components/RugPudo';
 import { LogoCarousel } from '@/components/LogoCarousel';
 import { AnimatedSection } from '@/components/AnimatedSection'; // Import the animation wrapper
@@ -24,9 +23,6 @@ const HomePage: NextPage = () => {
         </AnimatedSection>
         <AnimatedSection>
           <ReceivingServiceSection />
-        </AnimatedSection>
-        <AnimatedSection>
-          <SixDAddress />
         </AnimatedSection>
         <AnimatedSection>
           <RugPudo />

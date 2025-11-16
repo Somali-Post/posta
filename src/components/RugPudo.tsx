@@ -11,14 +11,16 @@ export const RugPudo = () => {
   return (
     <section className="bg-white">
       <div className="grid lg:grid-cols-2 items-center">
-        {/* --- THE FIX: Increased height on mobile, full height on desktop --- */}
-        <div className="relative h-[50vh] lg:h-full w-full">
-          <Image
-            src="/images/pudo-point.png"
-            alt="A customer at a RUG PUDO point"
-            layout="fill"
-            objectFit="cover"
-          />
+        {/* --- THE FIX: Elevated the image with padding and shadow --- */}
+        <div className="flex items-center justify-center h-[60vh] lg:h-[60vh] w-full p-6 lg:p-10">
+          <div className="relative w-full h-full rounded-3xl shadow-2xl overflow-hidden bg-white">
+            <Image
+              src="/images/pudo-point.png"
+              alt="A customer at a RUG PUDO point"
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
         </div>
         
         {/* --- THE FIX: Increased padding from p-12 to p-20 for more breathing room --- */}
