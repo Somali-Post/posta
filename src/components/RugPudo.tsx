@@ -33,7 +33,7 @@ export const RugPudo = () => {
           <p className="text-lg text-gray-700 leading-relaxed mb-10">
             {rugPudo.body}
           </p>
-          <Button href="/#"> {/* Update href when the page exists */}
+          <Button href="/pudo">
             {rugPudo.cta}
           </Button>
         </div>
