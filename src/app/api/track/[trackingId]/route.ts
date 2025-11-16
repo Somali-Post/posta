@@ -198,8 +198,17 @@ export async function GET(request: Request, context: RouteContext) {
       );
     }
 
-    const history = (Array.isArray(record.Events) ? record.Events : [])
-      .map((event: any) => {
+    type NormalizedEvent = {
+      status: string;
+      explanation: string;
+      location: string;
+      code: string;
+      timestamp: string;
+    };
+
+    const sourceEvents = Array.isArray(record.Events) ? record.Events : [];
+    const history: NormalizedEvent[] = sourceEvents
+      .map((event: any): NormalizedEvent => {
         const eventInfo = eventCodeMap[event.EventCd] || null;
         const friendlyStatus =
           event.EventNm ||
@@ -220,7 +229,7 @@ export async function GET(request: Request, context: RouteContext) {
           timestamp: normalizeEventDate(event.EventDT),
         };
       })
-      .sort((a, b) => sortByTimestamp(a.timestamp, b.timestamp));
+      .sort((a: NormalizedEvent, b: NormalizedEvent) => sortByTimestamp(a.timestamp, b.timestamp));
 
     const latestEvent = history[history.length - 1];
 

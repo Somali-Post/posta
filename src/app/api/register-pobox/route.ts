@@ -5,10 +5,20 @@ import nodemailer from 'nodemailer';
 export async function POST(request: Request) {
   const { name, email, phone, whatsapp, boxType } = await request.json();
 
-  // Basic validation
   if (!name || !email || !phone || !boxType) {
     return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
   }
+
+  // --- THIS IS THE NEW PART ---
+  // We create the secure link for the admin to click
+  const adminSecretKey = process.env.ADMIN_SECRET_KEY;
+  const confirmationUrl = new URL(`${request.headers.get('origin')}/admin`);
+  confirmationUrl.searchParams.set('name', name);
+  confirmationUrl.searchParams.set('email', email);
+  confirmationUrl.searchParams.set('phone', phone);
+  confirmationUrl.searchParams.set('boxType', boxType);
+  confirmationUrl.searchParams.set('secret', adminSecretKey || '');
+  // --- END OF NEW PART ---
 
   const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_SERVER_HOST,
@@ -39,7 +49,10 @@ export async function POST(request: Request) {
             <li><strong>Box Type:</strong> ${boxType}</li>
           </ul>
           <hr>
-          <p><strong>Next Steps:</strong> Please wait for the applicant to send payment via EVC Plus. Once payment is confirmed, please issue the e-certificate to their email and/or WhatsApp.</p>
+          <p style="margin-top: 20px;"><strong>Action Required:</strong> Once you have confirmed the EVC Plus payment, click the link below to issue the official e-certificate:</p>
+          <a href="${confirmationUrl.toString()}" style="display: inline-block; padding: 10px 20px; background-color: #0D47A1; color: #fff; text-decoration: none; border-radius: 5px;">
+            Confirm Payment & Send Certificate
+          </a>
         </div>
       `,
     });

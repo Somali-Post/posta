@@ -75,21 +75,6 @@ const AboutPage = () => {
           </div>
         </section>
 
-        {/* --- Achievements "By the Numbers" Section --- */}
-        <section className="py-20 bg-light-gray">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl font-bold text-dark-text mb-8">{about.achievements.title}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-              {about.achievements.cards.map((card) => (
-                <div key={card.label}>
-                  <p className="text-6xl font-bold text-somali-blue">{card.value}</p>
-                  <p className="text-xl font-semibold">{card.label}</p>
-                  <p className="text-gray-600">{card.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
       </main>
       <Footer />
     </div>
