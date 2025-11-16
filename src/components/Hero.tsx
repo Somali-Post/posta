@@ -9,7 +9,7 @@ export const Hero = () => {
   const { hero } = useTranslations();
 
   return (
-    <section className="relative bg-cover bg-center text-white" style={{ backgroundImage: "url('/images/hero-background.png')" }}>
+    <section className="relative bg-cover bg-center text-white" style={{ backgroundImage: "url('/images/hero-background-digital.png')" }}>
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="container mx-auto px-4 relative z-10 flex items-center min-h-[70vh]">
         <div className="max-w-3xl py-24">

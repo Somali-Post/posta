@@ -16,14 +16,6 @@ export const Navbar = () => {
   const translations = useTranslations();
   const { language, setLanguage } = useLanguage();
 
-  const navLinks = [
-    { name: translations.nav.home, href: '/' },
-    { name: translations.nav.services, href: '/services/receiving' },
-    { name: translations.nav.poBox, href: '/services/po-box' },
-    { name: translations.nav.help, href: '/help' },
-    { name: translations.nav.about, href: '/about' },
-  ];
-
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
@@ -44,12 +36,47 @@ export const Navbar = () => {
         </Link>
 
         {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link key={link.name} href={link.href} className="text-base font-medium text-dark-text hover:text-somali-blue transition-colors duration-300">
-              {link.name}
-            </Link>
-          ))}
+        <nav className="hidden md:flex items-center gap-6 text-base font-medium text-dark-text">
+          <Link href="/" className="hover:text-somali-blue transition-colors duration-300">
+            Home
+          </Link>
+          <Link href="/track" className="hover:text-somali-blue transition-colors duration-300">
+            Track
+          </Link>
+          <div className="relative group">
+            <button
+              type="button"
+              className="flex items-center gap-2 hover:text-somali-blue transition-colors duration-300"
+            >
+              Services <span className="text-sm">▼</span>
+            </button>
+            <div className="absolute left-0 mt-3 w-60 rounded-2xl border border-slate-100 bg-white p-2 shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
+              <Link
+                href="/services/receiving"
+                className="block rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-somali-blue"
+              >
+                Receiving Mail &amp; Parcels
+              </Link>
+              <Link
+                href="/services/po-box"
+                className="block rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-somali-blue"
+              >
+                P.O. Box Rentals
+              </Link>
+              <Link
+                href="/pudo"
+                className="block rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-somali-blue"
+              >
+                RUG PUDO Network
+              </Link>
+            </div>
+          </div>
+          <Link href="/help" className="hover:text-somali-blue transition-colors duration-300">
+            Help
+          </Link>
+          <Link href="/about" className="hover:text-somali-blue transition-colors duration-300">
+            About Us
+          </Link>
         </nav>
 
         {/* Language Switcher */}
