@@ -5,6 +5,7 @@ import type { NextPage } from 'next';
 import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import TrackIcon from '@/components/icons/TrackIcon';
+import { useLanguage, useTranslations } from '@/context/LanguageContext';
 
 // Define the structure of our tracking data
 interface TrackingEvent {
@@ -27,9 +28,9 @@ interface TrackingData {
 }
 
 // A component to format the date and time nicely
-const formatTimestamp = (ts: string) => {
+const formatTimestamp = (ts: string, locale: string) => {
   try {
-    return new Date(ts).toLocaleString('en-US', {
+    return new Date(ts).toLocaleString(locale, {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -53,7 +54,9 @@ const TrackPage: NextPage = () => {
   const [trackingId, setTrackingId] = useState('');
   const [data, setData] = useState<TrackingData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [hasError, setHasError] = useState(false);
+  const { track } = useTranslations();
+  const { locale } = useLanguage();
 
   const handleTrack = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,7 +64,7 @@ const TrackPage: NextPage = () => {
 
     setIsLoading(true);
     setData(null);
-    setError(null);
+    setHasError(false);
 
     try {
       const response = await fetch(`/api/track/${trackingId.trim()}`);
@@ -73,7 +76,7 @@ const TrackPage: NextPage = () => {
       const result: TrackingData = await response.json();
       setData(result);
     } catch (err) {
-      setError('Could not track the item. Please check the number and try again.');
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
@@ -86,14 +89,15 @@ const TrackPage: NextPage = () => {
         <div className="container mx-auto max-w-4xl">
           {/* --- The Search Form --- */}
           <div className="bg-white p-8 rounded-lg shadow-md mb-8">
-            <h1 className="text-4xl font-bold text-somali-blue mb-2">Track Your Item</h1>
-            <p className="text-lg text-gray-600 mb-6">Enter your tracking number below.</p>
+            <h1 className="text-4xl font-bold text-somali-blue mb-2">{track.title}</h1>
+            <p className="text-lg text-gray-600">{track.subtitle}</p>
+            <p className="text-base text-gray-500 mb-6">{track.instructions}</p>
             <form onSubmit={handleTrack} className="flex flex-col sm:flex-row gap-2">
               <input
                 type="text"
                 value={trackingId}
                 onChange={(e) => setTrackingId(e.target.value)}
-                placeholder="e.g., CC850579694SE"
+                placeholder={track.placeholder}
                 className="flex-grow w-full px-4 py-3 text-lg border-2 border-border-gray rounded-md focus:ring-2 focus:ring-accent-blue focus:border-accent-blue transition"
                 disabled={isLoading}
               />
@@ -103,45 +107,48 @@ const TrackPage: NextPage = () => {
                 disabled={isLoading}
               >
                 <TrackIcon className="w-6 h-6" />
-                <span>{isLoading ? 'Searching...' : 'Track'}</span>
+                <span>{isLoading ? track.buttonLoading : track.buttonIdle}</span>
               </button>
             </form>
           </div>
 
           {/* --- The Results Area --- */}
           <div className="bg-white p-8 rounded-lg shadow-md">
-            {isLoading && <p className="text-center text-lg text-gray-600">Loading tracking details...</p>}
+            {isLoading && <p className="text-center text-lg text-gray-600">{track.loading}</p>}
 
-            {error && <p className="text-center text-lg text-red-600">{error}</p>}
+            {hasError && <p className="text-center text-lg text-red-600">{track.error}</p>}
 
             {data && (
               <div>
                 {/* Not Found Message */}
-                {data.status === 'Not Found' && <p className="text-center text-lg text-gray-700">{data.message}</p>}
+                {data.status === 'Not Found' && (
+                  <p className="text-center text-lg text-gray-700">{data.message ?? track.notFound}</p>
+                )}
 
                 {/* Success Results */}
                 {data.status !== 'Not Found' && (
                   <div>
                     <h2 className="text-3xl font-bold text-dark-text mb-6">
-                      Tracking Details for <span className="text-somali-blue">{data.trackingId}</span>
+                      {track.detailsHeading}{' '}
+                      <span className="text-somali-blue">{data.trackingId}</span>
                     </h2>
 
                     {/* Status Card */}
                     <div className="bg-somali-blue text-white p-6 rounded-lg mb-8">
-                      <p className="text-lg uppercase tracking-wider">Current Status</p>
+                      <p className="text-lg uppercase tracking-wider">{track.currentStatus}</p>
                       <p className="text-4xl font-bold">{data.status}</p>
                     </div>
 
                     {/* Route Summary */}
                     <div className="grid grid-cols-2 gap-4 text-center mb-8">
                       <div>
-                        <p className="text-sm text-gray-500">Origin</p>
+                        <p className="text-sm text-gray-500">{track.originLabel}</p>
                         <p className="text-2xl font-bold">
                           {formatCountry(data.origin, data.originCode)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">Destination</p>
+                        <p className="text-sm text-gray-500">{track.destinationLabel}</p>
                         <p className="text-2xl font-bold">
                           {formatCountry(data.destination, data.destinationCode)}
                         </p>
@@ -149,14 +156,14 @@ const TrackPage: NextPage = () => {
                     </div>
 
                     {/* Timeline */}
-                    <h3 className="text-2xl font-bold mb-4">Shipment History</h3>
+                    <h3 className="text-2xl font-bold mb-4">{track.historyTitle}</h3>
                     <div className="border-l-2 border-somali-blue pl-6">
                       {data.history.map((event, index) => (
                         <div key={index} className="relative mb-6">
                           <div className="absolute -left-[34px] top-1 w-4 h-4 bg-somali-blue rounded-full border-4 border-white"></div>
                           <p className="font-bold text-lg text-dark-text">{event.status}</p>
                           <p className="text-gray-600">{event.location}</p>
-                          <p className="text-sm text-gray-500">{formatTimestamp(event.timestamp)}</p>
+                          <p className="text-sm text-gray-500">{formatTimestamp(event.timestamp, locale)}</p>
                           {event.explanation && (
                             <p className="text-sm text-gray-500 italic mt-1">{event.explanation}</p>
                           )}

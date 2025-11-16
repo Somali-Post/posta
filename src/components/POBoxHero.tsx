@@ -1,10 +1,15 @@
+'use client';
+
 // src/components/POBoxHero.tsx
 import Link from 'next/link';
 import { LockIcon } from './icons/LockIcon';
 import { GlobeIcon } from './icons/GlobeIcon';
 import { KeyIcon } from './icons/KeyIcon';
+import { useTranslations } from '@/context/LanguageContext';
 
 export const POBoxHero = () => {
+  const { poBoxHero } = useTranslations();
+
   return (
     <section 
       className="relative h-[80vh] bg-cover bg-center bg-no-repeat bg-fixed flex items-center justify-center"
@@ -17,17 +22,22 @@ export const POBoxHero = () => {
         <div className="p-8 sm:p-12">
           {/* Main Headline */}
           <h2 className="text-4xl md:text-5xl font-extrabold uppercase text-brand-dark-blue leading-tight">
-            Your Secure Address in Somalia
+            {poBoxHero.title}
           </h2>
 
           {/* Sub-headline and CTA Button */}
           <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <p className="text-xl font-semibold">
-              P.O. Box Rentals<br />from Somali Post
+              {poBoxHero.subtitleLines.map((line, index) => (
+                <span key={`${line}-${index}`}>
+                  {line}
+                  {index < poBoxHero.subtitleLines.length - 1 && <br />}
+                </span>
+              ))}
             </p>
             <Link href="/services/po-box">
               <button className="bg-brand-dark-blue text-white font-bold px-8 py-3 rounded-md hover:bg-blue-900 transition-colors whitespace-nowrap">
-                RENT YOURS TODAY
+                {poBoxHero.button}
               </button>
             </Link>
           </div>
@@ -37,15 +47,15 @@ export const POBoxHero = () => {
         <div className="border-t border-border-gray bg-light-gray grid grid-cols-3 gap-4 text-center p-4 rounded-b-md">
           <div className="flex items-center justify-center gap-2">
             <LockIcon className="w-6 h-6 text-brand-dark-blue" />
-            <span className="font-medium text-sm">Reliable & Safe</span>
+            <span className="font-medium text-sm">{poBoxHero.badges[0]}</span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <GlobeIcon className="w-6 h-6 text-brand-dark-blue" />
-            <span className="font-medium text-sm">Connects You Globally</span>
+            <span className="font-medium text-sm">{poBoxHero.badges[1]}</span>
           </div>
           <div className="flex items-center justify-center gap-2">
             <KeyIcon className="w-6 h-6 text-brand-dark-blue" />
-            <span className="font-medium text-sm">Easy 24/7 Access</span>
+            <span className="font-medium text-sm">{poBoxHero.badges[2]}</span>
           </div>
         </div>
       </div>

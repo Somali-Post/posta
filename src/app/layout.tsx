@@ -2,6 +2,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css' // Note: Ensure your globals.css is in src/app, not src/styles
+import { LanguageProvider } from '@/context/LanguageContext'
 
 // This configures the Inter font with the subsets we need
 const inter = Inter({
@@ -22,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* The font variable is applied to the body tag */}
-      <body className={`${inter.variable} font-sans`}>{children}</body>
+      <body className={`${inter.variable} font-sans`}>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   )
 }

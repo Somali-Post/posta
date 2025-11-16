@@ -1,5 +1,6 @@
 import type { AppProps } from 'next/app';
 import { Inter } from 'next/font/google';
+import { LanguageProvider } from '@/context/LanguageContext';
 
 // --- THIS IS THE FIX ---
 // The path is now '@/app/globals.css' so both the App Router and Pages Router share the same styles.
@@ -14,8 +15,10 @@ const inter = Inter({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${inter.variable} font-sans`}>
-      <Component {...pageProps} />
-    </main>
+    <LanguageProvider>
+      <main className={`${inter.variable} font-sans`}>
+        <Component {...pageProps} />
+      </main>
+    </LanguageProvider>
   );
 }

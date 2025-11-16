@@ -1,14 +1,27 @@
+'use client';
+
 // src/components/layout/Navbar.tsx
 import Image from 'next/image';
 import Link from 'next/link';
+import type { Language } from '@/lib/translations';
+import { useLanguage, useTranslations } from '@/context/LanguageContext';
+
+const languageOptions: { code: Language; short: string }[] = [
+  { code: 'so', short: 'SO' },
+  { code: 'en', short: 'EN' },
+  { code: 'ar', short: 'AR' },
+];
 
 export const Navbar = () => {
-  // Simplified and updated navigation links
+  const translations = useTranslations();
+  const { language, setLanguage } = useLanguage();
+
   const navLinks = [
-    { name: 'Services', href: '/services/receiving' }, // Points directly to the main service
-    { name: 'P.O. Box', href: '/services/po-box' },
-    { name: 'Help', href: '/help' },
-    { name: 'About Us', href: '/about' },
+    { name: translations.nav.home, href: '/' },
+    { name: translations.nav.services, href: '/services/receiving' },
+    { name: translations.nav.poBox, href: '/services/po-box' },
+    { name: translations.nav.help, href: '/help' },
+    { name: translations.nav.about, href: '/about' },
   ];
 
   return (
@@ -40,10 +53,18 @@ export const Navbar = () => {
         </nav>
 
         {/* Language Switcher */}
-        <div className="flex items-center gap-4 text-sm font-medium">
-          <button className="text-gray-500 hover:text-dark-text">SO</button>
-          <button className="text-dark-text font-bold">EN</button>
-          <button className="text-gray-500 hover:text-dark-text">AR</button>
+        <div className="flex items-center gap-3 text-sm font-medium">
+          {languageOptions.map(({ code, short }) => (
+            <button
+              key={code}
+              type="button"
+              className={`transition-colors ${language === code ? 'text-dark-text font-bold' : 'text-gray-500 hover:text-dark-text'}`}
+              onClick={() => setLanguage(code)}
+              aria-label={translations.languageNames[code]}
+            >
+              {short}
+            </button>
+          ))}
         </div>
       </div>
     </header>

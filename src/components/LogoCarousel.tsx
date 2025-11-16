@@ -1,6 +1,9 @@
+'use client';
+
 // src/components/LogoCarousel.tsx
 import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
+import { useTranslations } from '@/context/LanguageContext';
 
 const originalLogoFilenames = [
   '01', '02', '03', '04', '05', '06', '07', '08', '10',
@@ -10,6 +13,7 @@ const originalLogoFilenames = [
 ].map(name => `${name}.png`);
 
 export const LogoCarousel = () => {
+  const { logoCarousel } = useTranslations();
   const [shuffledLogos, setShuffledLogos] = useState<string[]>([]);
   const [animationDuration, setAnimationDuration] = useState('60s');
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -42,10 +46,10 @@ export const LogoCarousel = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-somali-blue">
-            Connecting with Postal Partners Worldwide
+            {logoCarousel.heading}
           </h2>
           <p className="text-lg text-gray-600 mt-2">
-            Part of a global network of trusted postal operators.
+            {logoCarousel.description}
           </p>
         </div>
 
@@ -59,7 +63,7 @@ export const LogoCarousel = () => {
               <div key={index} className="flex-shrink-0 w-88 mx-3 h-40 flex items-center justify-center">
                 <Image
                   src={`/images/logos/${filename}`}
-                  alt={`Postal partner logo ${index}`}
+                  alt={`${logoCarousel.altPrefix} ${index + 1}`}
                   width={320}
                   height={140}
                   style={{ objectFit: 'contain' }}
