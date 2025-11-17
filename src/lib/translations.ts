@@ -7,11 +7,11 @@ export interface FaqItem {
 }
 
 interface FooterLinks {
-  home: string;
+  about: string;
   services: string;
   poBox: string;
+  pudo: string;
   help: string;
-  about: string;
 }
 
 interface ServiceStep {
@@ -29,12 +29,94 @@ interface HelpContactHour {
   value: string;
 }
 
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  image: string;
+}
+
+interface PoBoxPlanOptions {
+  individualLabel: string;
+  individualPrice: string;
+  businessLabel: string;
+  businessPrice: string;
+  priceSuffix: string;
+}
+
+interface PoBoxFormFields {
+  name: string;
+  email: string;
+  phone: string;
+  whatsapp: string;
+}
+
+interface PoBoxApplicationContent {
+  heroTitle: string;
+  heroSubtitle: string;
+  stepOneTitle: string;
+  planOptions: PoBoxPlanOptions;
+  formFields: PoBoxFormFields;
+  submitLabel: string;
+  submittingLabel: string;
+  missingFieldsMessage: string;
+  successMessage: string;
+  stepTwoTitle: string;
+  stepTwoBody: string;
+  evcLabel: string;
+  evcNumber: string;
+  paymentNote: string;
+  stepThreeTitle: string;
+  stepThreeBody: string;
+  testimonialsTitle: string;
+  testimonials: Testimonial[];
+}
+
+interface PudoCard {
+  title: string;
+  description: string;
+}
+
+interface PudoFaq {
+  question: string;
+  answer: string;
+}
+
+interface PudoContent {
+  heroTitle: string;
+  heroSubtitle: string;
+  ecosystemTitle: string;
+  ecosystemSubtitle: string;
+  ecosystemCards: PudoCard[];
+  interestTitle: string;
+  interestSubtitle: string;
+  form: {
+    businessName: string;
+    ownerName: string;
+    phone: string;
+    location: string;
+    submitLabel: string;
+    submittingLabel: string;
+    missingFields: string;
+    successTitle: string;
+    successBody: string;
+    errorMessage: string;
+  };
+  faqTitle: string;
+  faqs: PudoFaq[];
+}
+
 export interface TranslationContent {
   languageNames: Record<Language, string>;
   nav: {
     home: string;
+    track: string;
     services: string;
-    poBox: string;
+    dropdown: {
+      receiving: string;
+      poBox: string;
+      pudo: string;
+    };
     help: string;
     about: string;
   };
@@ -80,6 +162,10 @@ export interface TranslationContent {
     emailValue: string;
     phoneLabel: string;
     phoneValue: string;
+    stayConnectedTitle: string;
+    stayConnectedBody: string;
+    privacy: string;
+    terms: string;
     rights: string;
   };
   serviceSidebar: {
@@ -191,6 +277,8 @@ export interface TranslationContent {
       }[];
     };
   };
+  poBoxApplication: PoBoxApplicationContent;
+  pudo: PudoContent;
 }
 
 export const languageLocales: Record<Language, string> = {
@@ -208,8 +296,13 @@ export const translations: Record<Language, TranslationContent> = {
     },
     nav: {
       home: 'Home',
+      track: 'Track',
       services: 'Services',
-      poBox: 'P.O. Box',
+      dropdown: {
+        receiving: 'Receiving Mail & Parcels',
+        poBox: 'P.O. Box Rentals',
+        pudo: 'RUG PUDO Network',
+      },
       help: 'Help',
       about: 'About Us',
     },
@@ -251,11 +344,11 @@ export const translations: Record<Language, TranslationContent> = {
         'Reconnecting Somalia to the world after 34 years. We are building a modern, digital-first postal service for a new era.',
       quickLinksTitle: 'Quick Links',
       links: {
-        home: 'Home',
+        about: 'About Us',
         services: 'Services',
         poBox: 'P.O. Box',
-        help: 'Help',
-        about: 'About Us',
+        pudo: 'RUG PUDO Network',
+        help: 'Help Center',
       },
       contactTitle: 'Contact Us',
       contactLines: ['General Post Office (GPO)', 'Jamhuuriya Road, Boondheere District', 'Muqdisho, Somalia'],
@@ -263,6 +356,10 @@ export const translations: Record<Language, TranslationContent> = {
       emailValue: 'posta@moct.gov.so',
       phoneLabel: 'Phone',
       phoneValue: '252-611003239',
+      stayConnectedTitle: 'Stay Connected',
+      stayConnectedBody: 'Follow us on social media for the latest news and updates.',
+      privacy: 'Privacy Policy',
+      terms: 'Terms of Service',
       rights: 'Somali Post. All rights reserved.',
     },
     serviceSidebar: {
@@ -303,7 +400,7 @@ export const translations: Record<Language, TranslationContent> = {
           'To ensure a secure and smooth pickup process, please bring the following to the General Post Office (GPO) in Mogadishu:',
         bringList: [
           'A valid National Identification (NIRA) ID card.',
-          'Your item’s tracking number.',
+          "Your item's tracking number.",
           'The notification message (SMS/email) you received from us.',
         ],
         locationTitle: 'Location & Hours',
@@ -381,7 +478,7 @@ export const translations: Record<Language, TranslationContent> = {
             answerParts: [
               'You can track your item by entering the 13-digit tracking number on our ',
               'Track page',
-              '. This will show you the latest updates on your shipment’s journey.',
+              ". This will show you the latest updates on your shipment's journey.",
             ],
           },
           {
@@ -500,8 +597,119 @@ export const translations: Record<Language, TranslationContent> = {
         ],
       },
     },
-  },
-  so: {
+    poBoxApplication: {
+      heroTitle: 'Get Your Official P.O. Box',
+      heroSubtitle:
+        'Join hundreds of individuals and businesses who trust Somali Post for a secure, private, and permanent mailing address.',
+      stepOneTitle: 'Step 1: Register Your Details',
+      planOptions: {
+        individualLabel: 'Individual',
+        individualPrice: '$24',
+        businessLabel: 'Business',
+        businessPrice: '$30',
+        priceSuffix: '/year',
+      },
+      formFields: {
+        name: 'Full Name',
+        email: 'Email Address',
+        phone: 'Phone Number',
+        whatsapp: 'WhatsApp Number (if different)',
+      },
+      submitLabel: 'Submit Application',
+      submittingLabel: 'Submitting...',
+      missingFieldsMessage: 'Please fill in all required fields.',
+      successMessage:
+        'Thank you! Your application has been received. Please proceed to Step 2 to complete your payment.',
+      stepTwoTitle: 'Step 2: Make Payment',
+      stepTwoBody: 'After submitting your application, please send the correct amount via EVC Plus.',
+      evcLabel: 'EVC Plus Number',
+      evcNumber: '611-69-69-89',
+      paymentNote:
+        'For faster verification, please send payment during our working hours (Sat-Wed 8:30-4:30, Thurs 8:30-2:00).',
+      stepThreeTitle: 'Step 3: Receive Your Certificate',
+      stepThreeBody:
+        'Once we confirm your payment, our team will issue your official P.O. Box e-certificate and send it to you via email and/or WhatsApp within one business day.',
+      testimonialsTitle: "Trusted By Somalia's Leading Institutions",
+      testimonials: [
+        {
+          quote:
+            "Using the Somali Post P.O. Box service has streamlined our corporate mail. It gives us the secure, official address that's essential for our national operations and formal correspondence.",
+          author: 'Hormuud Telecom',
+          role: 'Official P.O. Box Holder',
+          image: '/images/logos/hormuud-logo.png',
+        },
+        {
+          quote:
+            'The P.O. Box system is critical for the secure correspondence required by financial institutions. Somali Post provides a reliable service that meets our standards for security and professionalism.',
+          author: 'Central Bank of Somalia',
+          role: 'Official P.O. Box Holder',
+          image: '/images/logos/central-bank-logo.png',
+        },
+      ],
+    },
+    pudo: {
+      heroTitle: 'Introducing the RUG PUDO Network',
+      heroSubtitle:
+        'The future of Somali logistics is local. We are building a nationwide network of trusted local businesses to serve as official postal points, bringing services closer to every community.',
+      ecosystemTitle: 'A Seamless Ecosystem',
+      ecosystemSubtitle: 'Connecting people, partners, and Posta.so in three simple steps.',
+      ecosystemCards: [
+        {
+          title: '1. For the Somali People',
+          description:
+            'Download the app, choose your local shop as your address, and receive notifications with a secure pickup code the moment your package arrives.',
+        },
+        {
+          title: '2. For Local Businesses',
+          description:
+            'Use our simple app to scan incoming parcels, automatically notifying customers. Verify pickup codes to ensure secure handovers and earn extra income.',
+        },
+        {
+          title: '3. For Somali Post',
+          description:
+            'Our staff use a central dashboard to digitally route international mail to the correct local PUDO point, creating an efficient, error-free national network.',
+        },
+      ],
+      interestTitle: 'Become a Founding Partner',
+      interestSubtitle:
+        "Be among the first to join Somalia's new postal network. By registering your interest today, you will get priority consideration and help shape the future of logistics in your community.",
+      form: {
+        businessName: 'Business Name',
+        ownerName: 'Your Full Name',
+        phone: 'Contact Phone',
+        location: 'Location / District',
+        submitLabel: 'Register My Interest',
+        submittingLabel: 'Submitting...',
+        missingFields: 'Please fill in all fields.',
+        successTitle: 'Thank you for registering!',
+        successBody: 'You are now on our priority list for the official launch.',
+        errorMessage: 'Something went wrong. Please try again.',
+      },
+      faqTitle: 'Questions You Might Have',
+      faqs: [
+        {
+          question: 'What equipment do I need to become a PUDO point?',
+          answer:
+            'All you need is a smartphone with an internet connection to run the simple Rug Agent app. No special hardware is required.',
+        },
+        {
+          question: 'How much space is required?',
+          answer:
+            'You only need a small, secure area to store a few parcels. This could be a shelf behind your counter or a lockable cabinet.',
+        },
+        {
+          question: 'How do I get paid?',
+          answer:
+            'PUDO partners earn a commission for every parcel they successfully process (both inbound scans and outbound collections). Payments are settled on a regular, automated basis.',
+        },
+        {
+          question: 'What kind of support will I receive from Somali Post?',
+          answer:
+            'Founding partners will receive full training on the app, official "RUG PUDO Partner" branding materials for your shop, and a dedicated support line for any questions.',
+        },
+      ],
+    },
+  },  so: {
     languageNames: {
       en: 'Ingiriisi',
       so: 'Soomaali',
@@ -509,8 +717,13 @@ export const translations: Record<Language, TranslationContent> = {
     },
     nav: {
       home: 'Bogga Hore',
+      track: 'Raad-raac',
       services: 'Adeegyada',
-      poBox: 'Sanduuqa P.O.',
+      dropdown: {
+        receiving: 'Qaabilaadda Boostada & Xirmooyinka',
+        poBox: 'Kiraynta Sanduuqa P.O.',
+        pudo: 'Shabakadda RUG PUDO',
+      },
       help: 'Caawimaad',
       about: 'Ku Saabsan',
     },
@@ -552,11 +765,11 @@ export const translations: Record<Language, TranslationContent> = {
         'Waxaan ka dib 34 sano dib ugu xidhay Soomaaliya dunida. Waxaan dhiseynaa adeeg boosto oo casri ah oo dijitaal ah.',
       quickLinksTitle: 'Xidhiidh Degdeg ah',
       links: {
-        home: 'Bogga Hore',
+        about: 'Ku Saabsan',
         services: 'Adeegyada',
         poBox: 'Sanduuqa P.O.',
-        help: 'Caawimaad',
-        about: 'Ku Saabsan',
+        pudo: 'Shabakadda RUG PUDO',
+        help: 'Xarunta Caawinta',
       },
       contactTitle: 'Nala Soo Xidhiidh',
       contactLines: ['Xarunta Boostada Guud (GPO)', 'Jamhuuriya Road, Degmada Boondheere', 'Muqdisho, Soomaaliya'],
@@ -564,6 +777,10 @@ export const translations: Record<Language, TranslationContent> = {
       emailValue: 'posta@moct.gov.so',
       phoneLabel: 'Telefoon',
       phoneValue: '252-611003239',
+      stayConnectedTitle: 'Ku Xirnow',
+      stayConnectedBody: 'Raac nala warbaahinta bulshada si aad ula socoto wararkii iyo cusboonaysiintii ugu dambeeyay.',
+      privacy: 'Qaanuunka Arrimaha Khaaska ah',
+      terms: 'Shuruudaha Adeegga',
       rights: 'Somali Post. Xuquuq kasta waa la dhowray.',
     },
     serviceSidebar: {
@@ -801,6 +1018,118 @@ export const translations: Record<Language, TranslationContent> = {
         ],
       },
     },
+    poBoxApplication: {
+      heroTitle: 'Hel Sanduuqaaga Rasmiga ah ee P.O.',
+      heroSubtitle:
+        'Ku soo biir boqolaal qof iyo ganacsiyo ku kalsoon Posta Soomaaliya si ay u helaan ciwaan ammaan ah, gaar loo leeyahay, oo joogto ah.',
+      stepOneTitle: 'Tallaabada 1: Diiwaangeli Faahfaahintaada',
+      planOptions: {
+        individualLabel: 'Shakhsi',
+        individualPrice: '$24',
+        businessLabel: 'Ganacsi',
+        businessPrice: '$30',
+        priceSuffix: '/sanad',
+      },
+      formFields: {
+        name: 'Magaca oo Dhameystiran',
+        email: 'Cinwaanka Iimaylka',
+        phone: 'Lambarka Taleefanka',
+        whatsapp: 'Lambarka WhatsApp (haddii uu ka duwan yahay)',
+      },
+      submitLabel: 'Gudbi Codsiga',
+      submittingLabel: 'Gudbinayaa...',
+      missingFieldsMessage: 'Fadlan buuxi dhammaan meelaha loo baahan yahay.',
+      successMessage:
+        'Waad ku mahadsan tahay! Codsigaaga waa nala helay. Fadlan u gudub Tallaabada 2 si aad u dhammaystirto lacag-bixinta.',
+      stepTwoTitle: 'Tallaabada 2: Bixi Lacagta',
+      stepTwoBody: 'Kadib markaad soo gudbiso codsiga, fadlan qaddarka saxda ah ku dir adeegga EVC Plus.',
+      evcLabel: 'Lambarka EVC Plus',
+      evcNumber: '611-69-69-89',
+      paymentNote:
+        'Si degdeg loogu xaqiijiyo, fadlan lacagta ku dir saacadaha shaqadeena (Sabti-Arbaco 8:30-4:30, Khamiis 8:30-2:00).',
+      stepThreeTitle: 'Tallaabada 3: Hel Shahaadadaada',
+      stepThreeBody:
+        'Markaan xaqiijino lacagtaada, waxaan kuu soo saar doonaa shahaadadaada elektaroonigga ah ee Sanduuqa P.O. waxaana kuu soo diri doonaa iimayl ama WhatsApp gudaheed hal maalin shaqo.',
+      testimonialsTitle: 'Waxaa Aamina Hay’adaha Hoggaanka Soomaaliya',
+      testimonials: [
+        {
+          quote:
+            'Adeegsiga adeegga Sanduuqa P.O. ee Posta Soomaaliya wuxuu fududeeyay boostadayada shirkadeed. Waxa uu na siiyay cinwaan rasmi ah oo ammaan ah oo lama huraan u ah hawlaheena qaran iyo waraaqaha rasmiga ah.',
+          author: 'Hormuud Telecom',
+          role: 'Haysta Sanduuqa P.O. ee Rasmiga ah',
+          image: '/images/logos/hormuud-logo.png',
+        },
+        {
+          quote:
+            'Nidaamka Sanduuqa P.O. wuxuu muhiim u yahay waraaqaha ammaan ee ay u baahan yihiin hay’adaha maaliyadeed. Posta Soomaaliya waxay bixisaa adeeg lagu kalsoonaan karo oo buuxiya heerarkayaga amniga iyo xirfadda.',
+          author: 'Bangiga Dhexe ee Soomaaliya',
+          role: 'Haysta Sanduuqa P.O. ee Rasmiga ah',
+          image: '/images/logos/central-bank-logo.png',
+        },
+      ],
+    },
+    pudo: {
+      heroTitle: 'Soo Bandhigidda Shabakadda RUG PUDO',
+      heroSubtitle:
+        'Mustaqbalka saadka Soomaaliyeed waa maxalli. Waxaan dhiseynaa shabakad qaran oo ganacsiyo maxalli ah oo la isku halayn karo si ay u noqdaan goobo rasmiga ah oo boosto, si adeeggii loogu soo dhoweeyo bulshada.',
+      ecosystemTitle: 'Nidaam Isku Xiran',
+      ecosystemSubtitle: 'Waxaan dadka, la-hawlgalayaasha, iyo Posta.so ku xireynaa saddex tallaabo oo fudud.',
+      ecosystemCards: [
+        {
+          title: '1. Dadka Soomaaliyeed',
+          description:
+            'Soo degso app-ka, dooro dukaankaaga maxalliga ah cinwaan ahaan, oo hel ogeysiisyo leh koodh qaadasho oo ammaan ah marka xirmadaadu timaaddo.',
+        },
+        {
+          title: '2. Ganacsiyada Maxalliga ah',
+          description:
+            'Adeegso app-keena fudud si aad u iskaanno xirmooyinka soo gala, adigoo si toos ah u wargelinaya macaamiisha. Hubi koodhadhka qaadista si ay u noqoto gudbin sugan oo aad u kasbato dakhli dheeraad ah.',
+        },
+        {
+          title: '3. Posta Soomaaliya',
+          description:
+            'Shaqaalaheennu waxay adeegsanayaan bar-kontarooleed dhexe si ay dijitaal ugu leexiyaan boostada caalamiga ah barta PUDO ee saxda ah, iyagoo abuura shabakad qaran oo hufan oo qalad-yar.',
+        },
+      ],
+      interestTitle: 'Noqo Lammaane Aasaasi ah',
+      interestSubtitle:
+        'Noqo kuwa ugu horreeya ee ku biira shabakadda boostada cusub ee Soomaaliya. Isdiiwaangeli maanta si aad mudnaan u hesho ugana qayb qaadato qaabeynta mustaqbalka saadka bulshadaada.',
+      form: {
+        businessName: 'Magaca Ganacsiga',
+        ownerName: 'Magacaaga Buuxa',
+        phone: 'Taleefoonka Xiriirka',
+        location: 'Goobta / Degmada',
+        submitLabel: 'Diiwaangeli Danahayga',
+        submittingLabel: 'Gudbinayaa...',
+        missingFields: 'Fadlan buuxi dhammaan meelaha.',
+        successTitle: 'Waad ku mahadsan tahay diiwaangelinta!',
+        successBody: 'Waxaad hadda ku jirtaa liiskayaga mudnaanta ee furitaanka rasmiga ah.',
+        errorMessage: 'Waxbaa khaldamay. Fadlan isku day mar kale.',
+      },
+      faqTitle: 'Su’aalaha aad Lahayd',
+      faqs: [
+        {
+          question: 'Qalabkee ayaan u baahanahay inaan noqdo barta PUDO?',
+          answer:
+            'Waxaad u baahan tahay keliya taleefan casri ah oo internet leh si aad u isticmaasho app-ka fudud ee Rug Agent. Looba baahna qalab gaar ah.',
+        },
+        {
+          question: 'Immisa boos ayaa loo baahan yahay?',
+          answer:
+            'Waxaad u baahan tahay meel yar oo ammaan ah oo aad ku kaydiso dhowr xirmo. Waxay ahaan kartaa shelf ka dambeeya kaaga ama armaajo la qufuli karo.',
+        },
+        {
+          question: 'Sideen u helaa lacag-bixin?',
+          answer:
+            'Wada-hawlgalayaasha PUDO waxay kasbadaan komishan xirmo kasta oo ay si guul leh u maareeyaan—ha ahaato soo gal ama soo qaadis. Lacagaha si joogto ah oo otomaatig ah ayaa loo kala xallinayaa.',
+        },
+        {
+          question: 'Taageero noocee ah ayaan ka heli doonaa Posta Soomaaliya?',
+          answer:
+            'Lammaanayaasha aasaasiga ah waxay heli doonaan tababar buuxa oo app-ka ah, agabka sumadda rasmiga ah ee “RUG PUDO Partner” ee dukaankaaga, iyo khad taageero oo gooni ah su’aal kasta.',
+        },
+      ],
+    },
   },
   ar: {
     languageNames: {
@@ -810,8 +1139,13 @@ export const translations: Record<Language, TranslationContent> = {
     },
     nav: {
       home: 'الرئيسية',
+      track: 'تتبع',
       services: 'الخدمات',
-      poBox: 'صندوق بريد',
+      dropdown: {
+        receiving: 'استلام البريد والطرود',
+        poBox: 'تأجير صناديق البريد',
+        pudo: 'شبكة RUG PUDO',
+      },
       help: 'الدعم',
       about: 'من نحن',
     },
@@ -853,11 +1187,11 @@ export const translations: Record<Language, TranslationContent> = {
         'نعيد ربط الصومال بالعالم بعد 34 عاماً. نبني خدمة بريدية حديثة ورقمية بالكامل لعصر جديد.',
       quickLinksTitle: 'روابط سريعة',
       links: {
-        home: 'الرئيسية',
+        about: 'من نحن',
         services: 'الخدمات',
         poBox: 'صندوق بريد',
-        help: 'الدعم',
-        about: 'من نحن',
+        pudo: 'شبكة RUG PUDO',
+        help: 'مركز المساعدة',
       },
       contactTitle: 'تواصل معنا',
       contactLines: ['المكتب البريدي العام (GPO)', 'شارع جمهورية، حي بونطير', 'مقديشو، الصومال'],
@@ -865,6 +1199,10 @@ export const translations: Record<Language, TranslationContent> = {
       emailValue: 'posta@moct.gov.so',
       phoneLabel: 'الهاتف',
       phoneValue: '252-611003239',
+      stayConnectedTitle: 'ابق على اتصال',
+      stayConnectedBody: 'تابعونا على وسائل التواصل الاجتماعي للحصول على آخر الأخبار والتحديثات.',
+      privacy: 'سياسة الخصوصية',
+      terms: 'شروط الخدمة',
       rights: 'المؤسسة البريدية الصومالية. جميع الحقوق محفوظة.',
     },
     serviceSidebar: {
@@ -1100,6 +1438,118 @@ export const translations: Record<Language, TranslationContent> = {
           { value: '1', label: 'IMPC نشط', description: 'تمت استعادة الاتصال الدولي الكامل.' },
         ],
       },
+    },
+    poBoxApplication: {
+      heroTitle: 'احصل على صندوق البريد الرسمي الخاص بك',
+      heroSubtitle:
+        'انضم إلى مئات الأفراد والشركات الذين يثقون في البريد الصومالي للحصول على عنوان بريدي آمن وخاص ودائم.',
+      stepOneTitle: 'الخطوة 1: سجّل بياناتك',
+      planOptions: {
+        individualLabel: 'فردي',
+        individualPrice: '$24',
+        businessLabel: 'أعمال',
+        businessPrice: '$30',
+        priceSuffix: '/سنة',
+      },
+      formFields: {
+        name: 'الاسم الكامل',
+        email: 'عنوان البريد الإلكتروني',
+        phone: 'رقم الهاتف',
+        whatsapp: 'رقم الواتساب (إذا كان مختلفاً)',
+      },
+      submitLabel: 'قدّم الطلب',
+      submittingLabel: 'جارٍ التقديم...',
+      missingFieldsMessage: 'يرجى ملء جميع الحقول المطلوبة.',
+      successMessage:
+        'شكراً لك! تم استلام طلبك. يرجى المتابعة إلى الخطوة 2 لإكمال الدفعة.',
+      stepTwoTitle: 'الخطوة 2: أرسل الدفعة',
+      stepTwoBody: 'بعد تقديم طلبك، يُرجى إرسال المبلغ الصحيح عبر EVC Plus.',
+      evcLabel: 'رقم EVC Plus',
+      evcNumber: '611-69-69-89',
+      paymentNote:
+        'للتأكيد بشكل أسرع، يُرجى إرسال الدفعة خلال ساعات عملنا (السبت-الأربعاء 8:30-4:30، الخميس 8:30-2:00).',
+      stepThreeTitle: 'الخطوة 3: استلم شهادتك',
+      stepThreeBody:
+        'بمجرد تأكيد دفعتك، سيصدر فريقنا شهادتك الإلكترونية لصندوق البريد ويرسلها إليك عبر البريد الإلكتروني و/أو الواتساب خلال يوم عمل واحد.',
+      testimonialsTitle: 'موثوق به من قبل المؤسسات الرائدة في الصومال',
+      testimonials: [
+        {
+          quote:
+            'باستخدام خدمة صندوق البريد من البريد الصومالي أصبح بريد شركتنا أكثر انسياباً. فهو يمنحنا عنواناً رسمياً آمناً لا غنى عنه لعملياتنا الوطنية ومراسلاتنا الرسمية.',
+          author: 'هرمود للاتصالات',
+          role: 'حامل صندوق بريد رسمي',
+          image: '/images/logos/hormuud-logo.png',
+        },
+        {
+          quote:
+            'يُعد نظام صندوق البريد ضرورياً للمراسلات الآمنة التي تتطلبها المؤسسات المالية. يقدم البريد الصومالي خدمة موثوقة تلبي معاييرنا المتعلقة بالأمن والاحترافية.',
+          author: 'البنك المركزي الصومالي',
+          role: 'حامل صندوق بريد رسمي',
+          image: '/images/logos/central-bank-logo.png',
+        },
+      ],
+    },
+    pudo: {
+      heroTitle: 'نقدّم لكم شبكة RUG PUDO',
+      heroSubtitle:
+        'مستقبل الخدمات اللوجستية الصومالية محلي. نحن نبني شبكة وطنية من الشركات المحلية الموثوقة لتكون نقاطاً بريدية رسمية، فتقترب الخدمات من كل مجتمع.',
+      ecosystemTitle: 'نظام بيئي سلس',
+      ecosystemSubtitle: 'نربط الأشخاص والشركاء وPosta.so في ثلاث خطوات بسيطة.',
+      ecosystemCards: [
+        {
+          title: '1. من أجل الشعب الصومالي',
+          description:
+            'نزّل التطبيق، واختر متجرك المحلي كعنوان لك، وتلقَّ الإشعارات برمز استلام آمن فور وصول طردك.',
+        },
+        {
+          title: '2. للشركات المحلية',
+          description:
+            'استخدم تطبيقنا البسيط لمسح الطرود الواردة وإخطار العملاء تلقائياً. تحقّق من رموز الاستلام لضمان التسليم الآمن واكسب دخلاً إضافياً.',
+        },
+        {
+          title: '3. للبريد الصومالي',
+          description:
+            'يستخدم موظفونا لوحة تحكم مركزية لتوجيه البريد الدولي رقمياً إلى نقطة PUDO المحلية الصحيحة، مما يخلق شبكة وطنية فعّالة وخالية من الأخطاء.',
+        },
+      ],
+      interestTitle: 'كن شريكاً مؤسساً',
+      interestSubtitle:
+        'كن من أوائل المنضمين إلى شبكة البريد الجديدة في الصومال. من خلال تسجيل اهتمامك اليوم ستحصل على أولوية المراجعة وتساعد في تشكيل مستقبل الخدمات اللوجستية في مجتمعك.',
+      form: {
+        businessName: 'اسم العمل',
+        ownerName: 'اسمك الكامل',
+        phone: 'هاتف التواصل',
+        location: 'الموقع / الحي',
+        submitLabel: 'سجّل اهتمامي',
+        submittingLabel: 'جارٍ التقديم...',
+        missingFields: 'يرجى ملء جميع الحقول.',
+        successTitle: 'شكراً لك على التسجيل!',
+        successBody: 'أنت الآن ضمن قائمة أولوياتنا للإطلاق الرسمي.',
+        errorMessage: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+      },
+      faqTitle: 'أسئلة قد تهمك',
+      faqs: [
+        {
+          question: 'ما المعدات التي أحتاجها لأصبح نقطة PUDO؟',
+          answer:
+            'كل ما تحتاجه هو هاتف ذكي متصل بالإنترنت لتشغيل تطبيق Rug Agent البسيط. لا حاجة لأي أجهزة إضافية.',
+        },
+        {
+          question: 'كم المساحة المطلوبة؟',
+          answer:
+            'تحتاج فقط إلى مساحة صغيرة وآمنة لتخزين بعض الطرود، مثل رف خلف طاولتك أو خزانة قابلة للقفل.',
+        },
+        {
+          question: 'كيف أتلقى دفعاتي؟',
+          answer:
+            'يحصل شركاء PUDO على عمولة عن كل طرد ينجحون في معالجته، سواء عند المسح الوارد أو التسليم الصادر، ويتم تسوية المدفوعات بانتظام وبشكل آلي.',
+        },
+        {
+          question: 'ما نوع الدعم الذي سأحصل عليه من البريد الصومالي؟',
+          answer:
+            'سيحصل الشركاء المؤسسون على تدريب كامل على التطبيق، ومواد علامة “RUG PUDO Partner” الرسمية لمتاجركم، إضافة إلى خط دعم مخصص لأي استفسارات.',
+        },
+      ],
     },
   },
 };

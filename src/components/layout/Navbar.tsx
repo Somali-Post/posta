@@ -1,99 +1,166 @@
-'use client';
+"use client";
 
 // src/components/layout/Navbar.tsx
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Language } from '@/lib/translations';
+import { usePathname } from 'next/navigation';
 import { useLanguage, useTranslations } from '@/context/LanguageContext';
+import type { Language } from '@/lib/translations';
 
-const languageOptions: { code: Language; short: string }[] = [
-  { code: 'so', short: 'SO' },
-  { code: 'en', short: 'EN' },
-  { code: 'ar', short: 'AR' },
-];
+const languageOrder: Language[] = ['so', 'en', 'ar'];
 
 export const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const pathname = usePathname();
   const translations = useTranslations();
   const { language, setLanguage } = useLanguage();
+
+  const serviceLinks = [
+    { href: '/services/receiving', label: translations.nav.dropdown.receiving },
+    { href: '/services/po-box', label: translations.nav.dropdown.poBox },
+    { href: '/pudo', label: translations.nav.dropdown.pudo },
+  ];
+
+  const primaryLinks = [
+    { href: '/', label: translations.nav.home },
+    { href: '/track', label: translations.nav.track },
+    { href: '/help', label: translations.nav.help },
+    { href: '/about', label: translations.nav.about },
+  ];
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => {
+    setIsMenuOpen(false);
+    setIsServicesOpen(false);
+  }, [pathname]);
+
+  const renderPrimaryLinks = (links: typeof primaryLinks) =>
+    links.map((link) => (
+      <Link key={link.href} href={link.href} className="text-base font-medium text-dark-text hover:text-brand-dark-blue">
+        {link.label}
+      </Link>
+    ));
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-        {/* Logo */}
         <Link href="/" className="flex items-center gap-3">
           <div className="bg-white rounded-full p-1 h-16 w-16 flex items-center justify-center">
-            <Image
-              src="/images/somali-post-logo.png"
-              alt="Somali Post Logo"
-              width={60}
-              height={60}
-              quality={100}
-            />
+            <Image src="/images/somali-post-logo.png" alt="Somali Post Logo" width={60} height={60} quality={100} />
           </div>
-          <span className="text-xl font-bold text-somali-blue hidden sm:block">
-            Posta.so
-          </span>
+          <span className="text-xl font-bold text-brand-dark-blue hidden sm:block">Posta.so</span>
         </Link>
 
-        {/* Navigation Links */}
-        <nav className="hidden md:flex items-center gap-6 text-base font-medium text-dark-text">
-          <Link href="/" className="hover:text-somali-blue transition-colors duration-300">
-            Home
-          </Link>
-          <Link href="/track" className="hover:text-somali-blue transition-colors duration-300">
-            Track
-          </Link>
-          <div className="relative group">
-            <button
-              type="button"
-              className="flex items-center gap-2 hover:text-somali-blue transition-colors duration-300"
-            >
-              Services <span className="text-sm">▼</span>
+        <nav className="hidden lg:flex items-center gap-6">
+          {renderPrimaryLinks(primaryLinks.slice(0, 2))}
+
+          <div
+            className="relative"
+            onMouseEnter={() => setIsServicesOpen(true)}
+            onMouseLeave={() => setIsServicesOpen(false)}
+          >
+            <button className="text-base font-medium text-dark-text hover:text-brand-dark-blue flex items-center gap-1">
+              {translations.nav.services}
+              <svg
+                className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
-            <div className="absolute left-0 mt-3 w-60 rounded-2xl border border-slate-100 bg-white p-2 shadow-2xl opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200">
-              <Link
-                href="/services/receiving"
-                className="block rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-somali-blue"
-              >
-                Receiving Mail &amp; Parcels
-              </Link>
-              <Link
-                href="/services/po-box"
-                className="block rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-somali-blue"
-              >
-                P.O. Box Rentals
-              </Link>
-              <Link
-                href="/pudo"
-                className="block rounded-xl px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 hover:text-somali-blue"
-              >
-                RUG PUDO Network
-              </Link>
-            </div>
+            {isServicesOpen && (
+              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2">
+                {serviceLinks.map((service) => (
+                  <Link key={service.href} href={service.href} className="block px-4 py-2 text-dark-text hover:bg-light-gray">
+                    {service.label}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
-          <Link href="/help" className="hover:text-somali-blue transition-colors duration-300">
-            Help
-          </Link>
-          <Link href="/about" className="hover:text-somali-blue transition-colors duration-300">
-            About Us
-          </Link>
+
+          {renderPrimaryLinks(primaryLinks.slice(2))}
         </nav>
 
-        {/* Language Switcher */}
-        <div className="flex items-center gap-3 text-sm font-medium">
-          {languageOptions.map(({ code, short }) => (
-            <button
-              key={code}
-              type="button"
-              className={`transition-colors ${language === code ? 'text-dark-text font-bold' : 'text-gray-500 hover:text-dark-text'}`}
-              onClick={() => setLanguage(code)}
-              aria-label={translations.languageNames[code]}
-            >
-              {short}
-            </button>
-          ))}
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-4 text-sm font-medium">
+            {languageOrder.map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setLanguage(code)}
+                className={`uppercase transition-colors ${
+                  language === code ? 'text-dark-text font-bold' : 'text-gray-500 hover:text-dark-text'
+                }`}
+                aria-label={translations.languageNames[code]}
+                aria-pressed={language === code}
+              >
+                {code}
+              </button>
+            ))}
+          </div>
+          <button
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="lg:hidden p-2"
+            aria-label="Toggle navigation"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16m-7 6h7'}
+              />
+            </svg>
+          </button>
         </div>
       </div>
+
+      {isMenuOpen && (
+        <div className="lg:hidden bg-white border-t border-border-gray">
+          <nav className="container mx-auto px-4 pt-2 pb-4 flex flex-col space-y-1">
+            {primaryLinks.slice(0, 2).map((link) => (
+              <Link key={link.href} href={link.href} className="py-2 text-lg font-medium text-dark-text hover:text-brand-dark-blue">
+                {link.label}
+              </Link>
+            ))}
+            {serviceLinks.map((service) => (
+              <Link
+                key={service.href}
+                href={service.href}
+                className="py-2 pl-4 text-md font-medium text-gray-600 hover:text-brand-dark-blue"
+              >
+                - {service.label}
+              </Link>
+            ))}
+            {primaryLinks.slice(2).map((link) => (
+              <Link key={link.href} href={link.href} className="py-2 text-lg font-medium text-dark-text hover:text-brand-dark-blue">
+                {link.label}
+              </Link>
+            ))}
+            <div className="flex gap-3 pt-4">
+              {languageOrder.map((code) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => setLanguage(code)}
+                  className={`uppercase flex-1 border rounded-md py-2 ${
+                    language === code ? 'border-brand-dark-blue text-brand-dark-blue font-semibold' : 'border-border-gray text-gray-600'
+                  }`}
+                  aria-label={translations.languageNames[code]}
+                  aria-pressed={language === code}
+                >
+                  {code}
+                </button>
+              ))}
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };
