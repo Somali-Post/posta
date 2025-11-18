@@ -8,7 +8,7 @@ interface CertificateEmailProps {
   serialNumber: string;
 }
 
-export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
+export const CertificateEmailSomali: React.FC<Readonly<CertificateEmailProps>> = ({
   name,
   poBoxNumber,
   expiryDate,
@@ -61,14 +61,26 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
           </div>
         </header>
         <div style={{ textAlign: 'center', margin: '60px 0' }}>
-          <p style={{ margin: 0, fontSize: '14px', textTransform: 'uppercase', color: '#555' }}>Serial Number: {serialNumber}</p>
+          <p style={{ margin: 0, fontSize: '14px', textTransform: 'uppercase', color: '#555' }}>
+            Nambarka Taxanaha: {serialNumber}
+          </p>
           <h2 style={{ margin: '10px 0', fontSize: '36px', color: '#0D47A1' }}>Shahaadada Ijaarka Sanduuqa Boostada</h2>
-          <p style={{ margin: 0, fontSize: '24px', color: '#333' }}>(P.O. Box Rental Certificate)</p>
+          <p style={{ margin: 0, fontSize: '24px', color: '#333' }}>(Somali Post P.O. Box Rental Certificate)</p>
         </div>
         <div style={{ fontSize: '18px', lineHeight: '1.8' }}>
-          <p>This is to certify that</p>
-          <p style={{ fontSize: '28px', fontWeight: 'bold', color: '#0D47A1', textAlign: 'center', margin: '20px 0' }}>{name}</p>
-          <p>is authorized to rent the Somali Government P.O. Box with the following details:</p>
+          <p>Waxaa lagu shahaadeynayaa in</p>
+          <p
+            style={{
+              fontSize: '28px',
+              fontWeight: 'bold',
+              color: '#0D47A1',
+              textAlign: 'center',
+              margin: '20px 0',
+            }}
+          >
+            {name}
+          </p>
+          <p>loo oggolaaday inuu kireysto Sanduuqa Boostada Dowladda Soomaaliya oo leh tafaasiisha soo socota:</p>
           <div
             style={{
               margin: '40px 0',
@@ -79,12 +91,12 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
             }}
           >
             <p style={{ fontSize: '20px' }}>
-              P.O. Box Number: <strong style={{ fontSize: '32px', color: '#0D47A1' }}>{poBoxNumber}</strong>
+              Nambarka Sanduuqa: <strong style={{ fontSize: '32px', color: '#0D47A1' }}>{poBoxNumber}</strong>
             </p>
-            <p style={{ fontSize: '16px', color: '#555' }}>Location: Hodan, Muqdisho-Somalia</p>
+            <p style={{ fontSize: '16px', color: '#555' }}>Goobta: Degmada Hodan, Muqdisho - Soomaaliya</p>
           </div>
           <p>
-            This certificate is valid until: <strong>{expiryDate}</strong>
+            Shahaadadani waxay shaqaynaysaa ilaa: <strong>{expiryDate}</strong>
           </p>
         </div>
         <footer

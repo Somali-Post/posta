@@ -8,7 +8,7 @@ interface CertificateEmailProps {
   serialNumber: string;
 }
 
-export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
+export const CertificateEmailArabic: React.FC<Readonly<CertificateEmailProps>> = ({
   name,
   poBoxNumber,
   expiryDate,
@@ -16,6 +16,7 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
 }) => (
   <div style={{ width: '100%', backgroundColor: '#f0f2f5', padding: '40px 0' }}>
     <div
+      dir="rtl"
       style={{
         width: '210mm',
         height: '297mm',
@@ -25,6 +26,7 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
         position: 'relative',
         border: '10px solid #0D47A1',
         padding: '40px',
+        fontFamily: 'Tahoma, Arial, sans-serif',
       }}
     >
       <div
@@ -37,7 +39,7 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
           zIndex: 0,
         }}
       >
-        <img src="https://posta.so/images/somali-post-logo.png" alt="Watermark" width="400" />
+        <img src="https://posta.so/images/somali-post-logo.png" alt="علامة مائية" width="400" />
       </div>
       <div style={{ position: 'relative', zIndex: 1 }}>
         <header
@@ -50,25 +52,37 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
           }}
         >
           <div>
-            <img src="https://posta.so/images/ministry-logo.png" alt="Ministry Logo" width="100" />
+            <img src="https://posta.so/images/ministry-logo.png" alt="شعار الوزارة" width="100" />
           </div>
           <div style={{ textAlign: 'center', color: '#0D47A1' }}>
-            <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold' }}>JAMHUURIYADDA FEDERAALKA SOOMAALIYA</h1>
-            <p style={{ margin: 0, fontSize: '16px' }}>WASAARADDA ISGAARSIINTA & TEKNOLOJIYADA</p>
+            <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 'bold' }}>جمهورية الصومال الفيدرالية</h1>
+            <p style={{ margin: 0, fontSize: '16px' }}>وزارة الإتصالات والتكنولوجيا</p>
           </div>
           <div>
-            <img src="https://posta.so/images/somali-post-logo.png" alt="Somali Post Logo" width="100" />
+            <img src="https://posta.so/images/somali-post-logo.png" alt="شعار البريد الصومالي" width="100" />
           </div>
         </header>
         <div style={{ textAlign: 'center', margin: '60px 0' }}>
-          <p style={{ margin: 0, fontSize: '14px', textTransform: 'uppercase', color: '#555' }}>Serial Number: {serialNumber}</p>
-          <h2 style={{ margin: '10px 0', fontSize: '36px', color: '#0D47A1' }}>Shahaadada Ijaarka Sanduuqa Boostada</h2>
-          <p style={{ margin: 0, fontSize: '24px', color: '#333' }}>(P.O. Box Rental Certificate)</p>
+          <p style={{ margin: 0, fontSize: '14px', textTransform: 'uppercase', color: '#555' }}>
+            رقم الشهادة: {serialNumber}
+          </p>
+          <h2 style={{ margin: '10px 0', fontSize: '36px', color: '#0D47A1' }}>شهادة تأجير صندوق بريد</h2>
+          <p style={{ margin: 0, fontSize: '24px', color: '#333' }}>شهادة رسمية لصندوق بريد البريد الصومالي</p>
         </div>
         <div style={{ fontSize: '18px', lineHeight: '1.8' }}>
-          <p>This is to certify that</p>
-          <p style={{ fontSize: '28px', fontWeight: 'bold', color: '#0D47A1', textAlign: 'center', margin: '20px 0' }}>{name}</p>
-          <p>is authorized to rent the Somali Government P.O. Box with the following details:</p>
+          <p>تشهد هذه الوثيقة بأن</p>
+          <p
+            style={{
+              fontSize: '28px',
+              fontWeight: 'bold',
+              color: '#0D47A1',
+              textAlign: 'center',
+              margin: '20px 0',
+            }}
+          >
+            {name}
+          </p>
+          <p>مخول باستئجار صندوق البريد الحكومي الصومالي وفق التفاصيل التالية:</p>
           <div
             style={{
               margin: '40px 0',
@@ -79,12 +93,12 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
             }}
           >
             <p style={{ fontSize: '20px' }}>
-              P.O. Box Number: <strong style={{ fontSize: '32px', color: '#0D47A1' }}>{poBoxNumber}</strong>
+              رقم صندوق البريد: <strong style={{ fontSize: '32px', color: '#0D47A1' }}>{poBoxNumber}</strong>
             </p>
-            <p style={{ fontSize: '16px', color: '#555' }}>Location: Hodan, Muqdisho-Somalia</p>
+            <p style={{ fontSize: '16px', color: '#555' }}>الموقع: هدّان، مقديشو - الصومال</p>
           </div>
           <p>
-            This certificate is valid until: <strong>{expiryDate}</strong>
+            تظل هذه الشهادة سارية حتى: <strong>{expiryDate}</strong>
           </p>
         </div>
         <footer
@@ -100,8 +114,8 @@ export const CertificateEmail: React.FC<Readonly<CertificateEmailProps>> = ({
         >
           <div>
             <EmailSignature />
-            <p style={{ margin: '0', borderTop: '1px solid #333', paddingTop: '5px', fontWeight: 'bold' }}>Saciid Axmed Xassan</p>
-            <p style={{ margin: '0', fontSize: '14px', color: '#555' }}>Agaasimaha Boostada</p>
+            <p style={{ margin: '0', borderTop: '1px solid #333', paddingTop: '5px', fontWeight: 'bold' }}>سعيد أحمد حسن</p>
+            <p style={{ margin: '0', fontSize: '14px', color: '#555' }}>مدير البريد</p>
           </div>
           <EmailSeal />
         </footer>

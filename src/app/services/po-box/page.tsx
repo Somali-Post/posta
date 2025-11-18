@@ -7,10 +7,11 @@ import { ServicePageHero } from '@/components/ServicePageHero';
 import Image from 'next/image';
 import PhoneInput from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { useTranslations } from '@/context/LanguageContext';
+import { useLanguage, useTranslations } from '@/context/LanguageContext';
 
 const POBoxPage = () => {
   const { poBoxApplication } = useTranslations();
+  const { language } = useLanguage();
   const [boxType, setBoxType] = useState<'Individual' | 'Business'>('Individual');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -49,6 +50,7 @@ const POBoxPage = () => {
       formData.append('phone', phone);
       if (whatsapp) formData.append('whatsapp', whatsapp);
       formData.append('boxType', boxType);
+      formData.append('language', language);
       formData.append('idFile', idFile);
       formData.append('photoFile', photoFile);
 
@@ -129,6 +131,7 @@ const POBoxPage = () => {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-6 mt-8">
+                <input type="hidden" name="language" value={language} />
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Full Name
