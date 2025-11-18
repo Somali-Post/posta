@@ -8,9 +8,9 @@ import { LinkedInIcon } from '../icons/LinkedInIcon';
 import { useTranslations } from '@/context/LanguageContext';
 
 const socialLinks = [
-  { href: '#', Icon: TwitterIcon },
-  { href: '#', Icon: FacebookIcon },
-  { href: '#', Icon: LinkedInIcon },
+  { key: 'twitter', href: '#', Icon: TwitterIcon },
+  { key: 'facebook', href: '#', Icon: FacebookIcon },
+  { key: 'linkedin', href: '#', Icon: LinkedInIcon },
 ];
 
 export const Footer = () => {
@@ -73,8 +73,8 @@ export const Footer = () => {
             <h3 className="font-bold text-lg mb-4">{footer.stayConnectedTitle}</h3>
             <p className="text-gray-400 mb-4">{footer.stayConnectedBody}</p>
             <div className="flex items-center justify-center md:justify-start gap-4">
-              {socialLinks.map(({ href, Icon }) => (
-                <a key={href} href={href} className="text-gray-400 hover:text-white">
+              {socialLinks.map(({ key, href, Icon }) => (
+                <a key={key} href={href} className="text-gray-400 hover:text-white">
                   <Icon className="w-6 h-6" />
                 </a>
               ))}
@@ -88,10 +88,10 @@ export const Footer = () => {
             &copy; {currentYear} {footer.rights}
           </p>
           <div className="flex gap-4 mt-4 sm:mt-0">
-            <Link href="#" className="hover:text-white">
+            <Link key="footer-privacy" href="#" className="hover:text-white">
               {footer.privacy}
             </Link>
-            <Link href="#" className="hover:text-white">
+            <Link key="footer-terms" href="#" className="hover:text-white">
               {footer.terms}
             </Link>
           </div>

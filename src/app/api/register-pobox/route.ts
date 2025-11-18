@@ -1,65 +1,77 @@
-// src/app/api/register-pobox/route.ts
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_KEY!
+);
 
 export async function POST(request: Request) {
-  const { name, email, phone, whatsapp, boxType } = await request.json();
-
-  if (!name || !email || !phone || !boxType) {
-    return NextResponse.json({ error: 'Missing required fields.' }, { status: 400 });
-  }
-
-  // --- THIS IS THE NEW PART ---
-  // We create the secure link for the admin to click
-  const adminSecretKey = process.env.ADMIN_SECRET_KEY;
-  const confirmationUrl = new URL(`${request.headers.get('origin')}/admin`);
-  confirmationUrl.searchParams.set('name', name);
-  confirmationUrl.searchParams.set('email', email);
-  confirmationUrl.searchParams.set('phone', phone);
-  confirmationUrl.searchParams.set('boxType', boxType);
-  confirmationUrl.searchParams.set('secret', adminSecretKey || '');
-  // --- END OF NEW PART ---
-
-  const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_SERVER_HOST,
-    port: Number(process.env.EMAIL_SERVER_PORT),
-    secure: Number(process.env.EMAIL_SERVER_PORT) === 465,
-    auth: {
-      user: process.env.EMAIL_SERVER_USER,
-      pass: process.env.EMAIL_SERVER_PASSWORD,
-    },
-  });
+  const formData = await request.formData();
+  
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const phone = formData.get('phone') as string;
+  const whatsapp = formData.get('whatsapp') as string | null;
+  const boxType = formData.get('boxType') as string;
+  const companyName = formData.get('companyName') as string | null;
+  const licenseNumber = formData.get('licenseNumber') as string | null;
+  
+  const idFile = formData.get('idFile') as File;
+  const photoFile = formData.get('photoFile') as File;
+  const licenseFile = formData.get('licenseFile') as File | null;
 
   try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_TO,
-      subject: `New P.O. Box Application: ${name}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; line-height: 1.6;">
-          <h2 style="color: #0D47A1;">New P.O. Box Application Received</h2>
-          <p>A new application has been submitted through the Posta.so website.</p>
-          <hr>
-          <h3>Applicant Details:</h3>
-          <ul>
-            <li><strong>Full Name:</strong> ${name}</li>
-            <li><strong>Email:</strong> ${email}</li>
-            <li><strong>Phone Number:</strong> ${phone}</li>
-            <li><strong>WhatsApp Number:</strong> ${whatsapp || 'Same as phone'}</li>
-            <li><strong>Box Type:</strong> ${boxType}</li>
-          </ul>
-          <hr>
-          <p style="margin-top: 20px;"><strong>Action Required:</strong> Once you have confirmed the EVC Plus payment, click the link below to issue the official e-certificate:</p>
-          <a href="${confirmationUrl.toString()}" style="display: inline-block; padding: 10px 20px; background-color: #0D47A1; color: #fff; text-decoration: none; border-radius: 5px;">
-            Confirm Payment & Send Certificate
-          </a>
-        </div>
-      `,
-    });
+    const { data: latestBox, error: latestBoxError } = await supabaseAdmin
+      .from('customers')
+      .select('po_box_number')
+      .order('po_box_number', { ascending: false })
+      .limit(1)
+      .single();
+    if (latestBoxError && latestBoxError.code !== 'PGRST116') throw latestBoxError;
+    const newPoBoxNumber = latestBox ? latestBox.po_box_number + 1 : 635;
 
-    return NextResponse.json({ message: 'Application submitted successfully!' });
-  } catch (error) {
-    console.error(error);
-    return NextResponse.json({ error: 'Failed to send application.' }, { status: 500 });
+    const uploadFile = async (bucket: string, file: File, path: string) => {
+      const { error } = await supabaseAdmin.storage
+        .from(bucket)
+        .upload(path, file, { upsert: true }); 
+      if (error) throw error;
+    };
+
+    const idFilePath = `${newPoBoxNumber}/${idFile.name.replace(/\s/g, '_')}`;
+    await uploadFile('id-documents', idFile, idFilePath);
+
+    const photoFilePath = `${newPoBoxNumber}/${photoFile.name.replace(/\s/g, '_')}`;
+    await uploadFile('photos', photoFile, photoFilePath);
+    
+    let licenseFilePath: string | null = null;
+    if (licenseFile) {
+        licenseFilePath = `${newPoBoxNumber}/${licenseFile.name.replace(/\s/g, '_')}`;
+        await uploadFile('license-documents', licenseFile, licenseFilePath);
+    }
+    
+    // --- THE FIX IS HERE ---
+    // We are now explicitly setting the payment_status for the new record.
+    const { error: insertError } = await supabaseAdmin.from('customers').insert({
+      name, email, phone, whatsapp,
+      box_type: boxType,
+      po_box_number: newPoBoxNumber,
+      company_name: companyName,
+      license_number: licenseNumber,
+      id_document_url: idFilePath,
+      photo_url: photoFilePath,
+      license_document_url: licenseFilePath,
+      payment_status: 'pending', // Add this line
+    });
+    // ----------------------
+
+    if (insertError) throw insertError;
+    
+    // Optional: Nodemailer logic here
+
+    return NextResponse.json({ message: 'Success!' });
+  } catch (error: any) {
+    console.error('API Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
