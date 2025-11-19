@@ -12,9 +12,11 @@
     "@react-email/components": "^1.0.1",
     "@react-email/render": "^2.0.0",
     "@supabase/supabase-js": "^2.81.1",
+    "@types/react-datepicker": "^6.2.0",
     "next": "16.0.1",
     "nodemailer": "^7.0.10",
     "react": "19.2.0",
+    "react-datepicker": "^8.9.0",
     "react-dom": "19.2.0",
     "react-email": "^5.0.4",
     "react-phone-number-input": "^3.4.13"
