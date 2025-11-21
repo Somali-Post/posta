@@ -1,4 +1,6 @@
 /* src/app/globals.css */
+@import 'react-datepicker/dist/react-datepicker.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -57,4 +59,18 @@ html {
 .phone-input-container .PhoneInputInput:focus {
   outline: none;
   box-shadow: none;
+}
+
+/* Custom styles for the date picker */
+.react-datepicker {
+  font-size: 0.8rem;
+}
+
+.react-datepicker__header {
+  background-color: #0D47A1;
+}
+
+.react-datepicker__current-month,
+.react-datepicker__day-name {
+  color: white;
 }

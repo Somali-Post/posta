@@ -38,8 +38,10 @@ interface Testimonial {
 
 interface PoBoxPlanOptions {
   individualLabel: string;
+  individualDescription: string;
   individualPrice: string;
   businessLabel: string;
+  businessDescription: string;
   businessPrice: string;
   priceSuffix: string;
 }
@@ -49,25 +51,94 @@ interface PoBoxFormFields {
   email: string;
   phone: string;
   whatsapp: string;
+  location: string;
+  dateOfBirth: string;
+  occupation: string;
+  niraIdNumber: string;
+  passportNumber: string;
+  identityHint: string;
+}
+
+interface PoBoxBusinessFields {
+  companyName: string;
+  licenseNumber: string;
+  licenseUpload: string;
+  licenseHint: string;
+}
+
+interface PoBoxUploads {
+  idDocument: string;
+  idDocumentHint: string;
+  photoUpload: string;
+}
+
+interface PoBoxTermsAgreement {
+  prefix: string;
+  linkLabel: string;
+  suffix: string;
+}
+
+interface PoBoxValidationMessages {
+  missingFields: string;
+  missingIdentification: string;
+  missingOccupation: string;
+  missingBusiness: string;
+  unexpectedError: string;
+  successMessage: string;
+}
+
+interface PoBoxPaymentCardForm {
+  heading: string;
+  comingSoon: string;
+  cardNumber: string;
+  cardNumberPlaceholder: string;
+  expiry: string;
+  expiryPlaceholder: string;
+  cvc: string;
+  cvcPlaceholder: string;
+  billingTitle: string;
+  country: string;
+  countryPlaceholder: string;
+  addressLine1: string;
+  addressPlaceholder: string;
+  city: string;
+  cityPlaceholder: string;
+  postalCode: string;
+  postalPlaceholder: string;
+  submitLabel: string;
+}
+
+interface PoBoxPaymentContent {
+  title: string;
+  localHeading: string;
+  localBody: string;
+  ussdPrompt: string;
+  ussdFormat: string;
+  internationalHeading: string;
+  internationalBody: string;
+  cardForm: PoBoxPaymentCardForm;
+}
+
+interface PoBoxCertificateContent {
+  title: string;
+  body: string;
 }
 
 interface PoBoxApplicationContent {
   heroTitle: string;
   heroSubtitle: string;
   stepOneTitle: string;
+  stepOneDescription: string;
   planOptions: PoBoxPlanOptions;
   formFields: PoBoxFormFields;
+  businessFields: PoBoxBusinessFields;
+  uploads: PoBoxUploads;
   submitLabel: string;
   submittingLabel: string;
-  missingFieldsMessage: string;
-  successMessage: string;
-  stepTwoTitle: string;
-  stepTwoBody: string;
-  evcLabel: string;
-  evcNumber: string;
-  paymentNote: string;
-  stepThreeTitle: string;
-  stepThreeBody: string;
+  termsAgreement: PoBoxTermsAgreement;
+  validationMessages: PoBoxValidationMessages;
+  payment: PoBoxPaymentContent;
+  certificate: PoBoxCertificateContent;
   testimonialsTitle: string;
   testimonials: Testimonial[];
 }
@@ -279,6 +350,19 @@ export interface TranslationContent {
   };
   poBoxApplication: PoBoxApplicationContent;
   pudo: PudoContent;
+  termsModal: TermsModalContent;
+}
+
+interface TermsModalSection {
+  title: string;
+  body: string;
+}
+
+interface TermsModalContent {
+  title: string;
+  intro: string;
+  closeLabel: string;
+  sections: TermsModalSection[];
 }
 
 export const languageLocales: Record<Language, string> = {
@@ -602,10 +686,14 @@ export const translations: Record<Language, TranslationContent> = {
       heroSubtitle:
         'Join hundreds of individuals and businesses who trust Somali Post for a secure, private, and permanent mailing address.',
       stepOneTitle: 'Step 1: Register Your Details',
+      stepOneDescription:
+        'Provide accurate information so that we can quickly verify your identity and assign your official P.O. Box.',
       planOptions: {
         individualLabel: 'Individual',
+        individualDescription: 'For personal mailboxes',
         individualPrice: '$24',
         businessLabel: 'Business',
+        businessDescription: 'For companies & NGOs',
         businessPrice: '$30',
         priceSuffix: '/year',
       },
@@ -614,21 +702,74 @@ export const translations: Record<Language, TranslationContent> = {
         email: 'Email Address',
         phone: 'Phone Number',
         whatsapp: 'WhatsApp Number (if different)',
+        location: 'Location / District',
+        dateOfBirth: 'Date of Birth',
+        occupation: 'Occupation',
+        niraIdNumber: 'NIRA ID Number',
+        passportNumber: 'Passport Number (optional)',
+        identityHint: 'Please provide one of the following numbers.',
+      },
+      businessFields: {
+        companyName: 'Company Name',
+        licenseNumber: 'Business License Number',
+        licenseUpload: 'Upload Business License',
+        licenseHint: 'Attach a clear scan of your valid business license.',
+      },
+      uploads: {
+        idDocument: 'Upload ID Document',
+        idDocumentHint: 'Please upload a clear scan of the NIRA or Passport you provided above.',
+        photoUpload: 'Upload Passport-size Photo',
       },
       submitLabel: 'Submit Application',
       submittingLabel: 'Submitting...',
-      missingFieldsMessage: 'Please fill in all required fields.',
-      successMessage:
-        'Thank you! Your application has been received. Please proceed to Step 2 to complete your payment.',
-      stepTwoTitle: 'Step 2: Make Payment',
-      stepTwoBody: 'After submitting your application, please send the correct amount via EVC Plus.',
-      evcLabel: 'EVC Plus Number',
-      evcNumber: '611-69-69-89',
-      paymentNote:
-        'For faster verification, please send payment during our working hours (Sat-Wed 8:30-4:30, Thurs 8:30-2:00).',
-      stepThreeTitle: 'Step 3: Receive Your Certificate',
-      stepThreeBody:
-        'Once we confirm your payment, our team will issue your official P.O. Box e-certificate and send it to you via email and/or WhatsApp within one business day.',
+      termsAgreement: {
+        prefix: 'I declare that the information provided is correct and agree to the ',
+        linkLabel: 'P.O. Box rental terms and conditions',
+        suffix: '.',
+      },
+      validationMessages: {
+        missingFields: 'Please fill in all required fields.',
+        missingIdentification: 'Please provide either a NIRA ID or a Passport Number.',
+        missingOccupation: 'Please provide your occupation.',
+        missingBusiness: 'Please provide all business details and upload your license.',
+        unexpectedError: 'Unexpected error. Please try again.',
+        successMessage: 'Application successful! A confirmation has been emailed to {email}.',
+      },
+      payment: {
+        title: 'Step 2: Make Payment',
+        localHeading: 'Local Payment (EVC Plus)',
+        localBody:
+          'Dial the following USSD code, enter the amount ({amount}), and use "w.post" in the description/reason field.',
+        ussdPrompt: 'Dial and follow instructions:',
+        ussdFormat: '*799*31525688*{amount}#',
+        internationalHeading: 'International Payment (Card)',
+        internationalBody:
+          'For customers overseas, you can pay securely with your Visa or MasterCard. (This feature is coming soon).',
+        cardForm: {
+          heading: 'Pay with Card',
+          comingSoon: 'Online card payment is coming soon. For now, please use EVC Plus or contact us for assistance.',
+          cardNumber: 'Card Number',
+          cardNumberPlaceholder: '**** **** **** ****',
+          expiry: 'Expiry Date',
+          expiryPlaceholder: 'MM / YY',
+          cvc: 'CVC',
+          cvcPlaceholder: '***',
+          billingTitle: 'Billing Address',
+          country: 'Country',
+          countryPlaceholder: 'Country',
+          addressLine1: 'Address Line 1',
+          addressPlaceholder: 'Street address',
+          city: 'City',
+          cityPlaceholder: 'City',
+          postalCode: 'ZIP / Postal Code',
+          postalPlaceholder: 'Postal Code',
+          submitLabel: 'Pay Now',
+        },
+      },
+      certificate: {
+        title: 'Step 3: Receive Your Certificate',
+        body: 'Once we confirm your payment, our team will issue your official P.O. Box e-certificate and send it to you via email and/or WhatsApp within one business day.',
+      },
       testimonialsTitle: "Trusted By Somalia's Leading Institutions",
       testimonials: [
         {
@@ -709,7 +850,39 @@ export const translations: Record<Language, TranslationContent> = {
         },
       ],
     },
-  },  so: {
+    termsModal: {
+      title: 'P.O. Box Rental Terms & Conditions',
+      intro: 'By applying for a P.O. Box, you agree to the following terms:',
+      closeLabel: 'Close',
+      sections: [
+        {
+          title: '1. Declaration of Information',
+          body: 'You declare that all information provided in your application is true, correct, and complete. You accept full responsibility for any consequences arising from inaccurate information.',
+        },
+        {
+          title: '2. Service Period & Renewal',
+          body: 'The rental period is for one (1) year from the date of payment confirmation. To ensure uninterrupted service, you must renew your rental before the expiry date.',
+        },
+        {
+          title: '3. Non-Renewal and Suspension',
+          body: 'If payment is not received by the expiry date, your P.O. Box will be suspended. If the rental is not renewed within a grace period of ten (10) days following a notification, Somali Post reserves the right to repossess and reassign the P.O. Box.',
+        },
+        {
+          title: '4. Use of Service',
+          body: 'The P.O. Box is to be used for receiving legal mail and parcels only. The use of the P.O. Box for illegal, prohibited, or fraudulent activities is strictly forbidden and will result in immediate termination of service and notification to the relevant authorities.',
+        },
+        {
+          title: '5. Lost Keys',
+          body: 'In the event of a lost key, you are required to report it to the General Post Office immediately. You will be responsible for the full cost of a key replacement and lock change.',
+        },
+        {
+          title: '6. Data Privacy',
+          body: 'The Somali National Postal Service is committed to protecting your privacy. The personal information collected is used solely for the purpose of managing your P.O. Box rental, verification, and for sending official communications. Your data will not be shared with third parties except as required by law.',
+        },
+      ],
+    },
+  },
+  so: {
     languageNames: {
       en: 'Ingiriisi',
       so: 'Soomaali',
@@ -1023,10 +1196,14 @@ export const translations: Record<Language, TranslationContent> = {
       heroSubtitle:
         'Ku soo biir boqolaal qof iyo ganacsiyo ku kalsoon Posta Soomaaliya si ay u helaan ciwaan ammaan ah, gaar loo leeyahay, oo joogto ah.',
       stepOneTitle: 'Tallaabada 1: Diiwaangeli Faahfaahintaada',
+      stepOneDescription:
+        'Soo gudbi xog sax ah si aan si degdeg ah u xaqiijinno aqoonsigaaga una qoondeyno sanduuqaaga rasmiga ah.',
       planOptions: {
         individualLabel: 'Shakhsi',
+        individualDescription: 'Ku habboon boostada shakhsiyeed',
         individualPrice: '$24',
         businessLabel: 'Ganacsi',
+        businessDescription: 'Ku habboon shirkadaha iyo NGO-yada',
         businessPrice: '$30',
         priceSuffix: '/sanad',
       },
@@ -1035,22 +1212,75 @@ export const translations: Record<Language, TranslationContent> = {
         email: 'Cinwaanka Iimaylka',
         phone: 'Lambarka Taleefanka',
         whatsapp: 'Lambarka WhatsApp (haddii uu ka duwan yahay)',
+        location: 'Goobta / Degmada',
+        dateOfBirth: 'Taariikhda Dhalashada',
+        occupation: 'Shaqada',
+        niraIdNumber: 'Lambarka Aqoonsiga NIRA',
+        passportNumber: 'Lambarka Baasaboorka (ikhtiyaari)',
+        identityHint: 'Fadlan mid ka mid ah lambarradan kor ku xusan geli.',
+      },
+      businessFields: {
+        companyName: 'Magaca Shirkadda',
+        licenseNumber: 'Lambarka Ruqsadda Ganacsiga',
+        licenseUpload: 'Ku Xiro Nuqulka Ruqsadda Ganacsiga',
+        licenseHint: 'Ku lifaaq nuqul cad oo ruqsaddaada ansaxda ah.',
+      },
+      uploads: {
+        idDocument: 'Ku Xiro Dukumeentiga Aqoonsiga',
+        idDocumentHint: 'Fadlan geli nuqul muuqda oo ka mid ah NIRA ama Baasaboorka aad kor ku sheegtay.',
+        photoUpload: 'Ku Xiro Sawir cabbir Baasaboor',
       },
       submitLabel: 'Gudbi Codsiga',
       submittingLabel: 'Gudbinayaa...',
-      missingFieldsMessage: 'Fadlan buuxi dhammaan meelaha loo baahan yahay.',
-      successMessage:
-        'Waad ku mahadsan tahay! Codsigaaga waa nala helay. Fadlan u gudub Tallaabada 2 si aad u dhammaystirto lacag-bixinta.',
-      stepTwoTitle: 'Tallaabada 2: Bixi Lacagta',
-      stepTwoBody: 'Kadib markaad soo gudbiso codsiga, fadlan qaddarka saxda ah ku dir adeegga EVC Plus.',
-      evcLabel: 'Lambarka EVC Plus',
-      evcNumber: '611-69-69-89',
-      paymentNote:
-        'Si degdeg loogu xaqiijiyo, fadlan lacagta ku dir saacadaha shaqadeena (Sabti-Arbaco 8:30-4:30, Khamiis 8:30-2:00).',
-      stepThreeTitle: 'Tallaabada 3: Hel Shahaadadaada',
-      stepThreeBody:
-        'Markaan xaqiijino lacagtaada, waxaan kuu soo saar doonaa shahaadadaada elektaroonigga ah ee Sanduuqa P.O. waxaana kuu soo diri doonaa iimayl ama WhatsApp gudaheed hal maalin shaqo.',
-      testimonialsTitle: 'Waxaa Aamina Hay’adaha Hoggaanka Soomaaliya',
+      termsAgreement: {
+        prefix: 'Waxaan cadaynayaa in macluumaadka kor ku xusan uu sax yahay waxaanan oggolahay ',
+        linkLabel: 'shuruudaha kirada Sanduuqa P.O.',
+        suffix: '.',
+      },
+      validationMessages: {
+        missingFields: 'Fadlan buuxi dhammaan meelaha loo baahan yahay.',
+        missingIdentification: 'Fadlan soo gudbi Aqoonsiga NIRA ama Lambarka Baasaboorka.',
+        missingOccupation: 'Fadlan ku qor shaqadaada.',
+        missingBusiness: 'Fadlan buuxi faahfaahinta ganacsiga kana lifaaq ruqsaddaada.',
+        unexpectedError: 'Waxaa dhacay qalad lama filaan ah. Fadlan isku day mar kale.',
+        successMessage: 'Codsiga waa la helay! Xaqiijin ayaa laguugu soo diray {email}.',
+      },
+      payment: {
+        title: 'Tallaabada 2: Bixi Lacagta',
+        localHeading: 'Lacag Gudaha (EVC Plus)',
+        localBody: 'Wac koodhkan USSD-ga, geli qaddarka ({amount}), kadibna isticmaal "w.post" qaybta sababta lacag-bixinta.',
+        ussdPrompt: 'Wac oo raac tilmaamaha:',
+        ussdFormat: '*799*31525688*{amount}#',
+        internationalHeading: 'Lacag Dibadda (Kaar)',
+        internationalBody:
+          'Macaamiisha dibadda jooga waxay si nabad ah ugu bixin karaan kaarkooda Visa ama MasterCard. (Astaantan wali waxay ku jirtaa marxalad soo saarid).',
+        cardForm: {
+          heading: 'Bixi adigoo adeegsanaya Kaar',
+          comingSoon: 'Lacag-bixinta kaarka onlaynka ah weli way socotaa. Ilaa markaas fadlan adeegso EVC Plus ama nala soo xiriir.',
+          cardNumber: 'Lambarka Kaarka',
+          cardNumberPlaceholder: '**** **** **** ****',
+          expiry: 'Taariikhda Dhicitaanka',
+          expiryPlaceholder: 'MM / YY',
+          cvc: 'CVC',
+          cvcPlaceholder: '***',
+          billingTitle: 'Cinwaanka Bixinta',
+          country: 'Dal',
+          countryPlaceholder: 'Dal',
+          addressLine1: 'Cinwaanka 1aad',
+          addressPlaceholder: 'Cinwaanka waddada',
+          city: 'Magaalada',
+          cityPlaceholder: 'Magaalada',
+          postalCode: 'Koodhka Boostada',
+          postalPlaceholder: 'Koodhka Boostada',
+          submitLabel: 'Bixi Hadda',
+        },
+      },
+      certificate: {
+        title: 'Tallaabada 3: Hel Shahaadadaada',
+        body:
+          'Markaan xaqiijino lacagtaada, waxaan kuu soo saar doonaa shahaadadaada elektaroonigga ah ee Sanduuqa P.O. waxaana kuu soo diri doonaa iimayl ama WhatsApp gudaheed hal maalin shaqo.',
+      },
+      testimonialsTitle: 'Waxaa Aamina Hay\'adaha Hoggaanka Soomaaliya',
       testimonials: [
         {
           quote:
@@ -1061,7 +1291,7 @@ export const translations: Record<Language, TranslationContent> = {
         },
         {
           quote:
-            'Nidaamka Sanduuqa P.O. wuxuu muhiim u yahay waraaqaha ammaan ee ay u baahan yihiin hay’adaha maaliyadeed. Posta Soomaaliya waxay bixisaa adeeg lagu kalsoonaan karo oo buuxiya heerarkayaga amniga iyo xirfadda.',
+            'Nidaamka Sanduuqa P.O. wuxuu muhiim u yahay waraaqaha ammaan ee ay u baahan yihiin hay\'adaha maaliyadeed. Posta Soomaaliya waxay bixisaa adeeg lagu kalsoonaan karo oo buuxiya heerarkayaga amniga iyo xirfadda.',
           author: 'Bangiga Dhexe ee Soomaaliya',
           role: 'Haysta Sanduuqa P.O. ee Rasmiga ah',
           image: '/images/logos/central-bank-logo.png',
@@ -1130,6 +1360,38 @@ export const translations: Record<Language, TranslationContent> = {
         },
       ],
     },
+    termsModal: {
+      title: 'Shuruudaha iyo Xeerarka Kirada Sanduuqa P.O.',
+      intro: 'Markaad codsanayso Sanduuqa P.O., waxaad oggolaanaysaa shuruudahan soo socda:',
+      closeLabel: 'Xir',
+      sections: [
+        {
+          title: '1. Caddeynta Macluumaadka',
+          body: 'Waxaad cadaynaysaa in dhammaan macluumaadka aad ku bixisay codsiga uu sax yahay oo dhammaystiran. Waxaad mas\'uuliyad buuxda iska saartaa cawaaqibka ka dhasha xog khaldan.',
+        },
+        {
+          title: '2. Mudada Adeegga & Cusboonaysiinta',
+          body: 'Kiradu waxay socotaa hal (1) sano laga bilaabo taariikhda xaqiijinta lacag-bixinta. Si adeeggu uusan kuugu istaagin waa inaad cusboonaysiisaa ka hor waqtiga uu dhacayo.',
+        },
+        {
+          title: '3. Hakin iyo Joojinta Kirada',
+          body: 'Haddii lacagtu aanay iman waqtiga kama dambaysta ah, sanduuqaaga P.O. waa la hakinaa. Haddii aan dib loo cusboonaysiin 10 maalmood oo dheeri ah ka dib digniin, Posta Soomaaliya waxay xaq u leedahay inay dib u qaadato sanduuqa oo ay qof kale siisay.',
+        },
+        {
+          title: '4. Isticmaalka Adeegga',
+          body: 'Sanduuqa P.O. waxa keliya loogu talagalay helista boostada iyo xirmooyinka sharci ah. Isticmaalka sharci-darrada ah, dhaqaale xun ama khiyaano ah waa laga mamnuucay waxaana keeni doonta in adeegga si degdeg ah loo joojiyo laguna wargeliyo hay\'adaha dowliga ah.',
+        },
+        {
+          title: '5. Furayaasha Lumay',
+          body: 'Haddii furaha lumaan waa inaad isla markiiba la socodsiisaa Xarunta Guud ee Boostada. Waxaad qaadaysaa kharashka buuxa ee furaha iyo qufulka lagu beddelayo.',
+        },
+        {
+          title: '6. Qarsoodiga Xogta',
+          body: 'Wasaaradda Boostada ee Soomaaliya waxay ka go\'an tahay ilaalinta xogtaada. Macluumaadkaaga waxa loo isticmaalaa keliya maaraynta kirada, xaqiijinta, iyo dirista fariimaha rasmiga ah. Lama wadaagi doono dhinac saddexaad aan sharcigu ku qasbin.',
+        },
+      ],
+    },
+
   },
   ar: {
     languageNames: {
@@ -1440,51 +1702,108 @@ export const translations: Record<Language, TranslationContent> = {
       },
     },
     poBoxApplication: {
-      heroTitle: 'احصل على صندوق البريد الرسمي الخاص بك',
+      heroTitle: '???? ??? ????? ????? ??????',
       heroSubtitle:
-        'انضم إلى مئات الأفراد والشركات الذين يثقون في البريد الصومالي للحصول على عنوان بريدي آمن وخاص ودائم.',
-      stepOneTitle: 'الخطوة 1: سجّل بياناتك',
+        '???? ??? ???? ??????? ???????? ????? ????? ????? ??????? ?????? ??? ????? ??? ???? ?????.',
+      stepOneTitle: '?????? 1: ???? ???????',
+      stepOneDescription:
+        '???? ??????? ????? ??? ????? ?? ?????? ?????? ?? ????? ?????? ????? ?????? ?????? ??.',
       planOptions: {
-        individualLabel: 'فردي',
+        individualLabel: '?????',
+        individualDescription: '???????? ???????',
         individualPrice: '$24',
-        businessLabel: 'أعمال',
+        businessLabel: '?????',
+        businessDescription: '??????? ?????????',
         businessPrice: '$30',
-        priceSuffix: '/سنة',
+        priceSuffix: '/???',
       },
       formFields: {
-        name: 'الاسم الكامل',
-        email: 'عنوان البريد الإلكتروني',
-        phone: 'رقم الهاتف',
-        whatsapp: 'رقم الواتساب (إذا كان مختلفاً)',
+        name: '????? ??????',
+        email: '?????? ??????????',
+        phone: '??? ??????',
+        whatsapp: '??? ?????? (?? ????)',
+        location: '?????? / ????',
+        dateOfBirth: '????? ???????',
+        occupation: '??????',
+        niraIdNumber: '??? ???? NIRA',
+        passportNumber: '??? ???? ????? (???????)',
+        identityHint: '???? ????? ??? ??????? ????????? ?????.',
       },
-      submitLabel: 'قدّم الطلب',
-      submittingLabel: 'جارٍ التقديم...',
-      missingFieldsMessage: 'يرجى ملء جميع الحقول المطلوبة.',
-      successMessage:
-        'شكراً لك! تم استلام طلبك. يرجى المتابعة إلى الخطوة 2 لإكمال الدفعة.',
-      stepTwoTitle: 'الخطوة 2: أرسل الدفعة',
-      stepTwoBody: 'بعد تقديم طلبك، يُرجى إرسال المبلغ الصحيح عبر EVC Plus.',
-      evcLabel: 'رقم EVC Plus',
-      evcNumber: '611-69-69-89',
-      paymentNote:
-        'للتأكيد بشكل أسرع، يُرجى إرسال الدفعة خلال ساعات عملنا (السبت-الأربعاء 8:30-4:30، الخميس 8:30-2:00).',
-      stepThreeTitle: 'الخطوة 3: استلم شهادتك',
-      stepThreeBody:
-        'بمجرد تأكيد دفعتك، سيصدر فريقنا شهادتك الإلكترونية لصندوق البريد ويرسلها إليك عبر البريد الإلكتروني و/أو الواتساب خلال يوم عمل واحد.',
-      testimonialsTitle: 'موثوق به من قبل المؤسسات الرائدة في الصومال',
+      businessFields: {
+        companyName: '??? ??????',
+        licenseNumber: '??? ?????? ????????',
+        licenseUpload: '???? ???? ?? ?????? ????????',
+        licenseHint: '???? ???? ????? ?? ????? ???????.',
+      },
+      uploads: {
+        idDocument: '???? ????? ??????',
+        idDocumentHint: '???? ??? ???? ????? ?? ???? NIRA ?? ???? ????? ??????? ?????.',
+        photoUpload: '???? ???? ????? ???? ???? ?????',
+      },
+      submitLabel: '????? ?????',
+      submittingLabel: '???? ???????...',
+      termsAgreement: {
+        prefix: '???? ??? ????????? ???????? ????? ?????? ??? ',
+        linkLabel: '???? ?????? ????? ????? ??????',
+        suffix: '.',
+      },
+      validationMessages: {
+        missingFields: '???? ????? ???? ?????? ????????.',
+        missingIdentification: '???? ??????? ???? ???? NIRA ?? ??? ???? ?????.',
+        missingOccupation: '???? ????? ?????.',
+        missingBusiness: '???? ????? ?????? ?????? ?????? ??????.',
+        unexpectedError: '??? ??? ??? ?????. ???? ???????? ??? ????.',
+        successMessage: '?? ?????? ?????! ?? ????? ????? ??? {email}.',
+      },
+      payment: {
+        title: '?????? 2: ????? ?????',
+        localHeading: '????? ?????? (EVC Plus)',
+        localBody: '???? ??? USSD ??????? ???? ?????? ({amount})? ????? "w.post" ?? ???? ?????.',
+        ussdPrompt: '???? ????? ????? ?????????:',
+        ussdFormat: '*799*31525688*{amount}#',
+        internationalHeading: '????? ?????? (?????)',
+        internationalBody:
+          '??????? ???? ??????? ?????? ????? ????? ???????? ????? ???? ?? ?????????. (??? ?????? ??????? ??????).',
+        cardForm: {
+          heading: '???? ????????',
+          comingSoon: '???? ????? ???????? ??? ???????? ??????? ??????. ???? ??????? EVC Plus ?? ??????? ???? ????????.',
+          cardNumber: '??? ???????',
+          cardNumberPlaceholder: '**** **** **** ****',
+          expiry: '????? ????????',
+          expiryPlaceholder: 'MM / YY',
+          cvc: '??? ?????? CVC',
+          cvcPlaceholder: '***',
+          billingTitle: '????? ???????',
+          country: '??????',
+          countryPlaceholder: '??????',
+          addressLine1: '??????? (??? 1)',
+          addressPlaceholder: '??? ??????',
+          city: '???????',
+          cityPlaceholder: '???????',
+          postalCode: '????? ???????',
+          postalPlaceholder: '????? ???????',
+          submitLabel: '???? ????',
+        },
+      },
+      certificate: {
+        title: '?????? 3: ????? ??????',
+        body:
+          '??? ????? ????? ????? ????? ????? ?????? ??????????? ??????? ???? ??? ?????? ?????????? ?/?? ?????? ???? ??? ??? ????.',
+      },
+      testimonialsTitle: '????? ??? ??? ???????? ?? ???????',
       testimonials: [
         {
           quote:
-            'باستخدام خدمة صندوق البريد من البريد الصومالي أصبح بريد شركتنا أكثر انسياباً. فهو يمنحنا عنواناً رسمياً آمناً لا غنى عنه لعملياتنا الوطنية ومراسلاتنا الرسمية.',
-          author: 'هرمود للاتصالات',
-          role: 'حامل صندوق بريد رسمي',
+            '??????? ???? ????? ?????? ?? ???? ??????? ???? ??????? ??????. ???? ????? ????? ???? ???? ????? ????????? ??????? ?????????? ???????.',
+          author: 'Hormuud Telecom',
+          role: '???? ????? ???? ????',
           image: '/images/logos/hormuud-logo.png',
         },
         {
           quote:
-            'يُعد نظام صندوق البريد ضرورياً للمراسلات الآمنة التي تتطلبها المؤسسات المالية. يقدم البريد الصومالي خدمة موثوقة تلبي معاييرنا المتعلقة بالأمن والاحترافية.',
-          author: 'البنك المركزي الصومالي',
-          role: 'حامل صندوق بريد رسمي',
+            '???? ?????? ?????? ????? ????????? ?????? ???? ??????? ???????? ???????. ???? ??????? ???? ???? ?????? ???? ???????? ?? ?????? ???????????.',
+          author: 'Central Bank of Somalia',
+          role: '???? ????? ???? ????',
           image: '/images/logos/central-bank-logo.png',
         },
       ],
@@ -1551,5 +1870,37 @@ export const translations: Record<Language, TranslationContent> = {
         },
       ],
     },
+    termsModal: {
+      title: '???? ?????? ????? ????? ??????',
+      intro: '??????? ????? ?????? ???? ???? ????? ??? ?????? ???????:',
+      closeLabel: '?????',
+      sections: [
+        {
+          title: '1. ????? ?????????',
+          body: '??? ??? ???? ????????? ??????? ?? ???? ????? ??????? ?????? ????????? ??????? ?? ?? ????? ???? ?? ??????? ??? ?????.',
+        },
+        {
+          title: '2. ??? ?????? ????????',
+          body: '????? ??? ??????? ???? ??? ????? ?? ????? ????? ?????? ???? ???? ????? ?????? ??? ????? ???????? ????? ???????????.',
+        },
+        {
+          title: '3. ????? ?????? ????????',
+          body: '??? ?? ??? ?????? ?????? ??? ???? ???????? ????? ????? ????? ??????. ???? ?? ??? ??????? ???? ???? ???? ????? ???? ???? ??? ??????? ??? ????? ??????? ??????? ??????? ??????? ??????? ???.',
+        },
+        {
+          title: '4. ??????? ??????',
+          body: '????? ??????? ????? ?????? ??? ?????? ?????? ??????? ????????? ???. ????? ????? ????? ???????? ??? ????? ??? ??????? ?? ??????? ??? ?????? ????? ??? ????? ?????? ?????? ?????? ???????.',
+        },
+        {
+          title: '5. ????? ????????',
+          body: '?? ??? ????? ??????? ??? ???? ????? ?????? ????? ?????? ?????? ??????? ??????? ??????? ???????? ??????? ?????? ?????.',
+        },
+        {
+          title: '6. ?????? ????????',
+          body: '????? ?????? ?????? ???????? ?????? ???????. ??????? ??????? ??????? ??? ?????? ?????? ????? ?????? ??????? ?????? ????????? ???????? ??? ??? ???????? ?? ?? ??? ???? ??? ??? ???? ??????? ????.',
+        },
+      ],
+    },
+
   },
 };

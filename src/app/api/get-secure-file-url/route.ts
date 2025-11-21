@@ -1,0 +1,28 @@
+import { NextResponse } from 'next/server';
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_KEY!
+);
+
+export async function POST(request: Request) {
+  const { bucket, path, secretKey } = await request.json();
+
+  if (secretKey !== process.env.ADMIN_SECRET_KEY) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+  if (!bucket || !path) {
+    return NextResponse.json({ error: 'Bucket and path are required.' }, { status: 400 });
+  }
+
+  try {
+    const { data, error } = await supabaseAdmin.storage.from(bucket).createSignedUrl(path, 300);
+
+    if (error) throw error;
+
+    return NextResponse.json({ signedUrl: data.signedUrl });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
