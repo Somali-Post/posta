@@ -1,193 +1,139 @@
-'use client';
-
-// src/app/services/receiving/page.tsx
-import Link from 'next/link';
-import { Navbar } from '@/components/layout/Navbar';
+﻿import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
-import { useTranslations } from '@/context/LanguageContext';
-import { GlobeIcon } from '@/components/icons/GlobeIcon';
-import { LockIcon } from '@/components/icons/LockIcon';
-import { KeyIcon } from '@/components/icons/KeyIcon';
-import { BuildingIcon } from '@/components/icons/BuildingIcon';
-import { Button } from '@/components/Button';
-
-const hours = [
-  { label: 'Saturday - Wednesday', value: '8:30 AM - 4:30 PM' },
-  { label: 'Thursday', value: '8:30 AM - 2:00 PM (Closes early)' },
-  { label: 'Friday', value: 'Closed' },
-];
+import { ServicePageHero } from '@/components/ServicePageHero';
+import { AnimatedSection } from '@/components/AnimatedSection';
+import Link from 'next/link';
+import { ArrowRightIcon } from '@/components/icons/ArrowRightIcon';
 
 const ReceivingPage = () => {
-  const { services, serviceSidebar, nav } = useTranslations();
-  const copy = services.receiving;
-
-  const heroTitle = 'International Mail & Parcels';
-  const heroSubtitle =
-    "Your reliable connection to the world. Here's everything you need to know about receiving items from abroad and our upcoming outbound services.";
-
   return (
-    <div className="bg-light-gray min-h-screen">
+    <div className="bg-light-gray">
       <Navbar />
       <main>
-        <section className="relative overflow-hidden bg-gradient-to-br from-brand-dark-blue via-somali-blue to-[#e7f0ff] text-white">
-          <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(circle_at_top_left,#fff,transparent_35%)]" />
-          <div className="container mx-auto px-4 py-16 sm:py-20">
-            <div className="max-w-4xl space-y-6">
-              <p className="text-sm uppercase tracking-[0.25em] text-white/80">{serviceSidebar.receiving}</p>
-              <h1 className="text-4xl md:text-5xl font-extrabold leading-tight">{heroTitle}</h1>
-              <p className="text-lg md:text-xl text-white/85 max-w-3xl">{heroSubtitle}</p>
-              <div className="flex flex-wrap gap-3">
-                {copy.steps.map((step) => (
-                  <span
-                    key={step.title}
-                    className="bg-white/15 border border-white/20 text-white px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm"
-                  >
-                    {step.title}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <ServicePageHero
+          title="International Mail & Parcels"
+          subtitle="Your reliable connection to the world. Here's everything you need to know about receiving items and our upcoming sending services."
+        />
 
-        <section className="container mx-auto px-4 -mt-12 pb-16">
-          <div className="grid lg:grid-cols-3 gap-10">
-            <div className="lg:col-span-2 space-y-8">
-              <div className="bg-white rounded-2xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-dark-text mb-6">{copy.processTitle}</h2>
-                <div className="space-y-6">
-                  {copy.steps.map((step, index) => {
-                    const icons = [GlobeIcon, LockIcon, KeyIcon];
-                    const Icon = icons[index % icons.length];
-                    const isLast = index === copy.steps.length - 1;
-                    return (
-                      <div key={step.title} className="relative pl-14">
-                        {!isLast && <span className="absolute left-6 top-10 h-full w-px bg-border-gray" />}
-                        <div className="absolute left-0 top-2 w-12 h-12 rounded-full bg-somali-blue/10 flex items-center justify-center text-somali-blue">
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <div className="bg-light-gray/40 border border-border-gray rounded-xl p-4 shadow-sm">
-                          <h3 className="text-lg font-semibold text-dark-text">{step.title}</h3>
-                          <p className="text-gray-700">{step.description}</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
+        <AnimatedSection>
+          <section className="py-20">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                {/* --- THE FIX (Part 1): Customer-Friendly Language --- */}
+                <h2 className="text-4xl font-bold text-brand-dark-blue">Receiving from Abroad</h2>
+                <p className="text-lg text-gray-600 mt-2">Follow these simple steps to receive your international items.</p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-lg p-8 border border-brand-dark-blue/10 space-y-4">
-                <p className="text-xs uppercase tracking-[0.35em] text-brand-dark-blue/70 font-semibold">Coming Soon</p>
-                <h2 className="text-2xl md:text-3xl font-extrabold text-brand-dark-blue">
-                  Coming Soon: Outbound Services
-                </h2>
-                <p className="text-gray-700 text-lg">
-                  Starting next year, you will be able to send letters and parcels to any country in the world using our
-                  modern, convenient, fully-tracked services.
-                </p>
-                <div className="grid md:grid-cols-3 gap-4">
-                  <div className="p-4 bg-light-gray/40 border border-border-gray rounded-xl h-full">
-                    <h3 className="font-semibold text-dark-text text-lg">Digital-First Customs</h3>
-                    <p className="text-gray-700 mt-2">
-                      Faster, more accurate customs clearance using the UPU&apos;s modern Customs Declaration System (CDS).
-                    </p>
-                  </div>
-                  <div className="p-4 bg-light-gray/40 border border-border-gray rounded-xl h-full">
-                    <h3 className="font-semibold text-dark-text text-lg">RUG PUDO Drop-Offs</h3>
-                    <p className="text-gray-700 mt-2">
-                      Send your mail from our nationwide network of trusted RUG PUDO partner locations.
-                    </p>
-                  </div>
-                  <div className="p-4 bg-light-gray/40 border border-border-gray rounded-xl h-full">
-                    <h3 className="font-semibold text-dark-text text-lg">Full International Tracking</h3>
-                    <p className="text-gray-700 mt-2">
-                      Track your parcel from your local drop-off point all the way to its final international destination.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-white rounded-2xl shadow-lg p-8 border border-somali-blue/10">
-                  <h3 className="text-xl font-bold text-dark-text mb-3">{copy.whatToBringTitle}</h3>
-                  <p className="text-gray-700 mb-4">{copy.whatToBringBody}</p>
-                  <ul className="space-y-3">
-                    {copy.bringList.map((item) => (
-                      <li key={item} className="flex items-start gap-3">
-                        <span className="mt-1 inline-block h-2 w-2 rounded-full bg-somali-blue" />
-                        <span className="text-dark-text font-semibold">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-lg p-8 border border-brand-dark-blue/10 space-y-4">
-                  <h3 className="text-xl font-bold text-dark-text">{copy.locationTitle}</h3>
-                  <p className="text-gray-700">{copy.locationBody}</p>
-                  <div className="flex items-start gap-3">
-                    <BuildingIcon className="w-6 h-6 text-brand-dark-blue mt-1" />
+              <div className="grid lg:grid-cols-5 gap-12">
+                <div className="lg:col-span-3 space-y-8">
+                  <div className="bg-white p-6 rounded-lg shadow-md flex items-start transition-transform duration-300 ease-out transform hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl">
+                    <div className="flex-shrink-0 w-10 h-10 bg-brand-dark-blue text-white font-bold rounded-full flex items-center justify-center mr-5">
+                      1
+                    </div>
                     <div>
-                      <p className="text-xs uppercase tracking-wide text-gray-500">{copy.addressLabel}</p>
-                      <p className="text-dark-text font-semibold">{copy.addressValue}</p>
+                      <h3 className="text-xl font-semibold">Item Arrives in Somalia</h3>
+                      <p className="text-gray-600 mt-1">Your parcel arrives at our main international postal facility in Mogadishu and is prepared for customs inspection.</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <LockIcon className="w-6 h-6 text-brand-dark-blue mt-1" />
+                  <div className="bg-white p-6 rounded-lg shadow-md flex items-start transition-transform duration-300 ease-out transform hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl">
+                    <div className="flex-shrink-0 w-10 h-10 bg-brand-dark-blue text-white font-bold rounded-full flex items-center justify-center mr-5">
+                      2
+                    </div>
                     <div>
-                      <p className="text-xs uppercase tracking-wide text-gray-500">{copy.hoursLabel}</p>
-                      <ul className="text-dark-text font-semibold space-y-1">
-                        {hours.map((entry) => (
-                          <li key={entry.label}>
-                            <span className="font-semibold">{entry.label}:</span> {entry.value}
-                          </li>
-                        ))}
+                      <h3 className="text-xl font-semibold">Customs Clearance</h3>
+                      <p className="text-gray-600 mt-1">The item is presented to Somali customs. Once cleared, it is handed over to Somali Post for final processing.</p>
+                    </div>
+                  </div>
+                  <div className="bg-white p-6 rounded-lg shadow-md flex items-start transition-transform duration-300 ease-out transform hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl">
+                    <div className="flex-shrink-0 w-10 h-10 bg-brand-dark-blue text-white font-bold rounded-full flex items-center justify-center mr-5">
+                      3
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-semibold">Notification & Collection</h3>
+                      <p className="text-gray-600 mt-1">
+                        Once your item is ready, we will notify you via SMS or email. You can then collect it from the GPO.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-brand-dark-blue text-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
+                    <div className="space-y-1">
+                      <p className="text-xs uppercase tracking-wide text-blue-100">Track updates</p>
+                      <h3 className="text-xl font-semibold">Track your item anytime</h3>
+                      <p className="text-blue-50 text-sm md:text-base">
+                        Real-time status from arrival to pickup—peace of mind with instant updates.
+                      </p>
+                    </div>
+                    <Link
+                      href="/track"
+                      className="inline-flex items-center gap-2 bg-white text-brand-dark-blue px-4 py-2 rounded-full text-sm font-semibold shadow hover:shadow-lg transition-transform duration-300 hover:-translate-y-0.5 hover:scale-105 active:scale-100"
+                    >
+                      Track item
+                      <ArrowRightIcon className="w-4 h-4" />
+                    </Link>
+                  </div>
+                </div>
+
+                <aside className="lg:col-span-2 space-y-8">
+                  <div className="bg-white p-8 rounded-lg shadow-md border-t-4 border-brand-dark-blue transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
+                    <h3 className="text-2xl font-bold text-dark-text mb-4">What to Bring for Collection</h3>
+                    <ul className="list-disc list-inside space-y-2 text-gray-700">
+                      <li className="font-semibold">Valid National ID (NIRA) or Passport</li>
+                      <li>Your item's tracking number</li>
+                      <li>The notification message (SMS/email)</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-8 rounded-lg shadow-md transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
+                    <h3 className="text-2xl font-bold text-dark-text mb-4">Location & Hours</h3>
+                    <p className="text-gray-700 font-semibold">General Post Office (GPO)</p>
+                    <p className="text-gray-600">Jamhuuriya Road, Boondheere District, Mogadishu</p>
+                    <div className="mt-4 border-t pt-4">
+                      <h4 className="font-semibold text-gray-700">Opening Hours:</h4>
+                      <ul className="text-gray-600">
+                        <li>
+                          <strong>Saturday - Wednesday:</strong> 8:30 AM - 4:30 PM
+                        </li>
+                        <li>
+                          <strong>Thursday:</strong> 8:30 AM - 2:00 PM
+                        </li>
+                        <li>
+                          <strong>Friday:</strong> Closed
+                        </li>
                       </ul>
                     </div>
                   </div>
-                </div>
+                </aside>
               </div>
             </div>
+          </section>
+        </AnimatedSection>
 
-            <div className="space-y-6">
-              <div className="bg-white rounded-2xl shadow-lg p-8 border border-border-gray">
-                <p className="text-sm uppercase tracking-[0.2em] text-gray-500 mb-2">{serviceSidebar.title}</p>
-                <h3 className="text-2xl font-bold text-dark-text mb-3">{copy.heroTitle}</h3>
-                <p className="text-gray-700 mb-6">{serviceSidebar.needHelpBody}</p>
-                <Button href="/help">{serviceSidebar.contactButton}</Button>
-              </div>
-              <div className="bg-brand-dark-blue text-white rounded-2xl shadow-lg p-8 space-y-4">
-                <div className="flex items-center gap-3">
-                  <GlobeIcon className="w-6 h-6" />
-                  <p className="text-lg font-semibold">{serviceSidebar.receiving}</p>
+        <AnimatedSection>
+          <section className="py-20 bg-brand-dark-blue text-white">
+            <div className="container mx-auto px-4 text-center">
+              {/* --- THE FIX (Part 1): Customer-Friendly Language --- */}
+              <h2 className="text-4xl font-bold">Coming in 2026: Sending to the World</h2>
+              <p className="text-xl opacity-90 mt-4 max-w-3xl mx-auto">
+                Get ready to connect with the world. Our new outbound service will allow you to send letters and parcels from your local neighborhood to any destination globally.
+              </p>
+              <div className="mt-12 grid md:grid-cols-3 gap-8">
+                {/* --- THE FIX (Part 3): Visually Harmonious "Frosted Glass" Cards --- */}
+                <div className="bg-white bg-opacity-10 hover:bg-opacity-20 transition-all p-6 rounded-lg transform hover:scale-105">
+                  <h3 className="font-bold text-2xl">Digital-First Customs</h3>
+                  <p className="opacity-80 mt-2">Fast, accurate customs clearance using the modern UPU Customs Declaration System (CDS).</p>
                 </div>
-                <div className="flex items-start gap-3 text-white/90">
-                  <BuildingIcon className="w-6 h-6 mt-1" />
-                  <div>
-                    <p className="text-sm uppercase tracking-wide text-white/70">{copy.addressLabel}</p>
-                    <p className="font-semibold">{copy.addressValue}</p>
-                  </div>
+                <div className="bg-white bg-opacity-10 hover:bg-opacity-20 transition-all p-6 rounded-lg transform hover:scale-105">
+                  <h3 className="font-bold text-2xl">Convenient Drop-Offs</h3>
+                  <p className="opacity-80 mt-2">Send your mail from our entire nationwide network of RUG PUDO partner locations.</p>
                 </div>
-                <div className="flex items-start gap-3 text-white/90">
-                  <KeyIcon className="w-6 h-6 mt-1" />
-                  <div>
-                    <p className="text-sm uppercase tracking-wide text-white/70">{copy.hoursLabel}</p>
-                    <ul className="space-y-1">
-                      {hours.map((entry) => (
-                        <li key={entry.label} className="font-semibold">
-                          <span className="font-semibold">{entry.label}:</span> {entry.value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="bg-white bg-opacity-10 hover:bg-opacity-20 transition-all p-6 rounded-lg transform hover:scale-105">
+                  <h3 className="font-bold text-2xl">Full International Tracking</h3>
+                  <p className="opacity-80 mt-2">Track your parcel from your local drop-off point to its final destination, right on our website.</p>
                 </div>
-                <Link href="/track" className="inline-flex items-center gap-2 text-white font-semibold hover:underline">
-                  {nav.track}
-                  <span aria-hidden>→</span>
-                </Link>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </AnimatedSection>
       </main>
       <Footer />
     </div>
