@@ -6,7 +6,13 @@ const supabaseAdmin = createClient(
   process.env.SUPABASE_SERVICE_KEY!
 );
 
+const isAdminPortalEnabled = process.env.NEXT_PUBLIC_ENABLE_ADMIN_PORTAL === 'true';
+
 export async function POST(request: Request) {
+  if (!isAdminPortalEnabled) {
+    return NextResponse.json({ error: 'Document access is temporarily disabled.' }, { status: 503 });
+  }
+
   const { bucket, path, secretKey } = await request.json();
 
   if (secretKey !== process.env.ADMIN_SECRET_KEY) {

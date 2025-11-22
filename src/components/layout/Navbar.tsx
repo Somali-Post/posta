@@ -1,10 +1,9 @@
 "use client";
 
 // src/components/layout/Navbar.tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useLanguage, useTranslations } from '@/context/LanguageContext';
 import type { Language } from '@/lib/translations';
 
@@ -13,9 +12,10 @@ const languageOrder: Language[] = ['so', 'en', 'ar'];
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
-  const pathname = usePathname();
   const translations = useTranslations();
   const { language, setLanguage } = useLanguage();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileNavRef = useRef<HTMLDivElement>(null);
 
   const serviceLinks = [
     { href: '/services/receiving', label: translations.nav.dropdown.receiving },
@@ -30,15 +30,65 @@ export const Navbar = () => {
     { href: '/about', label: translations.nav.about },
   ];
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        isServicesOpen
+      ) {
+        setIsServicesOpen(false);
+      }
+      if (
+        mobileNavRef.current &&
+        !mobileNavRef.current.contains(event.target as Node) &&
+        isMenuOpen
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+        setIsServicesOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMenuOpen, isServicesOpen]);
+
+  const handleServiceMouseEnter = () => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches) {
+      setIsServicesOpen(true);
+    }
+  };
+
+  const handleServiceMouseLeave = () => {
+    if (typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches) {
+      setIsServicesOpen(false);
+    }
+  };
+
+  const closeMenus = () => {
     setIsMenuOpen(false);
     setIsServicesOpen(false);
-  }, [pathname]);
+  };
 
   const renderPrimaryLinks = (links: typeof primaryLinks) =>
     links.map((link) => (
-      <Link key={link.href} href={link.href} className="text-base font-medium text-dark-text hover:text-brand-dark-blue">
+      <Link
+        key={link.href}
+        href={link.href}
+        onClick={closeMenus}
+        className="text-base font-medium text-dark-text hover:text-brand-dark-blue"
+      >
         {link.label}
       </Link>
     ));
@@ -48,7 +98,7 @@ export const Navbar = () => {
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         <Link href="/" className="flex items-center gap-3">
           <div className="bg-white rounded-full p-1 h-16 w-16 flex items-center justify-center">
-            <Image src="/images/somali-post-logo.png" alt="Somali Post Logo" width={60} height={60} quality={100} />
+            <Image src="/images/somali-post-logo.png" alt="Somali Post Logo" width={60} height={60} />
           </div>
           <span className="text-xl font-bold text-brand-dark-blue hidden sm:block">Posta.so</span>
         </Link>
@@ -58,10 +108,18 @@ export const Navbar = () => {
 
           <div
             className="relative"
-            onMouseEnter={() => setIsServicesOpen(true)}
-            onMouseLeave={() => setIsServicesOpen(false)}
+            ref={dropdownRef}
+            onMouseEnter={handleServiceMouseEnter}
+            onMouseLeave={handleServiceMouseLeave}
           >
-            <button className="text-base font-medium text-dark-text hover:text-brand-dark-blue flex items-center gap-1">
+            <button
+              type="button"
+              className="text-base font-medium text-dark-text hover:text-brand-dark-blue flex items-center gap-1"
+              onClick={() => setIsServicesOpen((prev) => !prev)}
+              onFocus={() => setIsServicesOpen(true)}
+              aria-haspopup="true"
+              aria-expanded={isServicesOpen}
+            >
               {translations.nav.services}
               <svg
                 className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`}
@@ -73,9 +131,18 @@ export const Navbar = () => {
               </svg>
             </button>
             {isServicesOpen && (
-              <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2">
+              <div
+                className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2"
+                role="menu"
+              >
                 {serviceLinks.map((service) => (
-                  <Link key={service.href} href={service.href} className="block px-4 py-2 text-dark-text hover:bg-light-gray">
+                  <Link
+                    key={service.href}
+                    href={service.href}
+                    onClick={closeMenus}
+                    className="block px-4 py-2 text-dark-text hover:bg-light-gray"
+                    role="menuitem"
+                  >
                     {service.label}
                   </Link>
                 ))}
@@ -121,10 +188,15 @@ export const Navbar = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="lg:hidden bg-white border-t border-border-gray">
+        <div className="lg:hidden bg-white border-t border-border-gray" ref={mobileNavRef}>
           <nav className="container mx-auto px-4 pt-2 pb-4 flex flex-col space-y-1">
             {primaryLinks.slice(0, 2).map((link) => (
-              <Link key={link.href} href={link.href} className="py-2 text-lg font-medium text-dark-text hover:text-brand-dark-blue">
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={closeMenus}
+                className="py-2 text-lg font-medium text-dark-text hover:text-brand-dark-blue"
+              >
                 {link.label}
               </Link>
             ))}
@@ -132,13 +204,19 @@ export const Navbar = () => {
               <Link
                 key={service.href}
                 href={service.href}
+                onClick={closeMenus}
                 className="py-2 pl-4 text-md font-medium text-gray-600 hover:text-brand-dark-blue"
               >
                 - {service.label}
               </Link>
             ))}
             {primaryLinks.slice(2).map((link) => (
-              <Link key={link.href} href={link.href} className="py-2 text-lg font-medium text-dark-text hover:text-brand-dark-blue">
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={closeMenus}
+                className="py-2 text-lg font-medium text-dark-text hover:text-brand-dark-blue"
+              >
                 {link.label}
               </Link>
             ))}

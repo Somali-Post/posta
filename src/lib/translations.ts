@@ -243,11 +243,11 @@ export interface TranslationContent {
     title: string;
     receiving: string;
     poBox: string;
-    needHelpTitle: string;
-    needHelpBody: string;
+    visitTitle: string;
+    visitBody: string;
     locationLabel: string;
     hoursLabel: string;
-    contactButton: string;
+    helpLinkLabel: string;
   };
   services: {
     receiving: {
@@ -281,16 +281,19 @@ export interface TranslationContent {
     subtitle: string;
     instructions: string;
     placeholder: string;
+    helper: string;
     buttonIdle: string;
     buttonLoading: string;
     loading: string;
     error: string;
+    invalidFormat: string;
     detailsHeading: string;
     currentStatus: string;
     originLabel: string;
     destinationLabel: string;
     historyTitle: string;
     notFound: string;
+    notFoundDetail: string;
   };
   help: {
     heroTitle: string;
@@ -345,6 +348,26 @@ export interface TranslationContent {
         value: string;
         label: string;
         description: string;
+      }[];
+    };
+  };
+  legal: {
+    privacy: {
+      title: string;
+      subtitle: string;
+      lastUpdatedLabel: string;
+      sections: {
+        title: string;
+        body: string;
+      }[];
+    };
+    terms: {
+      title: string;
+      subtitle: string;
+      lastUpdatedLabel: string;
+      sections: {
+        title: string;
+        body: string;
       }[];
     };
   };
@@ -450,11 +473,11 @@ export const translations: Record<Language, TranslationContent> = {
       title: 'Our Services',
       receiving: 'Receiving Mail & Parcels',
       poBox: 'P.O. Box Rentals',
-      needHelpTitle: 'Need Help?',
-      needHelpBody: 'For any questions, please visit us or get in touch.',
+      visitTitle: 'Visit Us',
+      visitBody: 'For any questions, please stop by the General Post Office (GPO) and we will be happy to help.',
       locationLabel: 'GPO, Mogadishu',
       hoursLabel: 'Sat - Thurs, 8:00 AM - 4:00 PM',
-      contactButton: 'Contact Us',
+      helpLinkLabel: 'Visit Help Center',
     },
     services: {
       receiving: {
@@ -534,16 +557,19 @@ export const translations: Record<Language, TranslationContent> = {
       subtitle: 'Stay informed every step of the way.',
       instructions: 'Enter your tracking number below.',
       placeholder: 'e.g., CC850579694SE',
+      helper: 'Your number should be 13 characters long, like AA123456789SE.',
       buttonIdle: 'Track',
       buttonLoading: 'Searching...',
       loading: 'Loading tracking details...',
       error: 'Could not track the item. Please check the number and try again.',
+      invalidFormat: 'Tracking numbers must follow the AA123456789SE format.',
       detailsHeading: 'Tracking Details for',
       currentStatus: 'Current Status',
       originLabel: 'Origin',
       destinationLabel: 'Destination',
       historyTitle: 'Shipment History',
       notFound: 'Tracking information is not available yet. Please try again later.',
+      notFoundDetail: 'It can take up to 48 hours after posting for new shipments to appear. Please double-check the number and try again later.',
     },
     help: {
       heroTitle: 'Help & Support Center',
@@ -678,6 +704,62 @@ export const translations: Record<Language, TranslationContent> = {
           { value: '34', label: 'Years Offline', description: 'Complete institutional hiatus overcome.' },
           { value: '$1.8M', label: 'Debt Cleared', description: 'UPU confidence restored, a landmark achievement.' },
           { value: '1', label: 'IMPC Active', description: 'Full international connectivity re-established.' },
+        ],
+      },
+    },
+    legal: {
+      privacy: {
+        title: 'Privacy Policy',
+        subtitle: 'How we collect, use, and protect information shared with Somali Post.',
+        lastUpdatedLabel: 'Last updated: January 2026',
+        sections: [
+          {
+            title: '1. Information We Collect',
+            body:
+              'When you submit forms, track items, or register for services we collect the details you provide, such as contact information, identification documents, and delivery preferences.',
+          },
+          {
+            title: '2. How We Use Data',
+            body:
+              'Your information is used to verify identity, issue notifications, process payments, and meet regulatory obligations. We do not sell data to third parties.',
+          },
+          {
+            title: '3. Storage & Security',
+            body:
+              'Information is stored in secure systems operated by Somali Post and trusted partners such as Supabase. Access is limited to authorized staff and protected through encryption and audit logs.',
+          },
+          {
+            title: '4. Your Choices',
+            body:
+              'You may request corrections or deletion of optional data at any time by emailing posta@moct.gov.so. Some records must be retained to comply with postal regulations.',
+          },
+        ],
+      },
+      terms: {
+        title: 'Terms of Service',
+        subtitle: 'The rules for using posta.so and the Somali National Postal Service.',
+        lastUpdatedLabel: 'Last updated: January 2026',
+        sections: [
+          {
+            title: '1. Acceptable Use',
+            body:
+              'You agree not to misuse Somali Post systems, attempt unauthorized access, or submit fraudulent information. All services must be used in accordance with Somali law.',
+          },
+          {
+            title: '2. Availability of Features',
+            body:
+              'Some features, such as online P.O. Box registration or payment confirmation, may be temporarily disabled while upgrades are underway. Access can be withdrawn if misuse is detected.',
+          },
+          {
+            title: '3. Accuracy of Information',
+            body:
+              'You are responsible for ensuring submitted details are accurate and current. Somali Post is not liable for delays or missed deliveries caused by incorrect information.',
+          },
+          {
+            title: '4. Changes to These Terms',
+            body:
+              'We may update these terms as we launch new services. Continued use of the website after revisions constitutes acceptance of the updated terms. Major changes will be announced on posta.so.',
+          },
         ],
       },
     },
@@ -960,11 +1042,11 @@ export const translations: Record<Language, TranslationContent> = {
       title: 'Adeegyadayada',
       receiving: 'Qaabilaadda Boostada & Xirmooyinka',
       poBox: 'Kiraynta Sanduuqa P.O.',
-      needHelpTitle: 'Ma u Baahan Tahay Caawimo?',
-      needHelpBody: 'Su’aal kasta fadlan noo soo booqo ama nala soo xidhiidh.',
+      visitTitle: 'Ma u Baahan Tahay Caawimo?',
+      visitBody: 'Su’aal kasta fadlan u soo booqo xarunta boostada guud.',
       locationLabel: 'GPO, Muqdisho',
       hoursLabel: 'Sabti - Khamiis, 8:00 subaxnimo - 4:00 galabnimo',
-      contactButton: 'Nala Soo Xidhiidh',
+      helpLinkLabel: 'Booq Xarunta Caawinta',
     },
     services: {
       receiving: {
@@ -1044,16 +1126,19 @@ export const translations: Record<Language, TranslationContent> = {
       subtitle: 'La soco talaabo kasta oo safarka ah.',
       instructions: 'Geli lambarka raadraaca ee hoose.',
       placeholder: 'tusaale, CC850579694SE',
+      helper: 'Lambarkaagu waa inuu ahaadaa 13 xaraf sida AA123456789SE.',
       buttonIdle: 'Raac',
       buttonLoading: 'Raadinaya...',
       loading: 'Faahfaahinta raadraaca ayaa soo dhacayso...',
       error: 'Xogta lama raaci karo. Fadlan hubi lambarka oo isku day mar kale.',
+      invalidFormat: 'Lambarka raadraaca waa inuu raacaa qaabka AA123456789SE.',
       detailsHeading: 'Faahfaahinta Raadraaca ee',
       currentStatus: 'Xaaladda Hadda',
       originLabel: 'Asal',
       destinationLabel: 'Meesha Loo Socdo',
       historyTitle: 'Taariikhda Rarista',
       notFound: 'Xog raadraac wali lama heli karo. Fadlan isku day mar dambe.',
+      notFoundDetail: 'Waxay qaadan kartaa ilaa 48 saacadood ka dib dirista in xogtu soo muuqato. Fadlan dib u hubi lambarka oo isku day mar kale.',
     },
     help: {
       heroTitle: 'Xarunta Caawinta & Taageerada',
@@ -1188,6 +1273,62 @@ export const translations: Record<Language, TranslationContent> = {
           { value: '34', label: 'Sano Xidhnaa', description: 'Waxaa laga gudbay hakadkii hay’adaha.' },
           { value: '$1.8M', label: 'Deyntii La Bixiyay', description: 'Kalsoonidii UPU ayaa dib loo soo celiyay.' },
           { value: '1', label: 'IMPC Firfircoon', description: 'Isku xidhnaanta caalamiga ah ayaa si buuxda u shaqaysa.' },
+        ],
+      },
+    },
+    legal: {
+      privacy: {
+        title: 'Privacy Policy',
+        subtitle: 'How we collect, use, and protect information shared with Somali Post.',
+        lastUpdatedLabel: 'Last updated: January 2026',
+        sections: [
+          {
+            title: '1. Information We Collect',
+            body:
+              'When you submit forms, track items, or register for services we collect the details you provide, such as contact information, identification documents, and delivery preferences.',
+          },
+          {
+            title: '2. How We Use Data',
+            body:
+              'Your information is used to verify identity, issue notifications, process payments, and meet regulatory obligations. We do not sell data to third parties.',
+          },
+          {
+            title: '3. Storage & Security',
+            body:
+              'Information is stored in secure systems operated by Somali Post and trusted partners such as Supabase. Access is limited to authorized staff and protected through encryption and audit logs.',
+          },
+          {
+            title: '4. Your Choices',
+            body:
+              'You may request corrections or deletion of optional data at any time by emailing posta@moct.gov.so. Some records must be retained to comply with postal regulations.',
+          },
+        ],
+      },
+      terms: {
+        title: 'Terms of Service',
+        subtitle: 'The rules for using posta.so and the Somali National Postal Service.',
+        lastUpdatedLabel: 'Last updated: January 2026',
+        sections: [
+          {
+            title: '1. Acceptable Use',
+            body:
+              'You agree not to misuse Somali Post systems, attempt unauthorized access, or submit fraudulent information. All services must be used in accordance with Somali law.',
+          },
+          {
+            title: '2. Availability of Features',
+            body:
+              'Some features, such as online P.O. Box registration or payment confirmation, may be temporarily disabled while upgrades are underway. Access can be withdrawn if misuse is detected.',
+          },
+          {
+            title: '3. Accuracy of Information',
+            body:
+              'You are responsible for ensuring submitted details are accurate and current. Somali Post is not liable for delays or missed deliveries caused by incorrect information.',
+          },
+          {
+            title: '4. Changes to These Terms',
+            body:
+              'We may update these terms as we launch new services. Continued use of the website after revisions constitutes acceptance of the updated terms. Major changes will be announced on posta.so.',
+          },
         ],
       },
     },
@@ -1471,11 +1612,11 @@ export const translations: Record<Language, TranslationContent> = {
       title: 'خدماتنا',
       receiving: 'استلام البريد والطرود',
       poBox: 'تأجير صناديق البريد',
-      needHelpTitle: 'تحتاج مساعدة؟',
-      needHelpBody: 'لأي استفسارات يرجى زيارتنا أو التواصل معنا.',
+      visitTitle: 'تحتاج مساعدة؟',
+      visitBody: 'لأي استفسارات يرجى زيارتنا في المكتب البريدي العام.',
       locationLabel: 'المكتب العام للبريد، مقديشو',
       hoursLabel: 'السبت - الخميس، 8:00 ص حتى 4:00 م',
-      contactButton: 'اتصل بنا',
+      helpLinkLabel: 'زيارة مركز المساعدة',
     },
     services: {
       receiving: {
@@ -1555,16 +1696,19 @@ export const translations: Record<Language, TranslationContent> = {
       subtitle: 'ابقَ مطلعاً على كل خطوة.',
       instructions: 'أدخل رقم التتبع في الحقل أدناه.',
       placeholder: 'مثال: CC850579694SE',
+      helper: 'يجب أن يتكون الرقم من 13 خانة مثل AA123456789SE.',
       buttonIdle: 'تتبع',
       buttonLoading: 'جاري البحث...',
       loading: 'جاري تحميل تفاصيل التتبع...',
       error: 'تعذر تتبع الشحنة. يرجى التحقق من الرقم والمحاولة مجدداً.',
+      invalidFormat: 'يجب أن يتبع رقم التتبع تنسيق AA123456789SE.',
       detailsHeading: 'تفاصيل التتبع لـ',
       currentStatus: 'الحالة الحالية',
       originLabel: 'بلد المنشأ',
       destinationLabel: 'الوجهة',
       historyTitle: 'سجل الشحنة',
       notFound: 'معلومات التتبع غير متاحة بعد. يرجى المحاولة لاحقاً.',
+      notFoundDetail: 'قد يستغرق ظهور الشحنات الجديدة حتى 48 ساعة بعد الإرسال. يرجى التحقق من الرقم والمحاولة مجدداً لاحقا.',
     },
     help: {
       heroTitle: 'مركز المساعدة والدعم',
@@ -1698,6 +1842,62 @@ export const translations: Record<Language, TranslationContent> = {
           { value: '34', label: 'سنة خارج الخدمة', description: 'تجاوزنا فترة الانقطاع المؤسسي التام.' },
           { value: '$1.8M', label: 'ديون مسددة', description: 'استعدنا ثقة الاتحاد البريدي العالمي.' },
           { value: '1', label: 'IMPC نشط', description: 'تمت استعادة الاتصال الدولي الكامل.' },
+        ],
+      },
+    },
+    legal: {
+      privacy: {
+        title: 'Privacy Policy',
+        subtitle: 'How we collect, use, and protect information shared with Somali Post.',
+        lastUpdatedLabel: 'Last updated: January 2026',
+        sections: [
+          {
+            title: '1. Information We Collect',
+            body:
+              'When you submit forms, track items, or register for services we collect the details you provide, such as contact information, identification documents, and delivery preferences.',
+          },
+          {
+            title: '2. How We Use Data',
+            body:
+              'Your information is used to verify identity, issue notifications, process payments, and meet regulatory obligations. We do not sell data to third parties.',
+          },
+          {
+            title: '3. Storage & Security',
+            body:
+              'Information is stored in secure systems operated by Somali Post and trusted partners such as Supabase. Access is limited to authorized staff and protected through encryption and audit logs.',
+          },
+          {
+            title: '4. Your Choices',
+            body:
+              'You may request corrections or deletion of optional data at any time by emailing posta@moct.gov.so. Some records must be retained to comply with postal regulations.',
+          },
+        ],
+      },
+      terms: {
+        title: 'Terms of Service',
+        subtitle: 'The rules for using posta.so and the Somali National Postal Service.',
+        lastUpdatedLabel: 'Last updated: January 2026',
+        sections: [
+          {
+            title: '1. Acceptable Use',
+            body:
+              'You agree not to misuse Somali Post systems, attempt unauthorized access, or submit fraudulent information. All services must be used in accordance with Somali law.',
+          },
+          {
+            title: '2. Availability of Features',
+            body:
+              'Some features, such as online P.O. Box registration or payment confirmation, may be temporarily disabled while upgrades are underway. Access can be withdrawn if misuse is detected.',
+          },
+          {
+            title: '3. Accuracy of Information',
+            body:
+              'You are responsible for ensuring submitted details are accurate and current. Somali Post is not liable for delays or missed deliveries caused by incorrect information.',
+          },
+          {
+            title: '4. Changes to These Terms',
+            body:
+              'We may update these terms as we launch new services. Continued use of the website after revisions constitutes acceptance of the updated terms. Major changes will be announced on posta.so.',
+          },
         ],
       },
     },

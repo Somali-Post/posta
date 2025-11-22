@@ -9,6 +9,7 @@ import { CertificateEmailSomali } from '@/components/emails/CertificateEmail.so'
 import { CertificateEmailArabic } from '@/components/emails/CertificateEmail.ar';
 
 const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_KEY!);
+const isAdminPortalEnabled = process.env.NEXT_PUBLIC_ENABLE_ADMIN_PORTAL === 'true';
 
 const sanitizeEmailHtml = (html: string) => {
   const withoutDoctype = html.replace(/<!DOCTYPE[\s\S]*?>/i, '').trim();
@@ -18,6 +19,13 @@ const sanitizeEmailHtml = (html: string) => {
 };
 
 export async function POST(request: Request) {
+  if (!isAdminPortalEnabled) {
+    return NextResponse.json(
+      { error: 'Certificate issuing is temporarily disabled.' },
+      { status: 503 }
+    );
+  }
+
   try {
     const { customerId, poBoxNumber, paymentDate, paymentRef, secretKey } = await request.json();
 

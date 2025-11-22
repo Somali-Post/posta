@@ -1,5 +1,6 @@
 "use client";
 
+import { notFound } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
@@ -65,7 +66,13 @@ const DocumentViewer = ({
   );
 };
 
+const isAdminPortalEnabled = process.env.NEXT_PUBLIC_ENABLE_ADMIN_PORTAL === 'true';
+
 const AdminConfirmationPage = () => {
+  if (!isAdminPortalEnabled) {
+    notFound();
+  }
+
   const searchParams = useSearchParams();
   const customerId = searchParams.get('id') || '';
   const name = searchParams.get('name') || '';

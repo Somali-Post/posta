@@ -1,5 +1,6 @@
 'use client';
 
+import type { ComponentType } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FacebookIcon } from '../icons/FacebookIcon';
@@ -7,10 +8,16 @@ import { TwitterIcon } from '../icons/TwitterIcon';
 import { LinkedInIcon } from '../icons/LinkedInIcon';
 import { useTranslations } from '@/context/LanguageContext';
 
-const socialLinks = [
-  { key: 'twitter', href: '#', Icon: TwitterIcon },
-  { key: 'facebook', href: '#', Icon: FacebookIcon },
-  { key: 'linkedin', href: '#', Icon: LinkedInIcon },
+type SocialLink = {
+  key: string;
+  Icon: ComponentType<{ className?: string }>;
+  href?: string;
+};
+
+const socialLinks: SocialLink[] = [
+  { key: 'twitter', Icon: TwitterIcon, href: process.env.NEXT_PUBLIC_SOCIAL_TWITTER_URL },
+  { key: 'facebook', Icon: FacebookIcon, href: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK_URL },
+  { key: 'linkedin', Icon: LinkedInIcon, href: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN_URL },
 ];
 
 export const Footer = () => {
@@ -72,13 +79,19 @@ export const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">{footer.stayConnectedTitle}</h3>
             <p className="text-gray-400 mb-4">{footer.stayConnectedBody}</p>
-            <div className="flex items-center justify-center md:justify-start gap-4">
-              {socialLinks.map(({ key, href, Icon }) => (
-                <a key={key} href={href} className="text-gray-400 hover:text-white">
-                  <Icon className="w-6 h-6" />
-                </a>
-              ))}
-            </div>
+            {socialLinks.filter((link) => !!link.href).length > 0 ? (
+              <div className="flex items-center justify-center md:justify-start gap-4">
+                {socialLinks
+                  .filter((link) => !!link.href)
+                  .map(({ key, href, Icon }) => (
+                    <a key={key} href={href} className="text-gray-400 hover:text-white" target="_blank" rel="noreferrer">
+                      <Icon className="w-6 h-6" />
+                    </a>
+                  ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 italic">Social channels coming soon.</p>
+            )}
           </div>
         </div>
       </div>
@@ -88,10 +101,10 @@ export const Footer = () => {
             &copy; {currentYear} {footer.rights}
           </p>
           <div className="flex gap-4 mt-4 sm:mt-0">
-            <Link key="footer-privacy" href="#" className="hover:text-white">
+            <Link key="footer-privacy" href="/privacy" className="hover:text-white">
               {footer.privacy}
             </Link>
-            <Link key="footer-terms" href="#" className="hover:text-white">
+            <Link key="footer-terms" href="/terms" className="hover:text-white">
               {footer.terms}
             </Link>
           </div>

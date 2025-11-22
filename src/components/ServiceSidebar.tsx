@@ -24,19 +24,17 @@ export const ServiceSidebar = () => {
           </nav>
         </div>
 
-        {/* Contact Info */}
+        {/* Visit Info */}
         <div className="bg-white p-6 rounded-lg shadow-md">
-          <h3 className="text-xl font-bold text-dark-text border-b pb-3 mb-4">{serviceSidebar.needHelpTitle}</h3>
-          <p className="text-gray-600">{serviceSidebar.needHelpBody}</p>
+          <h3 className="text-xl font-bold text-dark-text border-b pb-3 mb-4">{serviceSidebar.visitTitle}</h3>
+          <p className="text-gray-600">{serviceSidebar.visitBody}</p>
           <p className="mt-4 text-gray-800">
             <strong>{serviceSidebar.locationLabel}</strong>
             <br />
             {serviceSidebar.hoursLabel}
           </p>
-          <Link href="/contact">
-            <button className="mt-4 w-full bg-somali-blue text-white font-bold py-2 rounded-md hover:bg-blue-700 transition-colors">
-              {serviceSidebar.contactButton}
-            </button>
+          <Link href="/help" className="inline-flex w-full mt-4 justify-center bg-somali-blue text-white font-bold py-2 rounded-md hover:bg-blue-700 transition-colors">
+            {serviceSidebar.helpLinkLabel}
           </Link>
         </div>
       </div>

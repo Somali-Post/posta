@@ -1,8 +1,9 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    qualities: [75, 100],
+    deviceSizes: [320, 420, 640, 768, 1024, 1200],
+    formats: ['image/avif', 'image/webp'],
   },
 };
 

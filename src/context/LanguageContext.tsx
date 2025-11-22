@@ -21,17 +21,15 @@ const isLanguage = (value: string | null): value is Language => {
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('en');
-
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window !== 'undefined') {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (isLanguage(stored)) {
+        return stored;
+      }
     }
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (isLanguage(stored)) {
-      setLanguage(stored);
-    }
-  }, []);
+    return 'en';
+  });
 
   const updateLanguage = (next: Language) => {
     setLanguage(next);
