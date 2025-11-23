@@ -15,6 +15,7 @@ export const Navbar = () => {
   const { language, setLanguage } = useLanguage();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const serviceLinks = [
     { href: '/services/receiving', label: translations.nav.dropdown.receiving },
@@ -63,19 +64,31 @@ export const Navbar = () => {
     };
   }, [isMenuOpen, isServicesOpen]);
 
-  const handleServiceMouseEnter = () => {
+  const clearHoverTimeout = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+  };
+
+  const handleServicePointerEnter = () => {
     if (typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches) {
+      clearHoverTimeout();
       setIsServicesOpen(true);
     }
   };
 
-  const handleServiceMouseLeave = () => {
+  const handleServicePointerLeave = () => {
     if (typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches) {
-      setIsServicesOpen(false);
+      clearHoverTimeout();
+      hoverTimeoutRef.current = setTimeout(() => {
+        setIsServicesOpen(false);
+      }, 150);
     }
   };
 
   const closeMenus = () => {
+    clearHoverTimeout();
     setIsMenuOpen(false);
     setIsServicesOpen(false);
   };
@@ -108,8 +121,8 @@ export const Navbar = () => {
           <div
             className="relative"
             ref={dropdownRef}
-            onMouseEnter={handleServiceMouseEnter}
-            onMouseLeave={handleServiceMouseLeave}
+            onPointerEnter={handleServicePointerEnter}
+            onPointerLeave={handleServicePointerLeave}
           >
             <button
               type="button"
