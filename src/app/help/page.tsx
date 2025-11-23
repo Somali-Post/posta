@@ -130,13 +130,13 @@ const HelpPage = () => {
                     <Link href="/track" className="font-semibold underline">
                       Track page
                     </Link>
-                    . This provides real-time updates on your shipment's journey.
+                    . This provides real-time updates on your shipment&rsquo;s journey.
                   </AccordionItem>
-                  <AccordionItem question="My tracking number says 'Not Found'. What does this mean?">
+                  <AccordionItem question="My tracking number says &lsquo;Not Found&rsquo;. What does this mean?">
                     This usually means the item is new to the system. Please check again in 24-48 hours. If the problem
                     persists, contact the sender to verify the tracking number.
                   </AccordionItem>
-                  <AccordionItem question="What does 'Arrival at inward office of exchange' mean?">
+                  <AccordionItem question="What does &lsquo;Arrival at inward office of exchange&rsquo; mean?">
                     This means your package has successfully arrived in Somalia and is at our main international
                     processing facility in Mogadishu, where it will be prepared for customs inspection.
                   </AccordionItem>
@@ -151,7 +151,7 @@ const HelpPage = () => {
                     .
                   </AccordionItem>
                   <AccordionItem question="What are the benefits of having a P.O. Box?">
-                    A P.O. Box provides a secure, private, and permanent address for all your mail. It's ideal for both
+                    A P.O. Box provides a secure, private, and permanent address for all your mail. It&rsquo;s ideal for both
                     individuals who want to protect their home address and for businesses that need a professional
                     mailing address.
                   </AccordionItem>
@@ -165,7 +165,7 @@ const HelpPage = () => {
                   </AccordionItem>
                   <AccordionItem question="What documents do I need to bring to collect my parcel?">
                     To collect your item, you must bring a valid National Identification (NIRA) ID card or Passport, the
-                    item's tracking number, and the notification message (SMS/email) you received from us.
+                    item&rsquo;s tracking number, and the notification message (SMS/email) you received from us.
                   </AccordionItem>
                   <AccordionItem question="Can someone else collect my parcel for me?">
                     Yes. The person collecting on your behalf must bring their own original NIRA ID card, a signed letter
@@ -191,7 +191,7 @@ const HelpPage = () => {
             <div className="text-center mb-12">
               <h2 className="text-4xl font-bold text-brand-dark-blue">Get Direct Support</h2>
               <p className="text-lg text-gray-600 mt-2">
-                Can't find an answer? Contact us directly or visit us at the General Post Office.
+                Can&rsquo;t find an answer? Contact us directly or visit us at the General Post Office.
               </p>
             </div>
             <div className="grid lg:grid-cols-2 gap-12">

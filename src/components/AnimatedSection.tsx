@@ -1,4 +1,3 @@
-// src/components/AnimatedSection.tsx
 "use client";
 import { useEffect, useRef, useState, ReactNode } from 'react';
 
@@ -17,17 +16,18 @@ export const AnimatedSection = ({ children }: { children: ReactNode }) => {
       {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1, // Trigger when 10% of the section is visible
+        threshold: 0.1,
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const sectionElement = sectionRef.current;
+    if (sectionElement) {
+      observer.observe(sectionElement);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (sectionElement) {
+        observer.unobserve(sectionElement);
       }
     };
   }, []);

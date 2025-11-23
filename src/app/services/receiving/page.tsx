@@ -19,7 +19,6 @@ const ReceivingPage = () => {
           <section className="py-20">
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
-                {/* --- THE FIX (Part 1): Customer-Friendly Language --- */}
                 <h2 className="text-4xl font-bold text-brand-dark-blue">Receiving from Abroad</h2>
                 <p className="text-lg text-gray-600 mt-2">Follow these simple steps to receive your international items.</p>
               </div>
@@ -79,7 +78,7 @@ const ReceivingPage = () => {
                     <h3 className="text-2xl font-bold text-dark-text mb-4">What to Bring for Collection</h3>
                     <ul className="list-disc list-inside space-y-2 text-gray-700">
                       <li className="font-semibold">Valid National ID (NIRA) or Passport</li>
-                      <li>Your item's tracking number</li>
+                      <li>Your item&rsquo;s tracking number</li>
                       <li>The notification message (SMS/email)</li>
                     </ul>
                   </div>
@@ -111,13 +110,11 @@ const ReceivingPage = () => {
         <AnimatedSection>
           <section className="py-20 bg-brand-dark-blue text-white">
             <div className="container mx-auto px-4 text-center">
-              {/* --- THE FIX (Part 1): Customer-Friendly Language --- */}
               <h2 className="text-4xl font-bold">Coming in 2026: Sending to the World</h2>
               <p className="text-xl opacity-90 mt-4 max-w-3xl mx-auto">
                 Get ready to connect with the world. Our new outbound service will allow you to send letters and parcels from your local neighborhood to any destination globally.
               </p>
               <div className="mt-12 grid md:grid-cols-3 gap-8">
-                {/* --- THE FIX (Part 3): Visually Harmonious "Frosted Glass" Cards --- */}
                 <div className="bg-white bg-opacity-10 hover:bg-opacity-20 transition-all p-6 rounded-lg transform hover:scale-105">
                   <h3 className="font-bold text-2xl">Digital-First Customs</h3>
                   <p className="opacity-80 mt-2">Fast, accurate customs clearance using the modern UPU Customs Declaration System (CDS).</p>

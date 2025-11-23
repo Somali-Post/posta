@@ -116,9 +116,10 @@ const AdminConfirmationPage = () => {
       if (!response.ok) throw new Error(result.error);
       setStatus('success');
       setMessage(result.message);
-    } catch (err: any) {
+    } catch (error) {
       setStatus('idle');
-      setError(err.message);
+      const message = error instanceof Error ? error.message : 'An unexpected error occurred.';
+      setError(message);
     }
   };
 

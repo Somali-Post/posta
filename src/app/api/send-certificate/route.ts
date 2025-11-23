@@ -107,8 +107,9 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ message: `Certificate sent to ${customer.email} successfully!` });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Send Certificate API Error:', error);
-    return NextResponse.json({ error: error.message || 'An unknown server error occurred.' }, { status: 500 });
+    const message = error instanceof Error ? error.message : 'An unknown server error occurred.';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

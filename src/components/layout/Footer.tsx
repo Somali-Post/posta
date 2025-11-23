@@ -37,7 +37,15 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center md:text-left">
           <div>
             <Link href="/" className="flex items-center justify-center md:justify-start gap-3 mb-4">
-              <Image src="/images/somali-post-logo.png" alt="Somali Post Logo" width={50} height={50} />
+              <span className="inline-flex items-center justify-center rounded-full bg-white p-1">
+                <Image
+                  src="/images/somali-post-logo.png"
+                  alt="Somali Post Logo"
+                  width={50}
+                  height={50}
+                  className="rounded-full"
+                />
+              </span>
               <span className="text-xl font-bold">Posta.so</span>
             </Link>
             <h3 className="font-bold text-lg mb-2">{footer.aboutTitle}</h3>

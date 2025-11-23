@@ -5,7 +5,8 @@ import { Navbar } from '@/components/layout/Navbar';
 import { Footer } from '@/components/layout/Footer';
 import TrackIcon from '@/components/icons/TrackIcon';
 import { countryCodeToFlag } from '@/lib/utils';
-import { useTranslations } from '@/context/LanguageContext';
+import { useLanguage, useTranslations } from '@/context/LanguageContext';
+import { getEventInfo, getStateLabel } from '@/lib/trackingEvents';
 
 interface TrackingEvent {
   status: string;
@@ -24,6 +25,8 @@ interface TrackingData {
   destinationCode?: string;
   history: TrackingEvent[];
   message?: string;
+  stateCode?: string;
+  latestEventCode?: string;
 }
 
 const formatTimestamp = (ts: string) => {
@@ -36,7 +39,7 @@ const formatTimestamp = (ts: string) => {
       hour: '2-digit',
       minute: '2-digit',
     });
-  } catch (e) {
+  } catch {
     return ts;
   }
 };
@@ -55,6 +58,7 @@ const TrackPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [inputError, setInputError] = useState<string | null>(null);
   const { track } = useTranslations();
+  const { language } = useLanguage();
   const trackingFormat = /^[A-Z]{2}\d{9}[A-Z]{2}$/;
 
   const handleIdChange = (value: string) => {
@@ -92,7 +96,7 @@ const TrackPage = () => {
 
       const result: TrackingData = await response.json();
       setData(result);
-    } catch (err) {
+    } catch {
       setError(track.error);
     } finally {
       setIsLoading(false);
@@ -108,6 +112,23 @@ const TrackPage = () => {
       return countryCodeToFlag(fallback);
     }
     return '';
+  };
+
+  const resolveCurrentStatus = () => {
+    if (!data) {
+      return '';
+    }
+    const localizedEvent = getEventInfo(data.latestEventCode, language);
+    const localizedState = getStateLabel(data.stateCode, language);
+    return localizedEvent?.label ?? localizedState ?? data.status;
+  };
+
+  const resolveEventCopy = (event: TrackingEvent) => {
+    const info = getEventInfo(event.code, language);
+    return {
+      label: info?.label ?? event.status,
+      explanation: info?.explanation ?? event.explanation,
+    };
   };
 
   return (
@@ -181,7 +202,7 @@ const TrackPage = () => {
 
                     <div className="bg-brand-dark-blue text-white p-6 rounded-lg">
                       <p className="text-sm uppercase tracking-wider">{track.currentStatus}</p>
-                      <p className="text-4xl font-bold">{data.status}</p>
+                      <p className="text-4xl font-bold">{resolveCurrentStatus()}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-center text-center">
@@ -212,15 +233,18 @@ const TrackPage = () => {
                     <div>
                       <h3 className="text-2xl font-bold mb-4 border-t pt-8">{track.historyTitle}</h3>
                       <div className="border-l-2 border-brand-dark-blue pl-6">
-                        {data.history.map((event, index) => (
-                          <div key={index} className="relative mb-8">
+                        {data.history.map((event) => {
+                          const localized = resolveEventCopy(event);
+                          return (
+                            <div key={event.timestamp + event.code} className="relative mb-8">
                             <div className="absolute -left-[35px] top-1 w-4 h-4 bg-brand-dark-blue rounded-full border-4 border-white" />
-                            <p className="font-bold text-lg text-dark-text">{event.status}</p>
-                            {event.explanation && <p className="text-md text-gray-600 mt-1">{event.explanation}</p>}
+                            <p className="font-bold text-lg text-dark-text">{localized.label}</p>
+                            {localized.explanation && <p className="text-md text-gray-600 mt-1">{localized.explanation}</p>}
                             <p className="text-gray-500 mt-2">{event.location}</p>
                             <p className="text-sm text-gray-500 mt-1">{formatTimestamp(event.timestamp)}</p>
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   </div>

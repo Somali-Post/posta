@@ -1,4 +1,3 @@
-// src/components/ServicePageHero.tsx
 
 interface ServicePageHeroProps {
   title: string;

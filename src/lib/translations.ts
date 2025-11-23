@@ -29,6 +29,17 @@ interface HelpContactHour {
   value: string;
 }
 
+interface RugPudoHighlight {
+  title: string;
+  description: string;
+}
+
+interface RugPudoRoadmapStep {
+  step: string;
+  title: string;
+  description: string;
+}
+
 interface Testimonial {
   quote: string;
   author: string;
@@ -221,6 +232,11 @@ export interface TranslationContent {
     heading: string;
     body: string;
     cta: string;
+    highlights: RugPudoHighlight[];
+    roadmap: RugPudoRoadmapStep[];
+    whyTitle: string;
+    whyHeading: string;
+    whyBody: string;
   };
   footer: {
     aboutTitle: string;
@@ -444,6 +460,41 @@ export const translations: Record<Language, TranslationContent> = {
       heading: 'The RUG PUDO Network: Postal Services, Closer to You',
       body: 'Soon, you can pick up and drop off parcels at trusted local shops and businesses in your neighborhood.',
       cta: 'Discover the Network',
+      highlights: [
+        {
+          title: 'Neighborhood Hubs',
+          description: 'Supermarkets, pharmacies, and mom-and-pop stores become your drop-off and pickup points.',
+        },
+        {
+          title: 'Digital Check-ins',
+          description: 'Each parcel is scanned in the Rug Agent app, so you see when it arrives and who collected it.',
+        },
+        {
+          title: 'Secure Codes',
+          description: 'Recipients present a one-time pickup code, ensuring parcels never leave with the wrong person.',
+        },
+      ],
+      roadmap: [
+        {
+          step: '01',
+          title: 'Pilot in Mogadishu',
+          description: 'Founding partners are selected in the busiest districts.',
+        },
+        {
+          step: '02',
+          title: 'Nationwide Rollout',
+          description: 'Every region receives a cluster of trained Rug PUDO shops.',
+        },
+        {
+          step: '03',
+          title: 'Two-way services',
+          description: 'Send or receive items at the same point—true last-mile coverage.',
+        },
+      ],
+      whyTitle: 'Why it matters',
+      whyHeading: 'Trust, traceability, and time saved.',
+      whyBody:
+        'Every pickup and drop-off feeds live tracking data back to our main hub, so customers get instant SMS updates and our operations team sees the entire journey.',
     },
     footer: {
       aboutTitle: 'About Posta.so',
@@ -1013,6 +1064,41 @@ export const translations: Record<Language, TranslationContent> = {
       heading: 'Shabakadda RUG PUDO: Adeegyada Boosaha oo Kuu Soo Dhaw',
       body: 'Mar dhow waxaad xirmooyinka ku qaadi ama ku dhiibi kartaa dukaamada iyo ganacsiyada lagu kalsoon yahay ee xaafaddaada.',
       cta: 'Soo Ogaaw Shabakadda',
+      highlights: [
+        {
+          title: 'Goobaha Xaafadda',
+          description: 'Suqyada, farmashiyeyaasha, iyo dukaamada yaryar ayaa noqda meelaha aad wax ku dhiibato oo ku qaadato.',
+        },
+        {
+          title: 'Hubin Dijitaal ah',
+          description: 'Xirmo kasta waxa lagu sawiraa app-ka Rug Agent, sidaas ayaad ku aragtaa marka ay timaado iyo cidda qaadatay.',
+        },
+        {
+          title: 'Koodhadh Ammaan ah',
+          description: 'Qof walba waxa uu keenaa koodh hal-mar ah marka uu qaadanayo si aan xirmooyinka khaldan loogu dhiibin.',
+        },
+      ],
+      roadmap: [
+        {
+          step: '01',
+          title: 'Tijaabada Muqdisho',
+          description: 'Lammaanayaasha aasaasiga ah ayaa laga xulayaa degmooyinka ugu mashquulka badan.',
+        },
+        {
+          step: '02',
+          title: 'Faafin Qaran',
+          description: 'Gobol walba waxa loo sameeyaa koox Rug PUDO ah oo tababar qaadatay.',
+        },
+        {
+          step: '03',
+          title: 'Adeegyo Laba-Jiho ah',
+          description: 'Halka aad wax ka qaado ayaad sidoo kale wax ka diri kartaa—gaarsiin dhammaystiran.',
+        },
+      ],
+      whyTitle: 'Sababta ay Muhiim u tahay',
+      whyHeading: 'Kalsooni, raad-raac, iyo waqti la badbaadiyay.',
+      whyBody:
+        'Mar kasta oo la keeno ama laga qaado xirmo waxa xogtu ku dhacdaa xarunta dhexe, macmiilkuna waxa uu helaa SMS degdeg ah halka kooxda hawlgalku ay aragto safarka oo dhan.',
     },
     footer: {
       aboutTitle: 'Ku Saabsan Posta.so',
@@ -1583,6 +1669,40 @@ export const translations: Record<Language, TranslationContent> = {
       heading: 'شبكة RUG PUDO: خدمات البريد أقرب إليك',
       body: 'عمّا قريب ستتمكن من استلام وتسليم الطرود في المتاجر والأعمال المحلية الموثوقة داخل حيك.',
       cta: 'اكتشف الشبكة',
+      highlights: [
+        {
+          title: 'مراكز الأحياء',
+          description: 'المتاجر والصيدليات والمحلات الصغيرة تصبح نقاطاً مريحة للاستلام والتسليم.',
+        },
+        {
+          title: 'عمليات تحقق رقمية',
+          description: 'يتم مسح كل طرد في تطبيق Rug Agent حتى تعرف وقت وصوله والجهة التي استلمته.',
+        },
+        {
+          title: 'رموز أمان فريدة',
+          description: 'يقدم المستلم رمزاً مرة واحدة ما يضمن عدم تسليم الطرد للشخص الخطأ.',
+        },
+      ],
+      roadmap: [
+        {
+          step: '01',
+          title: 'مرحلة تجريبية في مقديشو',
+          description: 'يتم اختيار الشركاء المؤسسين في أكثر الأحياء حركة.',
+        },
+        {
+          step: '02',
+          title: 'انتشار على مستوى البلاد',
+          description: 'يحصل كل إقليم على مجموعة من متاجر Rug PUDO المدربة.',
+        },
+        {
+          step: '03',
+          title: 'خدمات باتجاهين',
+          description: 'إرسال واستلام الطرد من نفس النقطة لتحقيق تغطية كاملة للميل الأخير.',
+        },
+      ],
+      whyTitle: 'لماذا يهم',
+      whyHeading: 'ثقة وتتبع ووقت يتم توفيره.',
+      whyBody: 'كل عملية استلام أو تسليم تغذي بيانات التتبع مباشرة إلى مركزنا الرئيسي ليحصل العملاء على إشعارات فورية ولتستطيع فرق العمل متابعة مسار الطرد بالكامل.',
     },
     footer: {
       aboutTitle: 'عن Posta.so',

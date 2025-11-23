@@ -1,6 +1,5 @@
 "use client";
 
-// src/components/Hero.tsx
 import { ArrowRightIcon } from './icons/ArrowRightIcon';
 import { Button } from './Button';
 import { useTranslations } from '@/context/LanguageContext';

@@ -28,7 +28,8 @@ export async function POST(request: Request) {
     if (error) throw error;
 
     return NextResponse.json({ signedUrl: data.signedUrl });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : 'An unknown error occurred.';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

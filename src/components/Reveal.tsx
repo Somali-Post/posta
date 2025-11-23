@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { ElementType, MutableRefObject, ReactNode, useEffect, useRef } from "react";
 
 type Props = {
-  as?: React.ElementType;
+  as?: ElementType;
   className?: string;
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export default function Reveal({ as: Tag = "section", className, children }: Props) {
@@ -32,7 +32,10 @@ export default function Reveal({ as: Tag = "section", className, children }: Pro
   }, []);
 
   return (
-    <Tag ref={ref as any} className={["reveal", className].filter(Boolean).join(" ")}> 
+    <Tag
+      ref={ref as MutableRefObject<HTMLElement | null>}
+      className={["reveal", className].filter(Boolean).join(" ")}
+    >
       {children}
     </Tag>
   );

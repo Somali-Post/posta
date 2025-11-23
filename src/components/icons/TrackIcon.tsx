@@ -20,4 +20,3 @@ export default function TrackIcon({ className }: Props) {
     </svg>
   );
 }
-

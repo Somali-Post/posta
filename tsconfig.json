@@ -21,15 +21,12 @@
         "name": "next"
       }
     ],
-    // --- THIS IS THE FIX ---
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"
       ]
-    }
-    // ----------------------
-    ,
+    },
     "target": "ES2017"
   },
   "include": [

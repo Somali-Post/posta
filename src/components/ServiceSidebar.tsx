@@ -1,6 +1,5 @@
 'use client';
 
-// src/components/ServiceSidebar.tsx
 import Link from 'next/link';
 import { useTranslations } from '@/context/LanguageContext';
 

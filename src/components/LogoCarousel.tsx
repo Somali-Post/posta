@@ -1,6 +1,5 @@
 'use client';
 
-// src/components/LogoCarousel.tsx
 import Image from 'next/image';
 import { useEffect, useMemo, useRef, useId, useState } from 'react';
 import { useTranslations } from '@/context/LanguageContext';
