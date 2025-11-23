@@ -553,7 +553,7 @@ export const translations: Record<Language, TranslationContent> = {
       contactTitle: 'Contact Us',
       contactLines: ['General Post Office (GPO)', 'Jamhuuriya Road, Boondheere District', 'Muqdisho, Somalia'],
       emailLabel: 'Email',
-      emailValue: 'posta@moct.gov.so',
+      emailValue: 'Postalservice@moct.gov.so',
       phoneLabel: 'Phone',
       phoneValue: '252-611003239',
       stayConnectedTitle: 'Stay Connected',
@@ -722,6 +722,16 @@ export const translations: Record<Language, TranslationContent> = {
             answer:
               'This usually means the item has just been posted and has not yet been scanned into the international postal system. Please check again in 24-48 hours. If the problem persists, please contact the sender to verify the tracking number.',
           },
+          {
+            question: "What does 'Arrival at inward office of exchange' mean?",
+            answer:
+              'It means your parcel has reached Somalia and is being processed at our import facility in Mogadishu before customs inspection.',
+          },
+          {
+            question: "The status says 'Held by customs'. What should I do?",
+            answer:
+              'Customs may need additional documents or duties. Follow any instructions you receive or contact us with your tracking number so we can help.',
+          },
         ],
         parcel: [
           {
@@ -739,12 +749,27 @@ export const translations: Record<Language, TranslationContent> = {
             answer:
               'Yes, but they must bring their own NIRA ID card, a signed letter of authorization from you, and a copy of your NIRA ID card.',
           },
+          {
+            question: 'What happens if I cannot collect my parcel right away?',
+            answer:
+              'We will hold your parcel for 14 days after notification. Please visit the GPO as soon as possible or contact us if you need more time.',
+          },
         ],
         general: [
           {
             question: 'Do you handle outbound (international) mail?',
             answer:
               'Currently, we only handle inbound mail and parcels. Outbound services are planned for the near future. Please check our website for updates.',
+          },
+          {
+            question: 'What is the RUG PUDO Network?',
+            answer:
+              'It is our upcoming network of neighborhood partners where you will be able to send and receive mail closer to home. Pilot locations launch soon.',
+          },
+          {
+            question: 'How can I contact support directly?',
+            answer:
+              'Visit the Help page, email Postalservice@moct.gov.so, call +252-611003239, or visit the General Post Office during business hours.',
           },
         ],
       },
@@ -753,7 +778,7 @@ export const translations: Record<Language, TranslationContent> = {
         addressLabel: 'Address',
         address: 'Jamhuuriya Road, Boondheere District, Muqdisho, Somalia',
         emailLabel: 'Email',
-        email: 'posta@moct.gov.so',
+        email: 'Postalservice@moct.gov.so',
         phoneLabel: 'Phone',
         phone: '252-611003239',
         hoursLabel: 'Opening Hours',
@@ -867,7 +892,7 @@ export const translations: Record<Language, TranslationContent> = {
           {
             title: '4. Your Choices',
             body:
-              'You may request corrections or deletion of optional data at any time by emailing posta@moct.gov.so. Some records must be retained to comply with postal regulations.',
+              'You may request corrections or deletion of optional data at any time by emailing Postalservice@moct.gov.so. Some records must be retained to comply with postal regulations.',
           },
         ],
       },
@@ -1200,7 +1225,7 @@ export const translations: Record<Language, TranslationContent> = {
       contactTitle: 'Nala Soo Xidhiidh',
       contactLines: ['Xarunta Boostada Guud (GPO)', 'Jamhuuriya Road, Degmada Boondheere', 'Muqdisho, Soomaaliya'],
       emailLabel: 'Iimayl',
-      emailValue: 'posta@moct.gov.so',
+      emailValue: 'Postalservice@moct.gov.so',
       phoneLabel: 'Telefoon',
       phoneValue: '252-611003239',
       stayConnectedTitle: 'Ku Xirnow',
@@ -1369,6 +1394,16 @@ export const translations: Record<Language, TranslationContent> = {
             answer:
               'Waxa ay badanaa ka dhigan tahay in xirmada la diray dhawaan oo aan weli lagu darin nidaamka caalamiga ah. Fadlan eeg mar labaad 24–48 saacadood gudahood. Haddii dhibaatadu sii socoto, la xidhiidh qofkii kuu diray si uu u xaqiijiyo lambarka.',
           },
+          {
+            question: "Maxay ka dhigan tahay 'Arrival at inward office of exchange'?",
+            answer:
+              'Waxay ka dhigan tahay in xirmadaadu soo gaadhay Soomaaliya islamarkaana lagu farsamayno xarunta soo dejinta ee Muqdisho ka hor intaan kastamku hubin.',
+          },
+          {
+            question: "Haddii fariintu tidhaahdo 'Held by customs' maxaan sameeyaa?",
+            answer:
+              'Kastamku waxa laga yaabaa inuu weydiisto dukumeenti ama canshuur dheeri ah. Raac tilmaamaha aad hesho ama nala soo xidhiidh adigoo wata lambarka raadraaca si aanu kaaga caawino.',
+          },
         ],
         parcel: [
           {
@@ -1386,12 +1421,27 @@ export const translations: Record<Language, TranslationContent> = {
             answer:
               'Haa, balse waa inuu keenaa kaarkiisa NIRA, warqad oggolaansho oo aad saxiixday, iyo nuqul ka mid ah kaarkaaga NIRA.',
           },
+          {
+            question: 'Maxaa dhaca haddii aanan markiiba qaadan karin xirmada?',
+            answer:
+              'Waxaanu haynaa xirmadaada ilaa 14 maalmood marka lagu wargeliyo. Fadlan ugaalay GPO sida ugu dhakhsaha badan ama nala soo xidhiidh haddii aad u baahan tahay waqti dheeraad ah.',
+          },
         ],
         general: [
           {
             question: 'Ma maamulaan boostada dibadda loo diro?',
             answer:
               'Hadda waxaanu kaliya maamulnaa boostada iyo xirmooyinka gudaha loo soo diro. Adeegyada dibadda loo diro waxa lagu dari doonaa dhawaan, fadlan isha ku hay boggayaga.',
+          },
+          {
+            question: 'Waa maxay shabakadda RUG PUDO?',
+            answer:
+              'Waa shabakad ganacsiyo xaafadeed oo lagu kalsoon yahay si aad uga diri karto ugana qaadan karto xirmooyinka meel kuu dhow. Tijaabooyinka ayaa dhowaan bilaabanaya.',
+          },
+          {
+            question: 'Sideen ula xidhiidhi karaa taageerada?',
+            answer:
+              'Booqo bogga Caawinta, iimayl noogu soo dir Postalservice@moct.gov.so, wac +252-611003239, ama booqo Xarunta Boostada Guud saacadaha shaqada.',
           },
         ],
       },
@@ -1400,7 +1450,7 @@ export const translations: Record<Language, TranslationContent> = {
         addressLabel: 'Cinwaan',
         address: 'Jamhuuriya Road, Degmada Boondheere, Muqdisho, Soomaaliya',
         emailLabel: 'Iimayl',
-        email: 'posta@moct.gov.so',
+        email: 'Postalservice@moct.gov.so',
         phoneLabel: 'Telefoon',
         phone: '252-611003239',
         hoursLabel: 'Saacadaha Furitaanka',
@@ -1514,7 +1564,7 @@ export const translations: Record<Language, TranslationContent> = {
           {
             title: '4. Your Choices',
             body:
-              'You may request corrections or deletion of optional data at any time by emailing posta@moct.gov.so. Some records must be retained to comply with postal regulations.',
+              'You may request corrections or deletion of optional data at any time by emailing Postalservice@moct.gov.so. Some records must be retained to comply with postal regulations.',
           },
         ],
       },
@@ -1847,7 +1897,7 @@ export const translations: Record<Language, TranslationContent> = {
       contactTitle: 'تواصل معنا',
       contactLines: ['المكتب البريدي العام (GPO)', 'شارع جمهورية، حي بونطير', 'مقديشو، الصومال'],
       emailLabel: 'البريد الإلكتروني',
-      emailValue: 'posta@moct.gov.so',
+      emailValue: 'Postalservice@moct.gov.so',
       phoneLabel: 'الهاتف',
       phoneValue: '252-611003239',
       stayConnectedTitle: 'ابق على اتصال',
@@ -2015,6 +2065,16 @@ export const translations: Record<Language, TranslationContent> = {
             answer:
               'غالباً ما يعني أن الشحنة أُرسلت للتو ولم تُسجّل بعد في النظام البريدي الدولي. يرجى إعادة المحاولة خلال 24-48 ساعة. إذا استمرت المشكلة تواصل مع المرسل للتأكد من الرقم.',
           },
+          {
+            question: "ماذا يعني تحديث \"Arrival at inward office of exchange\"؟",
+            answer:
+              'يعني أن شحنتك وصلت إلى الصومال ويتم التعامل معها في مركز الواردات بمقديشو قبل الفحص الجمركي.',
+          },
+          {
+            question: "ظهرت حالة \"Held by customs\"، ماذا أفعل؟",
+            answer:
+              'قد تطلب الجمارك مستندات إضافية أو دفع رسوم. اتبع التعليمات التي تصلك أو تواصل معنا واذكر رقم التتبع لنساعدك.',
+          },
         ],
         parcel: [
           {
@@ -2032,12 +2092,27 @@ export const translations: Record<Language, TranslationContent> = {
             answer:
               'نعم، لكن يجب أن يحضر بطاقة هويته NIRA، ورسالة تفويض موقعة منك، ونسخة من بطاقة هويتك.',
           },
+          {
+            question: 'ماذا يحدث إذا لم أستطع استلام الطرد مباشرة؟',
+            answer:
+              'نحتفظ بالطرد لمدة 14 يوماً بعد الإشعار. يرجى زيارة المكتب البريدي العام في أقرب وقت أو التواصل معنا إذا احتجت وقتاً إضافياً.',
+          },
         ],
         general: [
           {
             question: 'هل تقدمون خدمات البريد إلى خارج البلاد؟',
             answer:
               'حالياً ندير البريد والطرود الواردة فقط. سنطلق خدمات الإرسال إلى الخارج قريباً، تابع موقعنا للتحديثات.',
+          },
+          {
+            question: 'ما هي شبكة RUG PUDO؟',
+            answer:
+              'هي شبكة من شركائنا المحليين لتمكينك من إرسال واستلام الطرود من متاجر قريبة منك. سيتم إطلاقها تدريجياً في الأحياء.',
+          },
+          {
+            question: 'كيف أتواصل مع فريق الدعم؟',
+            answer:
+              'زر صفحة المساعدة، أو راسلنا على Postalservice@moct.gov.so، أو اتصل على ‎+252-611003239، أو قم بزيارة المكتب البريدي العام خلال الدوام.',
           },
         ],
       },
@@ -2046,7 +2121,7 @@ export const translations: Record<Language, TranslationContent> = {
         addressLabel: 'العنوان',
         address: 'شارع جمهورية، حي بونطير، مقديشو، الصومال',
         emailLabel: 'البريد الإلكتروني',
-        email: 'posta@moct.gov.so',
+        email: 'Postalservice@moct.gov.so',
         phoneLabel: 'الهاتف',
         phone: '252-611003239',
         hoursLabel: 'ساعات العمل',
@@ -2160,7 +2235,7 @@ export const translations: Record<Language, TranslationContent> = {
           {
             title: '4. Your Choices',
             body:
-              'You may request corrections or deletion of optional data at any time by emailing posta@moct.gov.so. Some records must be retained to comply with postal regulations.',
+              'You may request corrections or deletion of optional data at any time by emailing Postalservice@moct.gov.so. Some records must be retained to comply with postal regulations.',
           },
         ],
       },
