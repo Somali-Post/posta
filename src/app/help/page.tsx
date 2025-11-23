@@ -7,8 +7,14 @@ import { Footer } from '@/components/layout/Footer';
 import { ServicePageHero } from '@/components/ServicePageHero';
 import { AccordionItem } from '@/components/AccordionItem';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
+import { useTranslations } from '@/context/LanguageContext';
+import type { TranslationContent } from '@/lib/translations';
 
-const ContactForm = () => {
+type ContactFormProps = {
+  copy: TranslationContent['help']['contactForm'];
+};
+
+const ContactForm = ({ copy }: ContactFormProps) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessageText] = useState('');
@@ -27,21 +33,22 @@ const ContactForm = () => {
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       setStatus('success');
-      setResponseMsg(result.success);
+      setResponseMsg('');
       setName('');
       setEmail('');
       setMessageText('');
-    } catch (err: any) {
+    } catch (error) {
+      console.error(error);
       setStatus('error');
-      setResponseMsg(err.message || 'An unknown error occurred.');
+      setResponseMsg(copy.errorMessage);
     }
   };
 
   if (status === 'success') {
     return (
       <div className="p-6 bg-green-100 text-green-800 rounded-lg text-center">
-        <h3 className="font-bold text-xl">{responseMsg}</h3>
-        <p>We will get back to you shortly.</p>
+        <h3 className="font-bold text-xl">{copy.successTitle}</h3>
+        <p>{copy.successBody}</p>
       </div>
     );
   }
@@ -50,7 +57,7 @@ const ContactForm = () => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-          Your Name
+          {copy.nameLabel}
         </label>
         <input
           type="text"
@@ -63,7 +70,7 @@ const ContactForm = () => {
       </div>
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Your Email
+          {copy.emailLabel}
         </label>
         <input
           type="email"
@@ -76,7 +83,7 @@ const ContactForm = () => {
       </div>
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-          Your Inquiry
+          {copy.messageLabel}
         </label>
         <textarea
           id="message"
@@ -92,96 +99,73 @@ const ContactForm = () => {
         disabled={status === 'loading'}
         className="w-full bg-brand-dark-blue text-white font-bold py-3 rounded-md hover:bg-blue-900 transition disabled:bg-gray-400"
       >
-        {status === 'loading' ? 'Sending...' : 'Send Message'}
+        {status === 'loading' ? copy.submittingLabel : copy.submitLabel}
       </button>
       {status === 'error' && (
-        <div className="p-4 bg-red-100 text-red-800 rounded-md text-center">{responseMsg}</div>
+        <div className="p-4 bg-red-100 text-red-800 rounded-md text-center">{responseMsg || copy.errorMessage}</div>
       )}
     </form>
   );
 };
 
+const renderAnswer = (faq: TranslationContent['help']['faqs']['tracking'][number]) => {
+  if (faq.answerParts) {
+    const [before, linkText, after] = faq.answerParts;
+    return (
+      <span>
+        {before}
+        <Link href="/track" className="font-semibold underline">
+          {linkText}
+        </Link>
+        {after}
+      </span>
+    );
+  }
+  return faq.answer ?? null;
+};
+
 const HelpPage = () => {
   const gpoPosition = { lat: 2.040212912457093, lng: 45.347156485402365 };
+  const { help } = useTranslations();
+  const { sections, faqs, contact, supportSection, contactForm } = help;
 
   return (
     <div className="bg-light-gray">
       <Navbar />
       <main>
-        <ServicePageHero
-          title="Support & Contact Center"
-          subtitle="We're here to help. Find answers to common questions or get in touch with our team directly."
-        />
+        <ServicePageHero title={help.heroTitle} subtitle={help.heroSubtitle} />
 
         <div className="container mx-auto px-4 py-16">
           <section className="mb-20">
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-brand-dark-blue">Find Answers Fast</h2>
-              <p className="text-lg text-gray-600 mt-2">
-                Browse our frequently asked questions to find the information you need.
-              </p>
+              <h2 className="text-4xl font-bold text-brand-dark-blue">{help.faqTitle}</h2>
+              <p className="text-lg text-gray-600 mt-2">{help.heroSubtitle}</p>
             </div>
             <div className="max-w-6xl mx-auto bg-white p-8 rounded-lg shadow-md">
               <div className="grid md:grid-cols-2 gap-x-12">
                 <div className="space-y-4">
-                  <h3 className="text-xl font-semibold text-brand-dark-blue pt-4 border-b pb-2">Tracking</h3>
-                  <AccordionItem question="How do I track my item?">
-                    You can track your item by entering the 13-digit tracking number on our{' '}
-                    <Link href="/track" className="font-semibold underline">
-                      Track page
-                    </Link>
-                    . This provides real-time updates on your shipment&rsquo;s journey.
-                  </AccordionItem>
-                  <AccordionItem question="My tracking number says &lsquo;Not Found&rsquo;. What does this mean?">
-                    This usually means the item is new to the system. Please check again in 24-48 hours. If the problem
-                    persists, contact the sender to verify the tracking number.
-                  </AccordionItem>
-                  <AccordionItem question="What does &lsquo;Arrival at inward office of exchange&rsquo; mean?">
-                    This means your package has successfully arrived in Somalia and is at our main international
-                    processing facility in Mogadishu, where it will be prepared for customs inspection.
-                  </AccordionItem>
+                  <h3 className="text-xl font-semibold text-brand-dark-blue pt-4 border-b pb-2">{sections.tracking}</h3>
+                  {faqs.tracking.map((faq) => (
+                    <AccordionItem key={faq.question} question={faq.question}>
+                      {renderAnswer(faq)}
+                    </AccordionItem>
+                  ))}
 
-                  <h3 className="text-xl font-semibold text-brand-dark-blue pt-6 border-b pb-2">P.O. Boxes</h3>
-                  <AccordionItem question="How do I apply for a P.O. Box?">
-                    Currently, all P.O. Box applications must be made in person at the GPO. We are launching a full
-                    online registration portal very soon, which you can find on our{' '}
-                    <Link href="/services/po-box" className="font-semibold underline">
-                      P.O. Box page
-                    </Link>
-                    .
-                  </AccordionItem>
-                  <AccordionItem question="What are the benefits of having a P.O. Box?">
-                    A P.O. Box provides a secure, private, and permanent address for all your mail. It&rsquo;s ideal for both
-                    individuals who want to protect their home address and for businesses that need a professional
-                    mailing address.
-                  </AccordionItem>
+                  <h3 className="text-xl font-semibold text-brand-dark-blue pt-6 border-b pb-2">{sections.parcel}</h3>
+                  {faqs.parcel.map((faq) => (
+                    <AccordionItem key={faq.question} question={faq.question}>
+                      {faq.answer}
+                    </AccordionItem>
+                  ))}
                 </div>
 
                 <div className="space-y-4 mt-10 md:mt-0">
-                  <h3 className="text-xl font-semibold text-brand-dark-blue pt-4 border-b pb-2">Parcel Collection</h3>
-                  <AccordionItem question="How will I know when my parcel is ready for collection?">
-                    We will send an SMS or email notification to you as soon as your item has been processed at the
-                    General Post Office (GPO) and is ready for you to pick up.
-                  </AccordionItem>
-                  <AccordionItem question="What documents do I need to bring to collect my parcel?">
-                    To collect your item, you must bring a valid National Identification (NIRA) ID card or Passport, the
-                    item&rsquo;s tracking number, and the notification message (SMS/email) you received from us.
-                  </AccordionItem>
-                  <AccordionItem question="Can someone else collect my parcel for me?">
-                    Yes. The person collecting on your behalf must bring their own original NIRA ID card, a signed letter
-                    of authorization from you, and a copy of your NIRA ID card.
-                  </AccordionItem>
-
-                  <h3 className="text-xl font-semibold text-brand-dark-blue pt-6 border-b pb-2">General Services</h3>
-                  <AccordionItem question="Do you handle outbound (international) mail?">
-                    Not yet. We are proud to announce that full outbound services for sending mail to the world will be
-                    launching in 2026. This will include digital customs clearance and drop-offs at our RUG PUDO network.
-                  </AccordionItem>
-                  <AccordionItem question="What is the RUG PUDO Network?">
-                    The RUG PUDO network is our upcoming network of local partner businesses (like supermarkets and
-                    pharmacies) that will act as convenient local points for sending and receiving mail. This will bring
-                    postal services closer to every neighborhood.
-                  </AccordionItem>
+                  <h3 className="text-xl font-semibold text-brand-dark-blue pt-4 border-b pb-2">{sections.general}</h3>
+                  {faqs.general.map((faq) => (
+                    <AccordionItem key={faq.question} question={faq.question}>
+                      {faq.answer}
+                    </AccordionItem>
+                  ))}
                 </div>
               </div>
             </div>
@@ -189,36 +173,51 @@ const HelpPage = () => {
 
           <section>
             <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-brand-dark-blue">Get Direct Support</h2>
-              <p className="text-lg text-gray-600 mt-2">
-                Can&rsquo;t find an answer? Contact us directly or visit us at the General Post Office.
-              </p>
+              <h2 className="text-4xl font-bold text-brand-dark-blue">{supportSection.title}</h2>
+              <p className="text-lg text-gray-600 mt-2">{supportSection.body}</p>
             </div>
             <div className="grid lg:grid-cols-2 gap-12">
               <div className="bg-white p-8 rounded-lg shadow-md">
-                <h3 className="text-2xl font-bold text-dark-text mb-6">Send Us a Message</h3>
-                <ContactForm />
+                <h3 className="text-2xl font-bold text-dark-text mb-6">{supportSection.messageHeading}</h3>
+                <ContactForm copy={contactForm} />
                 <div className="mt-8 border-t pt-6 space-y-4">
+                  <h4 className="text-lg font-semibold text-dark-text">{contact.title}</h4>
                   <div>
-                    <h4 className="font-semibold">Email</h4>
-                    <a href="mailto:posta@moct.gov.so" className="text-brand-dark-blue">
-                      posta@moct.gov.so
+                    <p className="font-semibold">{contact.addressLabel}</p>
+                    <p className="text-gray-600">{contact.address}</p>
+                  </div>
+                  <div>
+                    <p className="font-semibold">{contact.emailLabel}</p>
+                    <a href={`mailto:${contact.email}`} className="text-brand-dark-blue">
+                      {contact.email}
                     </a>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Phone</h4>
-                    <p>252-611003239</p>
+                    <p className="font-semibold">{contact.phoneLabel}</p>
+                    <a href={`tel:${contact.phone}`} className="text-brand-dark-blue">
+                      {contact.phone}
+                    </a>
                   </div>
                   <div>
-                    <h4 className="font-semibold">Opening Hours</h4>
-                    <p>Sat-Wed: 8:30-4:30 | Thurs: 8:30-2:00 | Fri: Closed</p>
+                    <p className="font-semibold">{contact.hoursLabel}</p>
+                    <ul className="text-gray-600 space-y-1">
+                      {contact.hours.map((hour) => (
+                        <li key={hour.label}>
+                          <strong>{hour.label}:</strong> {hour.value}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
+                <div className="p-8 border-b border-border-gray">
+                  <h3 className="text-2xl font-bold text-dark-text">{supportSection.visitHeading}</h3>
+                  <p className="text-gray-600 mt-2">{supportSection.visitDescription}</p>
+                </div>
                 <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
-                  <div style={{ height: '100%', minHeight: '500px', width: '100%' }}>
+                  <div style={{ height: '100%', minHeight: '420px', width: '100%' }}>
                     <Map defaultCenter={gpoPosition} defaultZoom={16} mapId="posta-so-map">
                       <Marker position={gpoPosition} />
                     </Map>

@@ -98,7 +98,7 @@ export const Footer = () => {
                   ))}
               </div>
             ) : (
-              <p className="text-gray-500 italic">Social channels coming soon.</p>
+              <p className="text-gray-500 italic">{footer.socialFallback}</p>
             )}
           </div>
         </div>

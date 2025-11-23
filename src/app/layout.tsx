@@ -2,15 +2,20 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/context/LanguageContext';
+import type { Language } from '@/lib/translations';
+import { translations } from '@/lib/translations';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
 });
 
+const defaultLanguage: Language = 'en';
+const defaultCopy = translations[defaultLanguage];
+
 export const metadata: Metadata = {
-  title: 'Posta.so - Somali Postal Service',
-  description: 'Reconnecting Somalia to the world. Track parcels, rent P.O. Boxes, and more.',
+  title: `Posta.so - ${defaultCopy.hero.title}`,
+  description: defaultCopy.hero.description,
   appleWebApp: {
     title: 'Posta.so',
     statusBarStyle: 'default',
@@ -27,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang={defaultLanguage} dir={defaultLanguage === 'ar' ? 'rtl' : 'ltr'}>
       <head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -36,7 +41,7 @@ export default function RootLayout({
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#0d47a1" />
         <meta name="msapplication-TileColor" content="#0d47a1" />
       </head>
-      <body className={`${inter.variable} font-sans`}>
+      <body className={`${inter.variable} font-sans`} dir={defaultLanguage === 'ar' ? 'rtl' : 'ltr'}>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>

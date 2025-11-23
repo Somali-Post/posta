@@ -19,6 +19,24 @@ interface ServiceStep {
   description: string;
 }
 
+interface TrackCta {
+  eyebrow: string;
+  title: string;
+  body: string;
+  button: string;
+}
+
+interface FutureServiceCard {
+  title: string;
+  description: string;
+}
+
+interface FutureSection {
+  title: string;
+  body: string;
+  cards: FutureServiceCard[];
+}
+
 interface InfoCard {
   title: string;
   description: string;
@@ -27,6 +45,25 @@ interface InfoCard {
 interface HelpContactHour {
   label: string;
   value: string;
+}
+
+interface HelpSupportSection {
+  title: string;
+  body: string;
+  messageHeading: string;
+  visitHeading: string;
+  visitDescription: string;
+}
+
+interface HelpContactForm {
+  nameLabel: string;
+  emailLabel: string;
+  messageLabel: string;
+  submitLabel: string;
+  submittingLabel: string;
+  successTitle: string;
+  successBody: string;
+  errorMessage: string;
 }
 
 interface RugPudoHighlight {
@@ -251,6 +288,7 @@ export interface TranslationContent {
     phoneValue: string;
     stayConnectedTitle: string;
     stayConnectedBody: string;
+    socialFallback: string;
     privacy: string;
     terms: string;
     rights: string;
@@ -271,6 +309,7 @@ export interface TranslationContent {
       heroSubtitle: string;
       processTitle: string;
       steps: ServiceStep[];
+      trackCta: TrackCta;
       whatToBringTitle: string;
       whatToBringBody: string;
       bringList: string[];
@@ -280,6 +319,7 @@ export interface TranslationContent {
       addressValue: string;
       hoursLabel: string;
       hoursValue: string;
+      futureSection: FutureSection;
     };
     poBox: {
       heroTitle: string;
@@ -320,6 +360,7 @@ export interface TranslationContent {
       parcel: string;
       general: string;
     };
+    supportSection: HelpSupportSection;
     faqs: {
       tracking: FaqItem[];
       parcel: FaqItem[];
@@ -336,6 +377,7 @@ export interface TranslationContent {
       hoursLabel: string;
       hours: HelpContactHour[];
     };
+    contactForm: HelpContactForm;
   };
   about: {
     heroTitle: string;
@@ -444,7 +486,7 @@ export const translations: Record<Language, TranslationContent> = {
       title: 'Your Secure Address in Somalia',
       subtitleLines: ['P.O. Box Rentals', 'from Somali Post'],
       button: 'RENT YOURS TODAY',
-      badges: ['Reliable & Safe', 'Connects You Globally', 'Easy 24/7 Access'],
+      badges: ['Reliable & Safe', 'Connects You Globally', 'Convenient Service Hours'],
     },
     receivingSection: {
       heading: 'Receive Mail from Around the World',
@@ -516,6 +558,7 @@ export const translations: Record<Language, TranslationContent> = {
       phoneValue: '252-611003239',
       stayConnectedTitle: 'Stay Connected',
       stayConnectedBody: 'Follow us on social media for the latest news and updates.',
+      socialFallback: 'Social channels coming soon.',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
       rights: 'Somali Post. All rights reserved.',
@@ -536,38 +579,63 @@ export const translations: Record<Language, TranslationContent> = {
         heroSubtitle:
           "Your reliable connection to the world. Here's everything you need to know about receiving your items sent from abroad.",
         processTitle: 'How the Process Works',
-        steps: [
-          {
-            title: 'Item Arrives in Somalia',
-            description:
-              'Your parcel arrives at the main international postal facility in Mogadishu and is processed for customs inspection.',
-          },
-          {
-            title: 'Customs Clearance',
-            description:
-              'The item is presented to Somali customs. Once cleared, it is handed over to Somali Post for final processing.',
-          },
-          {
-            title: 'Notification of Arrival',
-            description:
-              "Once your item is ready, we will send you an SMS or email notification to let you know it's available for collection.",
-          },
-        ],
-        whatToBringTitle: 'What to Bring for Collection',
-        whatToBringBody:
-          'To ensure a secure and smooth pickup process, please bring the following to the General Post Office (GPO) in Mogadishu:',
-        bringList: [
-          'A valid National Identification (NIRA) ID card.',
+      steps: [
+        {
+          title: 'Item Arrives in Somalia',
+          description:
+            'Your parcel arrives at the main international postal facility in Mogadishu and is processed for customs inspection.',
+        },
+        {
+          title: 'Customs Clearance',
+          description:
+            'The item is presented to Somali customs. Once cleared, it is handed over to Somali Post for final processing.',
+        },
+        {
+          title: 'Notification of Arrival',
+          description:
+            "Once your item is ready, we will send you an SMS or email notification to let you know it's available for collection.",
+        },
+      ],
+      trackCta: {
+        eyebrow: 'Track updates',
+        title: 'Track your item anytime',
+        body: 'Real-time status from arrival to pickup—peace of mind with instant updates.',
+        button: 'Track item',
+      },
+      whatToBringTitle: 'What to Bring for Collection',
+      whatToBringBody:
+        'To ensure a secure and smooth pickup process, please bring the following to the General Post Office (GPO) in Mogadishu:',
+      bringList: [
+        'A valid National Identification (NIRA) ID card.',
           "Your item's tracking number.",
           'The notification message (SMS/email) you received from us.',
         ],
         locationTitle: 'Location & Hours',
-        locationBody: 'All items are to be collected from the General Post Office (GPO).',
-        addressLabel: 'Address',
-        addressValue: 'Jamhuuriya Road, Boondheere, Mogadishu, Somalia',
-        hoursLabel: 'Hours',
-        hoursValue: 'Saturday - Thursday, 8:00 AM - 4:00 PM',
+      locationBody: 'All items are to be collected from the General Post Office (GPO).',
+      addressLabel: 'Address',
+      addressValue: 'Jamhuuriya Road, Boondheere, Mogadishu, Somalia',
+      hoursLabel: 'Hours',
+      hoursValue: 'Saturday - Thursday, 8:00 AM - 4:00 PM',
+      futureSection: {
+        title: 'Coming in 2026: Sending to the World',
+        body:
+          'Get ready to connect with the world. Our new outbound service will allow you to send letters and parcels from your local neighborhood to any destination globally.',
+        cards: [
+          {
+            title: 'Digital-First Customs',
+            description: 'Fast, accurate customs clearance using the modern UPU Customs Declaration System (CDS).',
+          },
+          {
+            title: 'Convenient Drop-Offs',
+            description: 'Send your mail from our nationwide network of RUG PUDO partner locations.',
+          },
+          {
+            title: 'Full International Tracking',
+            description: 'Track every parcel from drop-off to destination right on our website.',
+          },
+        ],
       },
+    },
       poBox: {
         heroTitle: 'Secure P.O. Box Rentals',
         heroSubtitle: 'Get a private, permanent, and professional mailing address at the heart of Mogadishu.',
@@ -632,6 +700,13 @@ export const translations: Record<Language, TranslationContent> = {
         parcel: 'Parcel Collection',
         general: 'General',
       },
+      supportSection: {
+        title: 'Get Direct Support',
+        body: "Can't find an answer? Contact us directly or visit us at the General Post Office.",
+        messageHeading: 'Send Us a Message',
+        visitHeading: 'Visit the General Post Office',
+        visitDescription: 'Find us on Jamhuuriya Road, Boondheere District, Mogadishu.',
+      },
       faqs: {
         tracking: [
           {
@@ -687,6 +762,16 @@ export const translations: Record<Language, TranslationContent> = {
           { label: 'Thursday', value: '8:30 AM - 2:00 PM' },
           { label: 'Friday', value: 'Closed' },
         ],
+      },
+      contactForm: {
+        nameLabel: 'Your Name',
+        emailLabel: 'Your Email',
+        messageLabel: 'Your Inquiry',
+        submitLabel: 'Send Message',
+        submittingLabel: 'Sending...',
+        successTitle: 'Message received!',
+        successBody: 'We will get back to you shortly.',
+        errorMessage: 'We could not send your message. Please try again.',
       },
     },
     about: {
@@ -1048,7 +1133,7 @@ export const translations: Record<Language, TranslationContent> = {
       title: 'Ciwaankaaga Ammaan ah ee Soomaaliya',
       subtitleLines: ['Kiraysta Sanduuqa P.O.', 'ee Somali Post'],
       button: 'KIRAYSADA MAANTA',
-      badges: ['La Aamini Karo & Badbaado', 'Kugu Xira Caalamka', 'Gelin Fudud 24/7'],
+      badges: ['La Aamini Karo & Badbaado', 'Kugu Xira Caalamka', 'Saacado Adeeg oo Ku Habboon'],
     },
     receivingSection: {
       heading: 'Ku Qaado Boostada Meel Kasta oo Adduunka ah',
@@ -1120,6 +1205,7 @@ export const translations: Record<Language, TranslationContent> = {
       phoneValue: '252-611003239',
       stayConnectedTitle: 'Ku Xirnow',
       stayConnectedBody: 'Raac nala warbaahinta bulshada si aad ula socoto wararkii iyo cusboonaysiintii ugu dambeeyay.',
+      socialFallback: 'Baraha bulshada dhawaan ayaan la wadaagi doonnaa.',
       privacy: 'Qaanuunka Arrimaha Khaaska ah',
       terms: 'Shuruudaha Adeegga',
       rights: 'Somali Post. Xuquuq kasta waa la dhowray.',
@@ -1140,37 +1226,62 @@ export const translations: Record<Language, TranslationContent> = {
         heroSubtitle:
           'Waa isku xidhkaaga lagu kalsoonaan karo ee dunida. Halkaan ka hel waxa aad u baahan tahay inaad ka ogaato alaabta laguu soo diray dibadda.',
         processTitle: 'Sida Habku u Shaqeeyo',
-        steps: [
-          {
-            title: 'Xirmada ayaa Soo Gaadha Soomaaliya',
-            description:
-              'Xirmadaadu waxay timaaddaa xarunta boostada caalamiga ah ee Muqdisho waxaana loo diyaariyaa kormeerka kastamka.',
-          },
-          {
-            title: 'Nadiifinta Kastamka',
-            description:
-              'Waxa lagu wareejiyaa kastamka Soomaaliya. Marka la fasaxo, waxaa loo gudbiyaa Somali Post si loo dhamaystiro.',
-          },
-          {
-            title: 'Ogeysiis Ku Saabsan Imaanshaha',
-            description:
-              'Marka alaabtaadu diyaar noqoto, SMS ama iimayl ayaan kuugu soo diraynaa si aan kuu ogeysiinno in lagaa qaadan karo.',
-          },
-        ],
-        whatToBringTitle: 'Waxaad U Baahan Tahay Markaad Soo Qaadanayso',
-        whatToBringBody:
-          'Si hab qaadasho oo ammaan ah u dhacdo, fadlan keen waxyaabahan markaad timaaddo Xarunta Boostada Guud ee Muqdisho:',
-        bringList: [
-          'Kaarka aqoonsiga qaranka ee NIRA oo sax ah.',
+      steps: [
+        {
+          title: 'Xirmada ayaa Soo Gaadha Soomaaliya',
+          description:
+            'Xirmadaadu waxay timaaddaa xarunta boostada caalamiga ah ee Muqdisho waxaana loo diyaariyaa kormeerka kastamka.',
+        },
+        {
+          title: 'Nadiifinta Kastamka',
+          description:
+            'Waxa lagu wareejiyaa kastamka Soomaaliya. Marka la fasaxo, waxaa loo gudbiyaa Somali Post si loo dhamaystiro.',
+        },
+        {
+          title: 'Ogeysiis Ku Saabsan Imaanshaha',
+          description:
+            'Marka alaabtaadu diyaar noqoto, SMS ama iimayl ayaan kuugu soo diraynaa si aan kuu ogeysiinno in lagaa qaadan karo.',
+        },
+      ],
+      trackCta: {
+        eyebrow: 'Cusboonaysiisyada raadraaca',
+        title: 'Raac xirmadaada wakhti kasta',
+        body: 'Hel xog toos ah laga bilaabo imaanshaha ilaa qaadashada—farriimo degdeg ah oo kuu xaqiijiya nabdoonida.',
+        button: 'Raac xirmada',
+      },
+      whatToBringTitle: 'Waxaad U Baahan Tahay Markaad Soo Qaadanayso',
+      whatToBringBody:
+        'Si hab qaadasho oo ammaan ah u dhacdo, fadlan keen waxyaabahan markaad timaaddo Xarunta Boostada Guud ee Muqdisho:',
+      bringList: [
+        'Kaarka aqoonsiga qaranka ee NIRA oo sax ah.',
           'Lambarka raadraaca xirmadaada.',
           'Fariinta ogeysiiska (SMS/iimayl) ee aanu kusoo dirnay.',
         ],
         locationTitle: 'Goobta & Saacadaha',
-        locationBody: 'Dhammaan xirmooyinka waxaa laga qaataa Xarunta Boostada Guud (GPO).',
-        addressLabel: 'Cinwaan',
-        addressValue: 'Jamhuuriya Road, Boondheere, Muqdisho, Soomaaliya',
-        hoursLabel: 'Saacadaha Shaqada',
-        hoursValue: 'Sabti - Khamiis, 8:00 subaxnimo - 4:00 galabnimo',
+      locationBody: 'Dhammaan xirmooyinka waxaa laga qaataa Xarunta Boostada Guud (GPO).',
+      addressLabel: 'Cinwaan',
+      addressValue: 'Jamhuuriya Road, Boondheere, Muqdisho, Soomaaliya',
+      hoursLabel: 'Saacadaha Shaqada',
+      hoursValue: 'Sabti - Khamiis, 8:00 subaxnimo - 4:00 galabnimo',
+      futureSection: {
+        title: 'Soo socda 2026: Dirista Caalamka',
+        body:
+          'Diyaar u noqo inaad dunida la xidhnaato. Adeegga dhoofinta cusub wuxuu kuu oggolaanayaa inaad waraaqo iyo xirmooyin uga dirto xaafaddaada meel kasta oo dunida ah.',
+        cards: [
+          {
+            title: 'Kastam Dijitaal ah',
+            description: 'Nadiifin dhakhso ah oo sax ah adigoo adeegsanaya nidaamka casriga ah ee UPU CDS.',
+          },
+          {
+            title: 'Meelo Fudud oo Lagu Dhiibo',
+            description: 'Ku tag dhammaan shabakadda Rug PUDO ee dalka oo dhan si aad u dhiibto boostadaada.',
+          },
+          {
+            title: 'Raad-raac Caalami ah oo Buuxa',
+            description: 'La soco xirmada laga bilaabo goobta lagu dhiibay ilaa meeshii ugu dambaysay adigoo booqda boggayaga.',
+          },
+        ],
+      },
       },
       poBox: {
         heroTitle: 'Kiraynta Sanduuqa P.O. ee Ammaan ah',
@@ -1236,6 +1347,13 @@ export const translations: Record<Language, TranslationContent> = {
         parcel: 'Soo Qaadashada Xirmooyinka',
         general: 'Guud',
       },
+      supportSection: {
+        title: 'Hel Taageero Toos ah',
+        body: 'Jawaabta ma helaysid? Nala soo xidhiidh ama nagu soo booqo Xarunta Boostada Guud.',
+        messageHeading: 'Noo Soo Dir Farriin',
+        visitHeading: 'Booqo Xarunta Boostada Guud',
+        visitDescription: 'Waxaan kugu suganahay Jamhuuriya Road, Boondheere, Muqdisho.',
+      },
       faqs: {
         tracking: [
           {
@@ -1291,6 +1409,16 @@ export const translations: Record<Language, TranslationContent> = {
           { label: 'Khamiis', value: '8:30 subaxnimo - 2:00 galabnimo' },
           { label: 'Jimce', value: 'Xiran' },
         ],
+      },
+      contactForm: {
+        nameLabel: 'Magacaaga',
+        emailLabel: 'Iimaylkaaga',
+        messageLabel: 'Su’aashaada',
+        submitLabel: 'Dir farriinta',
+        submittingLabel: 'Diraysa...',
+        successTitle: 'Farriinta waa nala soo gaadhay!',
+        successBody: 'Waxaan kugula soo laaban doonaa sida ugu dhakhsaha badan.',
+        errorMessage: 'Farriinta lama dirin. Fadlan isku day mar kale.',
       },
     },
     about: {
@@ -1724,6 +1852,7 @@ export const translations: Record<Language, TranslationContent> = {
       phoneValue: '252-611003239',
       stayConnectedTitle: 'ابق على اتصال',
       stayConnectedBody: 'تابعونا على وسائل التواصل الاجتماعي للحصول على آخر الأخبار والتحديثات.',
+      socialFallback: 'قنوات التواصل الاجتماعي ستكون متاحة قريباً.',
       privacy: 'سياسة الخصوصية',
       terms: 'شروط الخدمة',
       rights: 'المؤسسة البريدية الصومالية. جميع الحقوق محفوظة.',
@@ -1761,6 +1890,12 @@ export const translations: Record<Language, TranslationContent> = {
               'عند جاهزية شحنتك سنرسل لك رسالة نصية أو بريداً إلكترونياً لإخبارك بأنها متاحة للاستلام.',
           },
         ],
+        trackCta: {
+          eyebrow: 'تحديثات التتبع',
+          title: 'تتبع شحنتك في أي وقت',
+          body: 'حالة آنية من لحظة الوصول حتى الاستلام—طمأنينة مع إشعارات فورية.',
+          button: 'تتبع الشحنة',
+        },
         whatToBringTitle: 'ما الذي ينبغي إحضاره عند الاستلام؟',
         whatToBringBody:
           'لضمان عملية استلام آمنة وسلسة، يرجى إحضار ما يلي إلى المكتب البريدي العام في مقديشو:',
@@ -1775,6 +1910,25 @@ export const translations: Record<Language, TranslationContent> = {
         addressValue: 'شارع جمهورية، بونطير، مقديشو، الصومال',
         hoursLabel: 'ساعات العمل',
         hoursValue: 'السبت - الخميس، من 8:00 ص إلى 4:00 م',
+        futureSection: {
+          title: 'قريباً في 2026: خدمة الإرسال إلى العالم',
+          body:
+            'استعد للتواصل مع العالم. ستتمكن من إرسال الرسائل والطرود من حيك إلى أي وجهة عالمية.',
+          cards: [
+            {
+              title: 'جمارك رقمية أولاً',
+              description: 'تخليص سريع ودقيق عبر نظام التصاريح الحديث UPU CDS.',
+            },
+            {
+              title: 'نقاط تسليم مريحة',
+              description: 'أرسل بريدك من شبكة شركائنا RUG PUDO المنتشرة في أنحاء البلاد.',
+            },
+            {
+              title: 'تتبع دولي كامل',
+              description: 'تابع شحنتك من نقطة التسليم وحتى الوجهة النهائية عبر موقعنا.',
+            },
+          ],
+        },
       },
       poBox: {
         heroTitle: 'تأجير صناديق البريد الآمنة',
@@ -1839,6 +1993,13 @@ export const translations: Record<Language, TranslationContent> = {
         parcel: 'استلام الطرود',
         general: 'عام',
       },
+      supportSection: {
+        title: 'احصل على دعم مباشر',
+        body: 'لم تجد الإجابة التي تبحث عنها؟ تواصل معنا مباشرة أو زر المكتب البريدي العام.',
+        messageHeading: 'أرسل لنا رسالة',
+        visitHeading: 'زر المكتب البريدي العام',
+        visitDescription: 'نقع في شارع جمهورية، حي بونطير، مقديشو.',
+      },
       faqs: {
         tracking: [
           {
@@ -1894,6 +2055,16 @@ export const translations: Record<Language, TranslationContent> = {
           { label: 'الخميس', value: '8:30 ص - 2:00 م' },
           { label: 'الجمعة', value: 'مغلق' },
         ],
+      },
+      contactForm: {
+        nameLabel: 'اسمك',
+        emailLabel: 'بريدك الإلكتروني',
+        messageLabel: 'استفسارك',
+        submitLabel: 'أرسل الرسالة',
+        submittingLabel: 'جارٍ الإرسال...',
+        successTitle: 'تم استلام رسالتك!',
+        successBody: 'سنتواصل معك في أقرب وقت ممكن.',
+        errorMessage: 'تعذر إرسال رسالتك. حاول مرة أخرى.',
       },
     },
     about: {

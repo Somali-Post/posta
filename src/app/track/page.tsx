@@ -29,9 +29,9 @@ interface TrackingData {
   latestEventCode?: string;
 }
 
-const formatTimestamp = (ts: string) => {
+const formatTimestamp = (ts: string, locale: string) => {
   try {
-    return new Date(ts).toLocaleString('en-US', {
+    return new Date(ts).toLocaleString(locale, {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -58,7 +58,7 @@ const TrackPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [inputError, setInputError] = useState<string | null>(null);
   const { track } = useTranslations();
-  const { language } = useLanguage();
+  const { language, locale } = useLanguage();
   const trackingFormat = /^[A-Z]{2}\d{9}[A-Z]{2}$/;
 
   const handleIdChange = (value: string) => {
@@ -241,7 +241,7 @@ const TrackPage = () => {
                             <p className="font-bold text-lg text-dark-text">{localized.label}</p>
                             {localized.explanation && <p className="text-md text-gray-600 mt-1">{localized.explanation}</p>}
                             <p className="text-gray-500 mt-2">{event.location}</p>
-                            <p className="text-sm text-gray-500 mt-1">{formatTimestamp(event.timestamp)}</p>
+                            <p className="text-sm text-gray-500 mt-1">{formatTimestamp(event.timestamp, locale)}</p>
                           </div>
                           );
                         })}
