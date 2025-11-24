@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useLanguage, useTranslations } from '@/context/LanguageContext';
 import type { Language } from '@/lib/translations';
 
-const languageOrder: Language[] = ['so', 'en', 'ar'];
+const languageOrder: Language[] = ['en', 'ar'];
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
