@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to: process.env.EMAIL_TO,
+      bcc: process.env.EMAIL_BCC,
       subject: `New Contact Form Inquiry from: ${name}`,
       replyTo: email,
       html: `

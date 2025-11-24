@@ -21,7 +21,8 @@ export async function POST(request: Request) {
   try {
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
-      to: process.env.EMAIL_TO, // This sends to your configured email
+      to: process.env.EMAIL_TO,
+      bcc: process.env.EMAIL_BCC,
       subject: `New RUG PUDO Partner Interest: ${businessName}`,
       html: `
         <div style="font-family: Arial, sans-serif; line-height: 1.6;">
