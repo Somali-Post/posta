@@ -15,6 +15,7 @@ export const Navbar = () => {
   const { language, setLanguage } = useLanguage();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileNavRef = useRef<HTMLDivElement>(null);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const serviceLinks = [
@@ -32,16 +33,22 @@ export const Navbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      const targetNode = event.target as Node;
+
+      if (menuToggleRef.current?.contains(targetNode)) {
+        return;
+      }
+
       if (
         dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
+        !dropdownRef.current.contains(targetNode) &&
         isServicesOpen
       ) {
         setIsServicesOpen(false);
       }
       if (
         mobileNavRef.current &&
-        !mobileNavRef.current.contains(event.target as Node) &&
+        !mobileNavRef.current.contains(targetNode) &&
         isMenuOpen
       ) {
         setIsMenuOpen(false);
@@ -183,6 +190,7 @@ export const Navbar = () => {
             ))}
           </div>
           <button
+            ref={menuToggleRef}
             onClick={() => setIsMenuOpen((prev) => !prev)}
             className="lg:hidden p-2"
             aria-label="Toggle navigation"
