@@ -42,6 +42,31 @@ interface InfoCard {
   description: string;
 }
 
+interface PoBoxPricingPlan {
+  label: string;
+  price: string;
+  suffix: string;
+}
+
+interface PoBoxPricing {
+  title: string;
+  note: string;
+  plans: PoBoxPricingPlan[];
+}
+
+interface PoBoxVisitInfo {
+  title: string;
+  officeName: string;
+  address: string;
+  hoursTitle: string;
+  hours: HelpContactHour[];
+}
+
+interface PoBoxPortalInfo {
+  title: string;
+  body: string;
+}
+
 interface HelpContactHour {
   label: string;
   value: string;
@@ -327,9 +352,10 @@ export interface TranslationContent {
       whyTitle: string;
       cards: InfoCard[];
       howTitle: string;
-      steps: string[];
-      pricingTitle: string;
-      pricingBody: string;
+      steps: ServiceStep[];
+      pricing: PoBoxPricing;
+      visit: PoBoxVisitInfo;
+      portal: PoBoxPortalInfo;
     };
   };
   track: {
@@ -643,7 +669,8 @@ export const translations: Record<Language, TranslationContent> = {
         cards: [
           {
             title: 'Security & Privacy',
-            description: 'Keep your mail safe in a locked box accessible only by you, protecting your personal information.',
+            description:
+              'Keep your mail safe in a locked box accessible by our staff, protecting your home address and personal information.',
           },
           {
             title: 'Permanent Address',
@@ -651,24 +678,60 @@ export const translations: Record<Language, TranslationContent> = {
           },
           {
             title: 'Reliable Notifications',
-            description: 'Receive timely notifications when new mail or parcels arrive in your P.O. Box.',
+            description: 'Receive timely SMS or email notifications when new mail or parcels arrive in your P.O. Box.',
           },
           {
             title: 'Professional Image',
             description: 'A P.O. Box provides a professional and established address for your business or organization.',
           },
         ],
-        howTitle: 'How to Register',
+        howTitle: 'How to Register (In-Person)',
         steps: [
-          'Visit the Customer Service desk at the General Post Office (GPO) in Mogadishu.',
-          'Request and complete a P.O. Box application form.',
-          'Provide a valid National Identification (NIRA) ID card for verification.',
-          'Pay the annual rental fee for your chosen box size.',
-          'Receive your P.O. Box number and keys!',
+          {
+            title: 'Visit the GPO',
+            description: 'Come to the Customer Service desk at the General Post Office in Mogadishu.',
+          },
+          {
+            title: 'Complete Application Form',
+            description: 'Request and fill out a P.O. Box application form with your details.',
+          },
+          {
+            title: 'Provide ID',
+            description: 'Present a valid National Identification (NIRA) ID card or Passport for verification.',
+          },
+          {
+            title: 'Pay the Annual Fee',
+            description: 'Pay the rental fee for your chosen box size.',
+          },
+          {
+            title: 'Receive Your P.O. Box Number',
+            description:
+              'Our staff will assign your official P.O. Box number. We handle all mail retrieval for you.',
+          },
         ],
-        pricingTitle: 'Pricing & Sizes',
-        pricingBody:
-          'We offer a range of P.O. Box sizes to fit your needs. Please visit the GPO for current availability and annual rental fees.',
+        pricing: {
+          title: 'Pricing & Sizes',
+          note: 'Please visit the GPO for current box availability.',
+          plans: [
+            { label: 'Individual', price: '$24', suffix: '/ year' },
+            { label: 'Business', price: '$30', suffix: '/ year' },
+          ],
+        },
+        visit: {
+          title: 'Visit Us',
+          officeName: 'General Post Office (GPO)',
+          address: 'Jamhuuriya Road, Boondheere District, Mogadishu',
+          hoursTitle: 'Opening Hours:',
+          hours: [
+            { label: 'Saturday - Wednesday', value: '8:30 AM - 4:30 PM' },
+            { label: 'Thursday', value: '8:30 AM - 2:00 PM' },
+            { label: 'Friday', value: 'Closed' },
+          ],
+        },
+        portal: {
+          title: 'Online Portal Coming Soon!',
+          body: 'An online platform to register, pay for, and manage your P.O. Box is currently under development. Stay tuned!',
+        },
       },
     },
     track: {
@@ -1315,32 +1378,68 @@ export const translations: Record<Language, TranslationContent> = {
         cards: [
           {
             title: 'Amni & Astaan',
-            description: 'Boostadaada ku kaydi sanduuq qufulan oo keligaa geli karto si xogtaadu u ahaato mid qarsoon.',
+            description:
+              'Boostadaada ku kaydi sanduuq qufulan oo ay maamulaan shaqaalaheennu si cinwaankaaga gurigu u ahaado mid qarsoon.',
           },
           {
             title: 'Ciwaan Joogto ah',
-            description: 'Ciwaanka sanduuqaagu isma beddelo xitaa haddii aad guurto, taas oo dejinaysa macluumaadkaaga.',
+            description: 'Ciwaanka sanduuqaaga P.O. wuu sii jiraa xitaa haddii aad guurto, taas oo dejinaysa macluumaadkaaga.',
           },
           {
             title: 'Ogeysiisyo La Aamini Karo',
-            description: 'Hel ogeysiisyo degdeg ah marka warqad cusub ama xirmo kusoo gaadho.',
+            description: 'Hel SMS ama email degdeg ah marka warqad ama xirmo cusub lagu daro Sanduuqaaga P.O.',
           },
           {
             title: 'Sawir Xirfadaysan',
             description: 'Sanduuqa P.O. wuxuu bixiyaa ciwaan ganacsi oo la hubo oo sumcaddaada kordhiya.',
           },
         ],
-        howTitle: 'Sida Loo Diiwaangalo',
+        howTitle: 'Sida Loo Diiwaangalo (Si Shakhsi ah)',
         steps: [
-          'Booqo miiska adeegga macaamiisha ee Xarunta Boostada Guud ee Muqdisho.',
-          'Codso oo buuxi foomka codsiga sanduuqa P.O.',
-          'Soo qaado kaarka aqoonsiga qaranka ee NIRA si loo xaqiijiyo.',
-          'Bixi kirada sannadlaha ah ee cabbirka sanduuqa aad dooratay.',
-          'Ka hel lambarka sanduuqaaga iyo furayaasha!',
+          {
+            title: 'Booqo GPO-ga',
+            description: 'U tag miiska adeegga macaamiisha ee Xarunta Boostada Guud ee Muqdisho.',
+          },
+          {
+            title: 'Buuxi Foomka Codsiga',
+            description: 'Dalbo oo buuxi foomka codsiga sanduuqa P.O. adigoo gelaya faahfaahintaada.',
+          },
+          {
+            title: 'Keen Aqoonsigaaga',
+            description: 'Keen kaarka aqoonsiga NIRA ama baasaboorka si loo xaqiijiyo.',
+          },
+          {
+            title: 'Bixi Lacagta Sannadlaha ah',
+            description: 'Bixi kirada sannadlaha ah ee cabbirka sanduuqa aad dooratay.',
+          },
+          {
+            title: 'Hel Lambarka Sanduuqa',
+            description: 'Shaqaalaheennu waxay ku siiyaan lambarkaaga rasmiga ah oo boostada ayaannu adiga kuu maamulnaa.',
+          },
         ],
-        pricingTitle: 'Qiimayaal & Cabbirro',
-        pricingBody:
-          'Waxaan haynaa cabbirro sanduuqyo kala duwan si ay ugu habboonaadaan baahiyahaaga. Fadlan booqo GPO si aad u ogaato helitaanka hadda iyo khidmadaha sannadlaha ah.',
+        pricing: {
+          title: 'Qiimayaal & Cabbirro',
+          note: 'Fadlan booqo GPO si aad u ogaato helitaanka sanduuqyada ee hadda.',
+          plans: [
+            { label: 'Shakhsi', price: '$24', suffix: '/ sannadkii' },
+            { label: 'Ganacsi', price: '$30', suffix: '/ sannadkii' },
+          ],
+        },
+        visit: {
+          title: 'Booqo Xafiiskayaga',
+          officeName: 'Xafiiska Boostada Guud (GPO)',
+          address: 'Jamhuuriya Road, Degmada Boondheere, Muqdisho',
+          hoursTitle: 'Saacadaha Furitaanka:',
+          hours: [
+            { label: 'Sabti - Arbaco', value: '8:30 subaxnimo - 4:30 galabnimo' },
+            { label: 'Khamiis', value: '8:30 subaxnimo - 2:00 duhurnimo' },
+            { label: 'Jimco', value: 'Xiran' },
+          ],
+        },
+        portal: {
+          title: 'Madasha Onleenka Waqti Dhow',
+          body: 'Waxaan dhisaynaa madal onleen ah oo aad kaga diiwaan galan, ku bixin karto, kana maamuli karto sanduuqaaga P.O. La soco!',
+        },
       },
     },
     track: {
@@ -1987,32 +2086,68 @@ export const translations: Record<Language, TranslationContent> = {
         cards: [
           {
             title: 'الأمان والخصوصية',
-            description: 'احتفظ ببريدك في صندوق مقفل لا يفتحه إلا أنت، لتحمي معلوماتك الشخصية.',
+            description:
+              'احتفظ ببريدك في صندوق مقفل يديره موظفونا، لتحمي عنوان منزلك ومعلوماتك الشخصية.',
           },
           {
             title: 'عنوان دائم',
-            description: 'يبقى عنوان صندوق بريدك ثابتاً حتى لو انتقلت إلى مكان آخر، ما يوفر استقراراً لجهات الاتصال.',
+            description: 'يبقى عنوان صندوق بريدك ثابتاً حتى لو انتقلت، ما يوفر استقراراً لجهات الاتصال.',
           },
           {
             title: 'إشعارات موثوقة',
-            description: 'تصلك إشعارات فورية عند وصول بريد أو طرد جديد إلى صندوقك.',
+            description: 'تصلك إشعارات SMS أو بريد إلكتروني فور وصول أي بريد أو طرد جديد.',
           },
           {
             title: 'صورة مهنية',
-            description: 'يمنحك صندوق البريد عنواناً معتمداً يعزز احترافية أعمالك.',
+            description: 'يمنحك صندوق البريد عنواناً معتمداً يعكس احترافية أعمالك.',
           },
         ],
-        howTitle: 'طريقة التسجيل',
+        howTitle: 'طريقة التسجيل (حضوريًا)',
         steps: [
-          'توجه إلى مكتب خدمة العملاء في المكتب البريدي العام (GPO) بمقديشو.',
-          'اطلب نموذج طلب صندوق بريد وقم بتعبئته.',
-          'أحضر بطاقة الهوية الوطنية (NIRA) الصالحة للمطابقة.',
-          'ادفع رسوم الإيجار السنوي وفق حجم الصندوق الذي تختاره.',
-          'استلم رقم صندوقك ومفاتيحك!',
+          {
+            title: 'زر المكتب العام',
+            description: 'توجه إلى مكتب خدمة العملاء في المكتب البريدي العام في مقديشو.',
+          },
+          {
+            title: 'عبئ نموذج الطلب',
+            description: 'اطلب نموذج طلب صندوق بريد واملأ بياناتك بالكامل.',
+          },
+          {
+            title: 'قدم هويتك',
+            description: 'أبرز بطاقة الهوية الوطنية (NIRA) أو جواز سفرك لإتمام التحقق.',
+          },
+          {
+            title: 'ادفع الرسوم السنوية',
+            description: 'سدّد رسوم الإيجار السنوي للحجم الذي تختاره.',
+          },
+          {
+            title: 'استلم رقم صندوقك',
+            description: 'سيزوّدك الموظفون برقم صندوقك الرسمي، ونحن نتولى استلام بريدك نيابةً عنك.',
+          },
         ],
-        pricingTitle: 'الأسعار والأحجام',
-        pricingBody:
-          'نوفر أحجاماً متعددة لصناديق البريد لتلائم احتياجاتك. يرجى زيارة المكتب العام لمعرفة التوافر الحالي والرسوم السنوية.',
+        pricing: {
+          title: 'الأسعار والأحجام',
+          note: 'يرجى زيارة المكتب العام لمعرفة التوافر الحالي للصناديق.',
+          plans: [
+            { label: 'أفراد', price: '$24', suffix: '/ سنويًا' },
+            { label: 'أعمال', price: '$30', suffix: '/ سنويًا' },
+          ],
+        },
+        visit: {
+          title: 'زورونا',
+          officeName: 'المكتب البريدي العام (GPO)',
+          address: 'شارع جمهورية، حي بونطير، مقديشو',
+          hoursTitle: 'ساعات العمل:',
+          hours: [
+            { label: 'السبت - الأربعاء', value: '8:30 ص - 4:30 م' },
+            { label: 'الخميس', value: '8:30 ص - 2:00 م' },
+            { label: 'الجمعة', value: 'مغلق' },
+          ],
+        },
+        portal: {
+          title: 'المنصة الإلكترونية قريباً!',
+          body: 'نعمل على تطوير منصة عبر الإنترنت للتسجيل والدفع وإدارة صندوق بريدك. ترقبوا الإطلاق قريباً!',
+        },
       },
     },
     track: {
