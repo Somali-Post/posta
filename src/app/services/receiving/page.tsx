@@ -23,7 +23,9 @@ const ReceivingPage = () => {
             <div className="container mx-auto px-4">
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold text-brand-dark-blue">{receiving.processTitle}</h2>
-                <p className="text-lg text-gray-600 mt-2">{receiving.heroSubtitle}</p>
+                <p className="text-lg text-gray-600 mt-2">
+                  Follow these simple steps to receive your international items securely.
+                </p>
               </div>
 
               <div className="grid lg:grid-cols-5 gap-12">
@@ -77,7 +79,17 @@ const ReceivingPage = () => {
                     </p>
                     <div className="mt-4 border-t pt-4">
                       <h4 className="font-semibold text-gray-700">{receiving.hoursLabel}</h4>
-                      <p className="text-gray-600">{receiving.hoursValue}</p>
+                      <ul className="text-gray-600 space-y-1 mt-2">
+                        <li>
+                          <strong>Saturday - Wednesday:</strong> 8:30 AM - 4:30 PM
+                        </li>
+                        <li>
+                          <strong>Thursday:</strong> 8:30 AM - 2:00 PM (Closes early)
+                        </li>
+                        <li>
+                          <strong>Friday:</strong> Closed
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </aside>
