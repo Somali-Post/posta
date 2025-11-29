@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 
     const { data: customer, error: customerError } = await supabaseAdmin
       .from('customers')
-      .select('name, email, box_type, language')
+      .select('name, email, box_type, language, location')
       .eq('id', customerId)
       .single();
 
@@ -70,6 +70,7 @@ export async function POST(request: Request) {
       poBoxNumber: normalizedPoBoxNumber,
       expiryDate,
       serialNumber,
+      location: customer.location ?? 'Muqdisho',
     };
 
     let emailHtml: string;
