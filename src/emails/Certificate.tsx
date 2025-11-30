@@ -84,8 +84,8 @@ export const Certificate = ({
               <table width="100%">
                 <tr>
                   <td width="60%">
-                    <div style={signatureContainer}>
-                      <Img src={SIGNATURE_URL} width="260" alt="Digital Signature" style={signatureImage} />
+                    <div style={signatureBoxStyle}>
+                      <Img src={SIGNATURE_URL} width="260" alt="Digital Signature" style={signatureImgStyle} />
                       <Hr style={signatureLine} />
                     </div>
                     <Text style={signatureName}>Saciid Axmed Xassan</Text>
@@ -128,6 +128,11 @@ const bodyText = { fontSize: '18px', lineHeight: '1.8', color: '#333', maxWidth:
 const signatureLine = { borderColor: '#333', margin: '10px 0 8px', width: '320px' };
 const signatureName = { margin: '0', fontWeight: 'bold', fontSize: '16px' };
 const signatureTitle = { margin: '2px 0 0', fontSize: '14px', color: '#555' };
-const signatureContainer = { position: 'relative', width: '360px', paddingBottom: '10px' };
-const signatureImage = { display: 'inline-block', position: 'relative', zIndex: 2, marginBottom: '-15px' };
+const signatureBoxStyle: React.CSSProperties = { position: 'relative', width: '360px', paddingBottom: '10px' };
+const signatureImgStyle: React.CSSProperties = {
+  display: 'inline-block',
+  position: 'relative',
+  zIndex: 2,
+  marginBottom: '-15px',
+};
 const seal = { width: '100px', height: '100px', borderRadius: '50%', backgroundColor: '#89B9ED', display: 'inline-block' };
