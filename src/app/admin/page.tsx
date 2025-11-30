@@ -5,6 +5,10 @@ import { notFound, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
+
 type ApplicationStatus = 'pending_review' | 'documents_verified' | 'certificate_sent';
 type ApplicationStatusFilter = ApplicationStatus | 'all';
 
