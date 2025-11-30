@@ -5,9 +5,7 @@ import { notFound, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
-export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
-export const revalidate = 0;
+const isAdminPortalEnabled = process.env.NEXT_PUBLIC_ENABLE_ADMIN_PORTAL === 'true';
 
 type ApplicationStatus = 'pending_review' | 'documents_verified' | 'certificate_sent';
 type ApplicationStatusFilter = ApplicationStatus | 'all';
@@ -163,9 +161,11 @@ const DocumentViewer = ({
   );
 };
 
-const isAdminPortalEnabled = process.env.NEXT_PUBLIC_ENABLE_ADMIN_PORTAL === 'true';
-
 const AdminContent = () => {
+  if (!isAdminPortalEnabled) {
+    notFound();
+  }
+
   const searchParams = useSearchParams();
   const customerId = searchParams.get('id');
   const secretKey = searchParams.get('secret') || '';
@@ -422,169 +422,4 @@ const AdminContent = () => {
                           Review
                         </Link>
                       </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-xl p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-bold text-brand-dark-blue">Verify Application</h1>
-          <Link
-            href={`/admin?secret=${secretKey}`}
-            className="text-brand-dark-blue underline font-semibold text-sm"
-          >
-            &larr; Back to list
-          </Link>
-        </div>
-
-        {customerLoading && <p>Loading application...</p>}
-        {customerError && <p className="text-red-600">{customerError}</p>}
-        {!customerLoading && customer && (
-          <div className="grid lg:grid-cols-2 gap-8">
-            <div>
-              <div className="space-y-3 mb-6 border-b pb-4">
-                <p>
-                  <strong>Name:</strong> {customer.name}
-                </p>
-                <p>
-                  <strong>Email:</strong> {customer.email}
-                </p>
-                <p>
-                  <strong>Phone:</strong> {customer.phone}
-                </p>
-                <p>
-                  <strong>Box Type:</strong> {customer.box_type}
-                </p>
-                <p>
-                  <strong>Assigned P.O. Box #:</strong>{' '}
-                  <span className="font-bold text-xl">{customer.po_box_number}</span>
-                </p>
-                <p>
-                  <strong>Current Status:</strong> {applicationStatusLabel}
-                </p>
-              </div>
-
-              <div className="mb-6">
-                <label htmlFor="verificationNotes" className="block text-sm font-medium text-gray-700">
-                  Verification Notes
-                </label>
-                <textarea
-                  id="verificationNotes"
-                  rows={4}
-                  value={verificationNotes}
-                  onChange={(e) => setVerificationNotes(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-dark-blue focus:ring-brand-dark-blue"
-                  placeholder="Add any notes or next steps for this applicant."
-                />
-                <div className="flex flex-wrap gap-3 mt-3">
-                  <button
-                    onClick={() => handleUpdateStatus()}
-                    disabled={statusLoading}
-                    className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 disabled:bg-gray-100 disabled:text-gray-400"
-                  >
-                    {statusLoading ? 'Saving...' : 'Save Notes'}
-                  </button>
-                  <button
-                    onClick={() => handleUpdateStatus('documents_verified')}
-                    disabled={statusLoading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-300"
-                  >
-                    Mark Docs Verified
-                  </button>
-                  <button
-                    onClick={() => handleUpdateStatus('pending_review')}
-                    disabled={statusLoading}
-                    className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 disabled:bg-yellow-300"
-                  >
-                    Move Back to Pending
-                  </button>
-                </div>
-                {statusError && <p className="text-red-600 mt-2">{statusError}</p>}
-                {statusMessage && <p className="text-green-600 mt-2">{statusMessage}</p>}
-              </div>
-
-              <div className="space-y-4 mb-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">Payment Date &amp; Time</label>
-                  <DatePicker
-                    selected={paymentDate}
-                    onChange={(date) => setPaymentDate(date)}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    dateFormat="dd/MM/yyyy h:mm aa"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-dark-blue focus:ring-brand-dark-blue"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="paymentRef" className="block text-sm font-medium text-gray-700">
-                    EVC Transaction ID (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    id="paymentRef"
-                    value={paymentRef}
-                    onChange={(e) => setPaymentRef(e.target.value)}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-brand-dark-blue focus:ring-brand-dark-blue"
-                  />
-                </div>
-              </div>
-
-              <p className="text-sm text-gray-600 mb-4">
-                Send the certificate only after you have confirmed the EVC Plus payment.
-              </p>
-              <button
-                onClick={handleSendCertificate}
-                disabled={certificateStatus === 'loading' || certificateStatus === 'success'}
-                className="w-full bg-green-600 text-white font-bold py-3 rounded-md hover:bg-green-700 transition disabled:bg-gray-400 disabled:cursor-not-allowed"
-              >
-                {certificateStatus === 'loading' ? 'Processing...' : 'Confirm Payment & Send Certificate'}
-              </button>
-              {certificateError && <p className="mt-4 text-red-600 text-center">{certificateError}</p>}
-              {certificateStatus === 'success' && (
-                <p className="mt-4 text-green-700 text-center">{certificateMessage}</p>
-              )}
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-semibold mb-4 border-b pb-2">Uploaded Documents</h2>
-              <DocumentViewer bucket="id-documents" path={customer.id_document_url} label="ID Document" secretKey={secretKey} />
-              <DocumentViewer bucket="photos" path={customer.photo_url} label="Passport-sized Photo" secretKey={secretKey} />
-              {customer.license_document_url && (
-                <DocumentViewer
-                  bucket="license-documents"
-                  path={customer.license_document_url}
-                  label="Business License"
-                  secretKey={secretKey}
-                />
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const AdminConfirmationPage = () => {
-  if (!isAdminPortalEnabled) {
-    notFound();
-  }
-
-  return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading admin portal…</div>}>
-      <AdminContent />
-    </Suspense>
-  );
-};
-
-export default AdminConfirmationPage;
+മെ*** End Patch
