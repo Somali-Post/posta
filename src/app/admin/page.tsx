@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { notFound, useSearchParams } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import DatePicker from 'react-datepicker';
 
 type ApplicationStatus = 'pending_review' | 'documents_verified' | 'certificate_sent';
@@ -161,11 +161,7 @@ const DocumentViewer = ({
 
 const isAdminPortalEnabled = process.env.NEXT_PUBLIC_ENABLE_ADMIN_PORTAL === 'true';
 
-const AdminConfirmationPage = () => {
-  if (!isAdminPortalEnabled) {
-    notFound();
-  }
-
+const AdminContent = () => {
   const searchParams = useSearchParams();
   const customerId = searchParams.get('id');
   const secretKey = searchParams.get('secret') || '';
@@ -572,6 +568,18 @@ const AdminConfirmationPage = () => {
         )}
       </div>
     </div>
+  );
+};
+
+const AdminConfirmationPage = () => {
+  if (!isAdminPortalEnabled) {
+    notFound();
+  }
+
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading admin portal…</div>}>
+      <AdminContent />
+    </Suspense>
   );
 };
 
