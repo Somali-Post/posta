@@ -81,21 +81,15 @@ export const Certificate = ({
               <table width="100%">
                 <tr>
                   <td width="60%">
-                    <div style={signatureBoxStyle}>
-                      <Img src={SIGNATURE_URL} width="260" alt="Digital Signature" style={signatureImgStyle} />
-                      <Hr style={signatureLine} />
+                    <div style={{ textAlign: 'center' }}>
+                      <Img src={SIGNATURE_URL} width="320" alt="Digital Signature" style={signatureImgStyle} />
                     </div>
+                    <Hr style={signatureLine} />
                     <Text style={signatureName}>Saciid Axmed Xassan</Text>
                     <Text style={signatureTitle}>Agaasimaha Boostada</Text>
                   </td>
                   <td width="40%" style={{ textAlign: 'right' }}>
-                    <div style={ribbonOuter}>
-                      <div style={ribbonInner}>
-                        <div style={ribbonText}>BOX {poBoxNumber}</div>
-                      </div>
-                      <div style={ribbonTailLeft}></div>
-                      <div style={ribbonTailRight}></div>
-                    </div>
+                    <div></div>
                   </td>
                 </tr>
               </table>
@@ -128,61 +122,11 @@ const subtitle = { margin: '8px 0 22px', fontSize: '22px', color: '#333' };
 const line = { borderColor: '#b1b1b1', margin: '18px auto', width: '92%' };
 const nameText = { margin: '0', fontSize: '32px', fontWeight: 'bold', color: '#0D47A1', letterSpacing: '1px' };
 const bodyText = { fontSize: '18px', lineHeight: '1.8', color: '#333', maxWidth: '80%', margin: '0 auto 18px' };
-const signatureLine = { borderColor: '#333', margin: '10px 0 8px', width: '320px' };
+const signatureLine = { borderColor: '#333', margin: '10px 0 8px', width: '100%' };
 const signatureName = { margin: '0', fontWeight: 'bold', fontSize: '16px' };
 const signatureTitle = { margin: '2px 0 0', fontSize: '14px', color: '#555' };
-const signatureBoxStyle: React.CSSProperties = { position: 'relative', width: '360px', paddingBottom: '10px' };
 const signatureImgStyle: React.CSSProperties = {
   display: 'inline-block',
   position: 'relative',
-  zIndex: 2,
-  marginBottom: '-15px',
-};
-const ribbonOuter = {
-  position: 'relative' as const,
-  display: 'inline-block',
-  width: '160px',
-  height: '160px',
-  background: 'linear-gradient(135deg, #0D47A1, #1E6EDD)',
-  borderRadius: '50%',
-  textAlign: 'center' as const,
-  color: '#fff',
-  boxShadow: '0 6px 20px rgba(13,71,161,0.35)',
-};
-const ribbonInner = {
-  position: 'absolute' as const,
-  top: '12px',
-  left: '12px',
-  right: '12px',
-  bottom: '12px',
-  borderRadius: '50%',
-  backgroundColor: '#fdfdfd',
-  border: '2px solid rgba(13,71,161,0.2)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column' as const,
-};
-const ribbonText = {
-  fontWeight: 'bold',
-  fontSize: '20px',
-  color: '#0D47A1',
-};
-const ribbonTailLeft = {
-  position: 'absolute' as const,
-  bottom: '-30px',
-  left: '20px',
-  width: '40px',
-  height: '40px',
-  background: '#1E6EDD',
-  clipPath: 'polygon(0 0, 100% 0, 60% 100%, 0 100%)',
-};
-const ribbonTailRight = {
-  position: 'absolute' as const,
-  bottom: '-30px',
-  right: '20px',
-  width: '40px',
-  height: '40px',
-  background: '#1E6EDD',
-  clipPath: 'polygon(0 0, 100% 0, 100% 100%, 40% 100%)',
+  marginBottom: '10px',
 };
