@@ -11,10 +11,7 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
-const LOCAL_BASE =
-  process.env.NEXT_PUBLIC_APP_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-const SIGNATURE_URL = `${LOCAL_BASE}/images/signature.png`;
+const SIGNATURE_URL = 'https://posta.so/images/signature.png';
 const MINISTRY_LOGO_URL = 'https://posta.so/images/ministry-logo.png';
 const POSTA_LOGO_URL = 'https://posta.so/images/somali-post-logo.png';
 
@@ -92,7 +89,13 @@ export const Certificate = ({
                     <Text style={signatureTitle}>Agaasimaha Boostada</Text>
                   </td>
                   <td width="40%" style={{ textAlign: 'right' }}>
-                    <div style={seal}></div>
+                    <div style={ribbonOuter}>
+                      <div style={ribbonInner}>
+                        <div style={ribbonText}>BOX {poBoxNumber}</div>
+                      </div>
+                      <div style={ribbonTailLeft}></div>
+                      <div style={ribbonTailRight}></div>
+                    </div>
                   </td>
                 </tr>
               </table>
@@ -135,4 +138,51 @@ const signatureImgStyle: React.CSSProperties = {
   zIndex: 2,
   marginBottom: '-15px',
 };
-const seal = { width: '100px', height: '100px', borderRadius: '50%', backgroundColor: '#89B9ED', display: 'inline-block' };
+const ribbonOuter = {
+  position: 'relative' as const,
+  display: 'inline-block',
+  width: '160px',
+  height: '160px',
+  background: 'linear-gradient(135deg, #0D47A1, #1E6EDD)',
+  borderRadius: '50%',
+  textAlign: 'center' as const,
+  color: '#fff',
+  boxShadow: '0 6px 20px rgba(13,71,161,0.35)',
+};
+const ribbonInner = {
+  position: 'absolute' as const,
+  top: '12px',
+  left: '12px',
+  right: '12px',
+  bottom: '12px',
+  borderRadius: '50%',
+  backgroundColor: '#fdfdfd',
+  border: '2px solid rgba(13,71,161,0.2)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column' as const,
+};
+const ribbonText = {
+  fontWeight: 'bold',
+  fontSize: '20px',
+  color: '#0D47A1',
+};
+const ribbonTailLeft = {
+  position: 'absolute' as const,
+  bottom: '-30px',
+  left: '20px',
+  width: '40px',
+  height: '40px',
+  background: '#1E6EDD',
+  clipPath: 'polygon(0 0, 100% 0, 60% 100%, 0 100%)',
+};
+const ribbonTailRight = {
+  position: 'absolute' as const,
+  bottom: '-30px',
+  right: '20px',
+  width: '40px',
+  height: '40px',
+  background: '#1E6EDD',
+  clipPath: 'polygon(0 0, 100% 0, 100% 100%, 40% 100%)',
+};
