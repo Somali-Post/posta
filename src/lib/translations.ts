@@ -11,6 +11,7 @@ interface FooterLinks {
   services: string;
   poBox: string;
   pudo: string;
+  cdsKiosk: string;
   help: string;
 }
 
@@ -260,6 +261,7 @@ export interface TranslationContent {
       receiving: string;
       poBox: string;
       pudo: string;
+      cdsKiosk: string;
     };
     help: string;
     about: string;
@@ -493,6 +495,7 @@ export const translations: Record<Language, TranslationContent> = {
         receiving: 'Receiving Mail & Parcels',
         poBox: 'P.O. Box Rentals',
         pudo: 'RUG PUDO Network',
+        cdsKiosk: 'CDS Kiosk',
       },
       help: 'Help',
       about: 'About Us',
@@ -574,6 +577,7 @@ export const translations: Record<Language, TranslationContent> = {
         services: 'Services',
         poBox: 'P.O. Box',
         pudo: 'RUG PUDO Network',
+        cdsKiosk: 'CDS Kiosk',
         help: 'Help Center',
       },
       contactTitle: 'Contact Us',
@@ -1202,6 +1206,7 @@ export const translations: Record<Language, TranslationContent> = {
         receiving: 'Qaabilaadda Boostada & Xirmooyinka',
         poBox: 'Kiraynta Sanduuqa P.O.',
         pudo: 'Shabakadda RUG PUDO',
+        cdsKiosk: 'CDS Kiosk',
       },
       help: 'Caawimaad',
       about: 'Ku Saabsan',
@@ -1283,6 +1288,7 @@ export const translations: Record<Language, TranslationContent> = {
         services: 'Adeegyada',
         poBox: 'Sanduuqa P.O.',
         pudo: 'Shabakadda RUG PUDO',
+        cdsKiosk: 'CDS Kiosk',
         help: 'Xarunta Caawinta',
       },
       contactTitle: 'Nala Soo Xidhiidh',
@@ -1911,6 +1917,7 @@ export const translations: Record<Language, TranslationContent> = {
         receiving: 'استلام البريد والطرود',
         poBox: 'تأجير صناديق البريد',
         pudo: 'شبكة RUG PUDO',
+        cdsKiosk: 'كشك CDS',
       },
       help: 'الدعم',
       about: 'من نحن',
@@ -1991,6 +1998,7 @@ export const translations: Record<Language, TranslationContent> = {
         services: 'الخدمات',
         poBox: 'صندوق بريد',
         pudo: 'شبكة RUG PUDO',
+        cdsKiosk: 'كشك CDS',
         help: 'مركز المساعدة',
       },
       contactTitle: 'تواصل معنا',

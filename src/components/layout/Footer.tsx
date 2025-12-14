@@ -23,11 +23,16 @@ const socialLinks: SocialLink[] = [
 export const Footer = () => {
   const { footer } = useTranslations();
   const currentYear = new Date().getFullYear();
-  const quickLinks = [
+  const quickLinks: { href: string; label: string; external?: boolean }[] = [
     { href: '/about', label: footer.links.about },
     { href: '/services/receiving', label: footer.links.services },
     { href: '/services/po-box', label: footer.links.poBox },
     { href: '/pudo', label: footer.links.pudo },
+    {
+      href: 'https://www.cds.post/CDS.Web/operational/andeclaration.aspx',
+      label: footer.links.cdsKiosk,
+      external: true,
+    },
     { href: '/help', label: footer.links.help },
   ];
 
@@ -55,11 +60,23 @@ export const Footer = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">{footer.quickLinksTitle}</h3>
             <nav className="flex flex-col space-y-2">
-              {quickLinks.map((link) => (
-                <Link key={link.href} href={link.href} className="text-gray-400 hover:text-white">
-                  {link.label}
-                </Link>
-              ))}
+              {quickLinks.map((link) =>
+                link.external ? (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-gray-400 hover:text-white"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link key={link.href} href={link.href} className="text-gray-400 hover:text-white">
+                    {link.label}
+                  </Link>
+                )
+              )}
             </nav>
           </div>
 

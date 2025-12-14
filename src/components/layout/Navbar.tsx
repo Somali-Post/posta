@@ -7,6 +7,11 @@ import { useLanguage, useTranslations } from '@/context/LanguageContext';
 import type { Language } from '@/lib/translations';
 
 const languageOrder: Language[] = ['en', 'ar'];
+type NavLink = {
+  href: string;
+  label: string;
+  external?: boolean;
+};
 
 export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,13 +23,18 @@ export const Navbar = () => {
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  const serviceLinks = [
+  const serviceLinks: NavLink[] = [
     { href: '/services/receiving', label: translations.nav.dropdown.receiving },
     { href: '/services/po-box', label: translations.nav.dropdown.poBox },
     { href: '/pudo', label: translations.nav.dropdown.pudo },
+    {
+      href: 'https://www.cds.post/CDS.Web/operational/andeclaration.aspx',
+      label: translations.nav.dropdown.cdsKiosk,
+      external: true,
+    },
   ];
 
-  const primaryLinks = [
+  const primaryLinks: NavLink[] = [
     { href: '/', label: translations.nav.home },
     { href: '/track', label: translations.nav.track },
     { href: '/help', label: translations.nav.help },
@@ -154,17 +164,31 @@ export const Navbar = () => {
                 className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl py-2"
                 role="menu"
               >
-                {serviceLinks.map((service) => (
-                  <Link
-                    key={service.href}
-                    href={service.href}
-                    onClick={closeMenus}
-                    className="block px-4 py-2 text-dark-text hover:bg-light-gray"
-                    role="menuitem"
-                  >
-                    {service.label}
-                  </Link>
-                ))}
+                {serviceLinks.map((service) =>
+                  service.external ? (
+                    <a
+                      key={service.href}
+                      href={service.href}
+                      onClick={closeMenus}
+                      className="block px-4 py-2 text-dark-text hover:bg-light-gray"
+                      role="menuitem"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {service.label}
+                    </a>
+                  ) : (
+                    <Link
+                      key={service.href}
+                      href={service.href}
+                      onClick={closeMenus}
+                      className="block px-4 py-2 text-dark-text hover:bg-light-gray"
+                      role="menuitem"
+                    >
+                      {service.label}
+                    </Link>
+                  )
+                )}
               </div>
             )}
           </div>
@@ -220,16 +244,29 @@ export const Navbar = () => {
                 {link.label}
               </Link>
             ))}
-            {serviceLinks.map((service) => (
-              <Link
-                key={service.href}
-                href={service.href}
-                onClick={closeMenus}
-                className="py-2 pl-4 text-md font-medium text-gray-600 hover:text-brand-dark-blue"
-              >
-                - {service.label}
-              </Link>
-            ))}
+            {serviceLinks.map((service) =>
+              service.external ? (
+                <a
+                  key={service.href}
+                  href={service.href}
+                  onClick={closeMenus}
+                  className="py-2 pl-4 text-md font-medium text-gray-600 hover:text-brand-dark-blue"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  - {service.label}
+                </a>
+              ) : (
+                <Link
+                  key={service.href}
+                  href={service.href}
+                  onClick={closeMenus}
+                  className="py-2 pl-4 text-md font-medium text-gray-600 hover:text-brand-dark-blue"
+                >
+                  - {service.label}
+                </Link>
+              )
+            )}
             {primaryLinks.slice(2).map((link) => (
               <Link
                 key={link.href}
