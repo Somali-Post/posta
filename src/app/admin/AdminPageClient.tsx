@@ -144,8 +144,8 @@ const AdminPageClient = () => {
   }
 
   const searchParams = useSearchParams();
-  const customerId = searchParams.get('id');
-  const secretKey = searchParams.get('secret') || '';
+  const customerId = searchParams?.get('id') || '';
+  const secretKey = searchParams?.get('secret') || '';
 
   const [paymentDate, setPaymentDate] = useState<Date | null>(new Date());
   const [paymentRef, setPaymentRef] = useState('');
@@ -160,7 +160,7 @@ const AdminPageClient = () => {
   const [listVersion, setListVersion] = useState(0);
 
   const [customer, setCustomer] = useState<CustomerDetail | null>(null);
-  const [customerLoading, setCustomerLoading] = useState(!!customerId);
+  const [customerLoading, setCustomerLoading] = useState(Boolean(customerId));
   const [customerError, setCustomerError] = useState('');
   const [verificationNotes, setVerificationNotes] = useState('');
   const [statusMessage, setStatusMessage] = useState('');
