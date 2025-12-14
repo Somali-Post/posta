@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
 import { LanguageProvider } from '@/context/LanguageContext';
 import type { Language } from '@/lib/translations';
 import { translations } from '@/lib/translations';
@@ -43,6 +44,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans`} dir={defaultLanguage === 'ar' ? 'rtl' : 'ltr'}>
         <LanguageProvider>{children}</LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
