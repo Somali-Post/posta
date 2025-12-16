@@ -741,7 +741,7 @@ export const translations: Record<Language, TranslationContent> = {
     track: {
       title: 'Track Your Item',
       subtitle: 'Stay informed every step of the way.',
-      instructions: 'Enter your tracking number below.',
+      instructions: 'Enter your tracking number above.',
       placeholder: 'e.g., CC850579694SE',
       helper: 'Your number should be 13 characters long, like AA123456789SE.',
       buttonIdle: 'Track',
