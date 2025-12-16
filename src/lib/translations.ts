@@ -364,6 +364,7 @@ export interface TranslationContent {
     title: string;
     subtitle: string;
     instructions: string;
+    emptyStateInstructions: string;
     placeholder: string;
     helper: string;
     buttonIdle: string;
@@ -741,7 +742,8 @@ export const translations: Record<Language, TranslationContent> = {
     track: {
       title: 'Track Your Item',
       subtitle: 'Stay informed every step of the way.',
-      instructions: 'Enter your tracking number above.',
+      instructions: 'Enter your tracking number below.',
+      emptyStateInstructions: 'Enter your tracking number above.',
       placeholder: 'e.g., CC850579694SE',
       helper: 'Your number should be 13 characters long, like AA123456789SE.',
       buttonIdle: 'Track',
@@ -1452,6 +1454,7 @@ export const translations: Record<Language, TranslationContent> = {
       title: 'Raac Alaabtaada',
       subtitle: 'La soco talaabo kasta oo safarka ah.',
       instructions: 'Geli lambarka raadraaca ee hoose.',
+      emptyStateInstructions: 'Geli lambarka raadraaca ee hoose.',
       placeholder: 'tusaale, CC850579694SE',
       helper: 'Lambarkaagu waa inuu ahaadaa 13 xaraf sida AA123456789SE.',
       buttonIdle: 'Raac',
@@ -2162,6 +2165,7 @@ export const translations: Record<Language, TranslationContent> = {
       title: 'تتبع شحنتك',
       subtitle: 'ابقَ مطلعاً على كل خطوة.',
       instructions: 'أدخل رقم التتبع في الحقل أدناه.',
+      emptyStateInstructions: 'أدخل رقم التتبع في الحقل أدناه.',
       placeholder: 'مثال: CC850579694SE',
       helper: 'يجب أن يتكون الرقم من 13 خانة مثل AA123456789SE.',
       buttonIdle: 'تتبع',

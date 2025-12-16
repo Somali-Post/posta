@@ -254,7 +254,7 @@ const TrackPage = () => {
 
             {!isLoading && !error && !data && (
               <div className="text-center text-gray-500 py-8">
-                <p className="text-lg">{track.instructions}</p>
+                <p className="text-lg">{track.emptyStateInstructions}</p>
               </div>
             )}
           </div>
