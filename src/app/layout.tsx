@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { LanguageProvider } from '@/context/LanguageContext';
 import type { Language } from '@/lib/translations';
 import { translations } from '@/lib/translations';
+import WhatsAppFloat from '@/components/common/WhatsAppFloat';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -44,6 +45,7 @@ export default function RootLayout({
       </head>
       <body className={`${inter.variable} font-sans`} dir={defaultLanguage === 'ar' ? 'rtl' : 'ltr'}>
         <LanguageProvider>{children}</LanguageProvider>
+        <WhatsAppFloat />
         <Analytics />
       </body>
     </html>

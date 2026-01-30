@@ -207,6 +207,7 @@ const TrackPage = () => {
     return null;
   })();
 
+
   return (
     <div className="flex flex-col min-h-screen bg-light-gray">
       <Navbar />
@@ -229,6 +230,7 @@ const TrackPage = () => {
                   onChange={(e) => handleIdChange(e.target.value)}
                   placeholder={track.placeholder}
                   maxLength={13}
+                  data-tracking-input="true"
                   aria-invalid={inputError ? 'true' : 'false'}
                   className="flex-grow w-full px-4 py-3 text-lg border-2 border-border-gray rounded-md focus:ring-2 focus:ring-brand-dark-blue focus:border-brand-dark-blue transition"
                   disabled={isLoading}
