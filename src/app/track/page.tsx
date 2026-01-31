@@ -182,7 +182,7 @@ const TrackPage = () => {
   const showGuidance = !isLoading && (isTransitGuidance || !!errorKey);
 
   const guidanceTitle = (() => {
-    if (isTransitGuidance) return 'No tracking updates are available in Somalia yet';
+    if (isTransitGuidance) return 'If no tracking update is available';
     if (errorKey === 'INVALID_S10') return 'Invalid tracking number';
     if (errorKey === 'RATE_LIMIT') return 'Too many requests';
     if (errorKey === 'SERVICE_DOWN') return 'Tracking service temporarily unavailable';
@@ -264,13 +264,16 @@ const TrackPage = () => {
                 {isTransitGuidance && (
                   <div className="mt-4 text-left bg-light-gray rounded-lg p-5 border border-border-gray">
                     <p className="text-dark-text font-semibold">
-                      No tracking updates are available in Somalia yet. This usually means the item has not arrived in
-                      Somalia and is still in transit through the origin and international transit network.
+                      This means the item has not yet arrived in Somalia and is still in transit.
                     </p>
 
                     <p className="text-gray-700 mt-3">
-                      Once the item arrives in Somalia and is recorded in our system for inbound processing, it will become
-                      trackable on this page within <span className="font-semibold">4 hours</span> of arrival.
+                      Please note that due to the small number of international direct flights into Somalia, most mail is
+                      transferred through a third country, which may lead to longer transit times.
+                    </p>
+
+                    <p className="text-gray-700 mt-3 font-semibold">
+                      Tracking is available within one hour of arrival in Somalia.
                     </p>
 
                     <div className="mt-5">
