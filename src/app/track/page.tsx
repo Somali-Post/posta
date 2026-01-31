@@ -182,7 +182,7 @@ const TrackPage = () => {
   const showGuidance = !isLoading && (isTransitGuidance || !!errorKey);
 
   const guidanceTitle = (() => {
-    if (isTransitGuidance) return 'If no tracking update is available';
+    if (isTransitGuidance) return 'No tracking update is available';
     if (errorKey === 'INVALID_S10') return 'Invalid tracking number';
     if (errorKey === 'RATE_LIMIT') return 'Too many requests';
     if (errorKey === 'SERVICE_DOWN') return 'Tracking service temporarily unavailable';
@@ -273,7 +273,7 @@ const TrackPage = () => {
                     </p>
 
                     <p className="text-gray-700 mt-3 font-semibold">
-                      Tracking is available within one hour of arrival in Somalia.
+                      Tracking will be available within one hour of arrival in Somalia.
                     </p>
 
                     <div className="mt-5">
