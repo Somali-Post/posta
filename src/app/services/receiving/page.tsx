@@ -1,126 +1,89 @@
-"use client";
-
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
-import { ServicePageHero } from '@/components/ServicePageHero';
-import { AnimatedSection } from '@/components/AnimatedSection';
-import { ArrowRightIcon } from '@/components/icons/ArrowRightIcon';
-import { useTranslations } from '@/context/LanguageContext';
+import { SiteShell } from '@/components/layout/SiteShell';
+import { Card, PageHero, Section } from '@/components/ui/Section';
 
-const ReceivingPage = () => {
-  const { services } = useTranslations();
-  const receiving = services.receiving;
-
-  return (
-    <div className="bg-light-gray">
-      <Navbar />
-      <main>
-        <ServicePageHero title={receiving.heroTitle} subtitle={receiving.heroSubtitle} />
-
-        <AnimatedSection>
-          <section className="py-20">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-brand-dark-blue">{receiving.processTitle}</h2>
-                <p className="text-lg text-gray-600 mt-2">
-                  Follow these simple steps to receive your international items securely.
-                </p>
-              </div>
-
-              <div className="grid lg:grid-cols-5 gap-12">
-                <div className="lg:col-span-3 space-y-8">
-                  {receiving.steps.map((step, index) => (
-                    <div
-                      key={step.title}
-                      className="bg-white p-6 rounded-lg shadow-md flex items-start transition-transform duration-300 ease-out transform hover:-translate-y-1 hover:scale-[1.02] hover:shadow-xl"
-                    >
-                      <div className="flex-shrink-0 w-10 h-10 bg-brand-dark-blue text-white font-bold rounded-full flex items-center justify-center mr-5">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold">{step.title}</h3>
-                        <p className="text-gray-600 mt-1">{step.description}</p>
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="bg-brand-dark-blue text-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
-                    <div className="space-y-1">
-                      <p className="text-xs uppercase tracking-wide text-blue-100">{receiving.trackCta.eyebrow}</p>
-                      <h3 className="text-xl font-semibold">{receiving.trackCta.title}</h3>
-                      <p className="text-blue-50 text-sm md:text-base">{receiving.trackCta.body}</p>
-                    </div>
-                    <Link
-                      href="/track"
-                      className="inline-flex items-center gap-2 bg-white text-brand-dark-blue px-4 py-2 rounded-full text-sm font-semibold shadow hover:shadow-lg transition-transform duration-300 hover:-translate-y-0.5 hover:scale-105 active:scale-100"
-                    >
-                      {receiving.trackCta.button}
-                      <ArrowRightIcon className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </div>
-
-                <aside className="lg:col-span-2 space-y-8">
-                  <div className="bg-white p-8 rounded-lg shadow-md border-t-4 border-brand-dark-blue transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
-                    <h3 className="text-2xl font-bold text-dark-text mb-4">{receiving.whatToBringTitle}</h3>
-                    <p className="text-gray-600 mb-4">{receiving.whatToBringBody}</p>
-                    <ul className="list-disc list-inside space-y-2 text-gray-700">
-                      {receiving.bringList.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="bg-white p-8 rounded-lg shadow-md transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
-                    <h3 className="text-2xl font-bold text-dark-text mb-4">{receiving.locationTitle}</h3>
-                    <p className="text-gray-700 font-semibold">{receiving.locationBody}</p>
-                    <p className="text-gray-600 mt-2">
-                      <strong>{receiving.addressLabel}:</strong> {receiving.addressValue}
-                    </p>
-                    <div className="mt-4 border-t pt-4">
-                      <h4 className="font-semibold text-gray-700">{receiving.hoursLabel}</h4>
-                      <ul className="text-gray-600 space-y-1 mt-2">
-                        <li>
-                          <strong>Saturday - Wednesday:</strong> 8:30 AM - 4:30 PM
-                        </li>
-                        <li>
-                          <strong>Thursday:</strong> 8:30 AM - 2:00 PM (Closes early)
-                        </li>
-                        <li>
-                          <strong>Friday:</strong> Closed
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </aside>
-              </div>
-            </div>
-          </section>
-        </AnimatedSection>
-
-        <AnimatedSection>
-          <section className="py-20 bg-brand-dark-blue text-white">
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-4xl font-bold">{receiving.futureSection.title}</h2>
-              <p className="text-xl opacity-90 mt-4 max-w-3xl mx-auto">{receiving.futureSection.body}</p>
-              <div className="mt-12 grid md:grid-cols-3 gap-8">
-                {receiving.futureSection.cards.map((card) => (
-                  <div
-                    key={card.title}
-                    className="bg-white bg-opacity-10 hover:bg-opacity-20 transition-all p-6 rounded-lg transform hover:scale-105"
-                  >
-                    <h3 className="font-bold text-2xl">{card.title}</h3>
-                    <p className="opacity-80 mt-2">{card.description}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        </AnimatedSection>
-      </main>
-      <Footer />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: 'Receiving International Mail',
+  description: 'Guidance for recipients receiving inbound international mail through Somali Post.',
 };
 
-export default ReceivingPage;
+const processSteps = [
+  ['Arrival at the inward office of exchange', 'The item reaches the Somali Post inbound exchange process.'],
+  ['Postal and customs processing', 'Postal handling and customs requirements may affect when the item becomes available.'],
+  ['Recipient contact', 'Somali Post may use the recipient mobile or WhatsApp number supplied on the item.'],
+  ['Collection or final handover', 'The item is collected or handed over according to operational arrangements.'],
+];
+
+const preparation = [
+  ['Tracking number', 'Keep the S10 tracking number provided by the sending postal operator.'],
+  ['Reachable telephone or WhatsApp', 'Make sure the recipient contact number on the item can be reached.'],
+  [
+    'Accepted identification',
+    'Valid accepted identification may include national identification or a valid passport, subject to Somali Post operational checks.',
+  ],
+];
+
+export default function ReceivingPage() {
+  return (
+    <SiteShell>
+      <PageHero
+        eyebrow="Current service"
+        title="Receiving International Mail"
+        description="Somali Post has restored inbound international postal exchange and provides guidance for recipients expecting items from abroad."
+      />
+
+      <Section title="How inbound mail is handled" compact>
+        <div className="grid gap-4 md:grid-cols-4">
+          {processSteps.map(([title, body], index) => (
+            <Card key={title} className="relative">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-sm font-black text-navy-950">
+                {index + 1}
+              </span>
+              <h2 className="mt-5 text-xl font-bold leading-tight text-navy-950">{title}</h2>
+              <p className="mt-3 text-base leading-7 text-ink-muted">{body}</p>
+            </Card>
+          ))}
+        </div>
+      </Section>
+
+      <section className="bg-surface-soft">
+        <Section title="What recipients should prepare" compact>
+          <div className="grid gap-5 md:grid-cols-3">
+            {preparation.map(([title, body]) => (
+              <Card key={title}>
+                <h2 className="text-xl font-bold text-navy-950">{title}</h2>
+                <p className="mt-3 text-base leading-7 text-ink-muted">{body}</p>
+              </Card>
+            ))}
+          </div>
+          <div className="mt-7 rounded-3xl border border-gold-400/50 bg-gold-400/12 p-6">
+            <h2 className="text-xl font-bold text-navy-950">Processing note</h2>
+            <p className="mt-3 text-lg leading-8 text-navy-950">
+              Processing and customs requirements may affect item availability. Somali Post should not be assumed to
+              provide a fixed processing time unless one is officially confirmed.
+            </p>
+          </div>
+        </Section>
+      </section>
+
+      <Section title="Next steps" compact>
+        <div className="grid gap-4 md:grid-cols-3">
+          {[
+            ['/track', 'Track an Item'],
+            ['/contact', 'Contact Somali Post'],
+            ['/send-to-somalia', 'View Address Guidance'],
+          ].map(([href, label]) => (
+            <Link
+              key={href}
+              href={href}
+              className="rounded-full bg-navy-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-navy-900"
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+      </Section>
+    </SiteShell>
+  );
+}

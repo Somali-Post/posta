@@ -1,32 +1,28 @@
-"use client";
+import type { Metadata } from 'next';
+import { SiteShell } from '@/components/layout/SiteShell';
+import { Card, PageHero, Section } from '@/components/ui/Section';
 
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
-import { ServicePageHero } from '@/components/ServicePageHero';
-import { useTranslations } from '@/context/LanguageContext';
-
-const TermsPage = () => {
-  const { legal } = useTranslations();
-  const { terms } = legal;
-
-  return (
-    <div className="bg-light-gray min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow">
-        <ServicePageHero title={terms.title} subtitle={terms.subtitle} />
-        <div className="container mx-auto px-4 py-16 space-y-8 max-w-4xl">
-          <p className="text-sm text-gray-500">{terms.lastUpdatedLabel}</p>
-          {terms.sections.map((section) => (
-            <section key={section.title} className="bg-white p-8 rounded-lg shadow-sm">
-              <h2 className="text-2xl font-bold text-brand-dark-blue mb-4">{section.title}</h2>
-              <p className="text-gray-700">{section.body}</p>
-            </section>
-          ))}
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: 'Terms of Use',
+  description: 'Terms of use for the Somali Post website.',
 };
 
-export default TermsPage;
+export default function TermsPage() {
+  return (
+    <SiteShell>
+      <PageHero
+        eyebrow="Terms"
+        title="Terms of Use"
+        description="Initial terms for the rebuilt Somali Post website."
+      />
+      <Section title="Use of this website">
+        <Card>
+          <p className="text-lg leading-8 text-ink-muted">
+            Website content is provided for public guidance. Service availability, fees, locations and contact details
+            should be treated as official only when confirmed by Somali Post.
+          </p>
+        </Card>
+      </Section>
+    </SiteShell>
+  );
+}

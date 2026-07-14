@@ -37,7 +37,7 @@ type NormalizedEvent = {
 };
 
 // --- simple in-memory rate limit + cache (per server instance) ---
-type CacheEntry = { expiresAt: number; payload: any; status?: number };
+type CacheEntry = { expiresAt: number; payload: unknown; status?: number };
 const cache = new Map<string, CacheEntry>();
 
 type RateEntry = { resetAt: number; count: number };

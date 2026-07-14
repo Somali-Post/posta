@@ -1,4 +1,4 @@
-import type { Language } from './translations';
+type Language = 'en' | 'so' | 'ar';
 
 export type EventInfo = {
   label: string;

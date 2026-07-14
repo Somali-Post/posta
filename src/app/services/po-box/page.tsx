@@ -1,96 +1,60 @@
-"use client";
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import { SiteShell } from '@/components/layout/SiteShell';
+import { Card, PageHero, Section } from '@/components/ui/Section';
+import { siteConfig } from '@/lib/site';
 
-import { Navbar } from '@/components/layout/Navbar';
-import { Footer } from '@/components/layout/Footer';
-import { ServicePageHero } from '@/components/ServicePageHero';
-import { useTranslations } from '@/context/LanguageContext';
-
-const POBoxPage = () => {
-  const { services } = useTranslations();
-  const poBox = services.poBox;
-
-  return (
-    <div className="bg-light-gray">
-      <Navbar />
-      <main>
-        <ServicePageHero title={poBox.heroTitle} subtitle={poBox.heroSubtitle} />
-
-        <div className="container mx-auto px-4 py-16">
-          <div className="grid lg:grid-cols-3 gap-12">
-            <div className="lg:col-span-2 space-y-12">
-              <section className="bg-white p-8 rounded-lg shadow-md">
-                <h2 className="text-3xl font-bold text-brand-dark-blue mb-6">{poBox.whyTitle}</h2>
-                <div className="grid sm:grid-cols-2 gap-8">
-                  {poBox.cards.map((card) => (
-                    <div key={card.title}>
-                      <h3 className="font-semibold text-xl text-dark-text">{card.title}</h3>
-                      <p className="text-gray-600 mt-1">{card.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-
-              <section className="bg-white p-8 rounded-lg shadow-md">
-                <h2 className="text-3xl font-bold text-brand-dark-blue mb-6">{poBox.howTitle}</h2>
-                <div className="space-y-6">
-                  {poBox.steps.map((step, index) => (
-                    <div key={step.title} className="flex items-start">
-                      <div className="flex-shrink-0 w-8 h-8 bg-brand-dark-blue text-white font-bold rounded-full flex items-center justify-center mr-4">
-                        {index + 1}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-semibold text-dark-text">{step.title}</h3>
-                        <p className="text-gray-600">{step.description}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </div>
-
-            <aside className="lg:col-span-1 space-y-8">
-              <div className="bg-white p-8 rounded-lg shadow-md border-t-4 border-brand-dark-blue">
-                <h2 className="text-2xl font-bold text-dark-text mb-4">{poBox.pricing.title}</h2>
-                <div className="space-y-4">
-                  {poBox.pricing.plans.map((plan) => (
-                    <div key={plan.label} className="p-4 border rounded-lg text-center">
-                      <p className="font-bold text-lg text-dark-text">{plan.label}</p>
-                      <p className="text-2xl font-bold text-brand-dark-blue">
-                        {plan.price} <span className="text-base font-normal text-gray-500">{plan.suffix}</span>
-                      </p>
-                    </div>
-                  ))}
-                </div>
-                <p className="text-sm text-gray-500 mt-4">{poBox.pricing.note}</p>
-              </div>
-
-              <div className="bg-white p-8 rounded-lg shadow-md">
-                <h2 className="text-2xl font-bold text-dark-text mb-4">{poBox.visit.title}</h2>
-                <p className="text-gray-700 font-semibold">{poBox.visit.officeName}</p>
-                <p className="text-gray-600">{poBox.visit.address}</p>
-                <div className="mt-4 border-t pt-4">
-                  <h3 className="font-semibold text-gray-700">{poBox.visit.hoursTitle}</h3>
-                  <ul className="text-gray-600">
-                    {poBox.visit.hours.map((hour) => (
-                      <li key={hour.label}>
-                        <strong>{hour.label}:</strong> {hour.value}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-brand-dark-blue text-white p-8 rounded-lg shadow-md text-center">
-                <h2 className="text-2xl font-bold mb-2">{poBox.portal.title}</h2>
-                <p className="opacity-90">{poBox.portal.body}</p>
-              </div>
-            </aside>
-          </div>
-        </div>
-      </main>
-      <Footer />
-    </div>
-  );
+export const metadata: Metadata = {
+  title: 'P.O. Box Information',
+  description: 'Information-only guidance for Somali Post P.O. Box enquiries.',
 };
 
-export default POBoxPage;
+export default function POBoxPage() {
+  return (
+    <SiteShell>
+      <PageHero
+        eyebrow="Information only"
+        title="P.O. Box Information"
+        description="P.O. Box service enquiries are handled by contacting Somali Post. Online registration, document uploads and payment processing are not available on this rebuilt website."
+      />
+      <Section title="How P.O. Box enquiries work">
+        <div className="grid gap-6 lg:grid-cols-[1fr_0.85fr]">
+          <div className="space-y-5 text-lg leading-8 text-ink-muted">
+            <p>
+              A P.O. Box gives a customer a dedicated postal box for receiving mail at a Somali Post facility. Somali
+              residents may use accepted national identification. Diaspora applicants may use a valid passport as
+              identification.
+            </p>
+            <p>
+              Applications are completed by contacting Somali Post directly. Fees, office details and confirmed opening
+              hours will be published only when officially confirmed.
+            </p>
+          </div>
+          <Card>
+            <h2 className="text-xl font-bold text-navy-950">Enquiry options</h2>
+            <dl className="mt-5 space-y-4 text-base text-ink-muted">
+              <div>
+                <dt className="font-semibold text-ink">Official email</dt>
+                <dd>
+                  <a className="text-navy-900 hover:text-gold-500" href={`mailto:${siteConfig.email}`}>
+                    {siteConfig.email}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-ink">Location</dt>
+                <dd>{siteConfig.address}</dd>
+              </div>
+            </dl>
+            <Link
+              href="/contact"
+              className="mt-6 inline-flex rounded-full bg-gold-500 px-5 py-3 text-sm font-bold text-navy-950 hover:bg-gold-400"
+            >
+              Contact Somali Post
+            </Link>
+          </Card>
+        </div>
+      </Section>
+    </SiteShell>
+  );
+}
