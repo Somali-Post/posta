@@ -10,25 +10,32 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'brand-dark-blue': '#0D47A1',
-        'dark-text': '#1E293B',
-        'light-gray': '#F8FAFC',
-        'border-gray': '#E2E8F0',
-        'somali-blue': '#0D47A1',
-        'accent-blue': '#89B9ED',
+        navy: {
+          950: '#10234F',
+          900: '#172D5B',
+          800: '#203A70',
+        },
+        gold: {
+          500: '#D9AE21',
+          400: '#E8C44C',
+        },
+        surface: {
+          DEFAULT: '#FFFFFF',
+          soft: '#F6F8FC',
+        },
+        border: '#DDE3ED',
+        ink: {
+          DEFAULT: '#172033',
+          muted: '#667085',
+        },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', ...fontFamily.sans],
+        sans: ['Manrope Variable', ...fontFamily.sans],
       },
-      animation: {
-        'infinite-scroll': 'infinite-scroll 60s linear infinite',
+      boxShadow: {
+        soft: '0 18px 50px rgba(16, 35, 79, 0.10)',
+        card: '0 10px 30px rgba(16, 35, 79, 0.08)',
       },
-      keyframes: {
-        'infinite-scroll': {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(-50%)' },
-        }
-      }
     },
   },
   plugins: [],

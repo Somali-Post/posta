@@ -1,140 +1,98 @@
-'use client';
-
-import type { ComponentType } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FacebookIcon } from '../icons/FacebookIcon';
-import { TwitterIcon } from '../icons/TwitterIcon';
-import { LinkedInIcon } from '../icons/LinkedInIcon';
-import { useTranslations } from '@/context/LanguageContext';
+import { serviceLinks, siteConfig } from '@/lib/site';
 
-type SocialLink = {
-  key: string;
-  Icon: ComponentType<{ className?: string }>;
-  href?: string;
-};
-
-const socialLinks: SocialLink[] = [
-  { key: 'twitter', Icon: TwitterIcon, href: process.env.NEXT_PUBLIC_SOCIAL_TWITTER_URL },
-  { key: 'facebook', Icon: FacebookIcon, href: process.env.NEXT_PUBLIC_SOCIAL_FACEBOOK_URL },
-  { key: 'linkedin', Icon: LinkedInIcon, href: process.env.NEXT_PUBLIC_SOCIAL_LINKEDIN_URL },
+const informationLinks = [
+  { href: '/about', label: 'About Somali Post' },
+  { href: '/help', label: 'Help Centre' },
+  { href: '/contact', label: 'Contact Us' },
+  { href: '/privacy', label: 'Privacy' },
+  { href: '/terms', label: 'Terms' },
+  { href: '/accessibility', label: 'Accessibility' },
 ];
 
-export const Footer = () => {
-  const { footer } = useTranslations();
-  const currentYear = new Date().getFullYear();
-  const quickLinks: { href: string; label: string; external?: boolean }[] = [
-    { href: '/about', label: footer.links.about },
-    { href: '/services/receiving', label: footer.links.services },
-    { href: '/services/po-box', label: footer.links.poBox },
-    { href: '/pudo', label: footer.links.pudo },
-    {
-      href: 'https://www.cds.post/CDS.Web/operational/andeclaration.aspx',
-      label: footer.links.cdsKiosk,
-      external: true,
-    },
-    { href: '/help', label: footer.links.help },
-  ];
+const serviceFooterLinks = [
+  { href: '/send-to-somalia', label: 'Send Mail to Somalia' },
+  { href: '/track', label: 'Track an Item' },
+  ...serviceLinks,
+];
 
+export function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 text-center md:text-left">
+    <footer className="bg-navy-950 text-white">
+      <div className="h-1 bg-gold-500" />
+      <div className="container-site py-14 md:py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr_1fr] lg:gap-12">
           <div>
-            <Link href="/" className="flex items-center justify-center md:justify-start gap-3 mb-4">
-              <span className="inline-flex items-center justify-center rounded-full bg-white p-1">
-                <Image
-                  src="/images/somali-post-logo.png"
-                  alt="Somali Post Logo"
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
+            <Link href="/" className="inline-flex items-center gap-3.5 rounded-xl">
+              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white">
+                <Image src="/images/somali-post-logo.png" alt="Somali Post logo" width={46} height={46} />
               </span>
-              <span className="text-xl font-bold">Posta.so</span>
+              <span className="text-lg font-bold">{siteConfig.legalName}</span>
             </Link>
-            <h3 className="font-bold text-lg mb-2">{footer.aboutTitle}</h3>
-            <p className="text-gray-400">{footer.aboutBody}</p>
+            <p className="mt-5 max-w-sm text-base leading-7 text-white/72">
+              Somalia&apos;s national postal operator, restoring inbound international postal exchange and rebuilding modern
+              national postal services.
+            </p>
+            <p className="mt-4 text-base font-semibold text-white/88">{siteConfig.address}</p>
           </div>
 
+          <FooterColumn title="Services" links={serviceFooterLinks} />
+          <FooterColumn title="Information" links={informationLinks} />
+
           <div>
-            <h3 className="font-bold text-lg mb-4">{footer.quickLinksTitle}</h3>
-            <nav className="flex flex-col space-y-2">
-              {quickLinks.map((link) =>
-                link.external ? (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    className="text-gray-400 hover:text-white"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {link.label}
+            <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-gold-400">Contact</h2>
+            <dl className="mt-5 space-y-4 text-base text-white/76">
+              <div>
+                <dt className="font-semibold text-white">Official email</dt>
+                <dd>
+                  <a className="rounded-sm hover:text-gold-400" href={`mailto:${siteConfig.email}`}>
+                    {siteConfig.email}
                   </a>
-                ) : (
-                  <Link key={link.href} href={link.href} className="text-gray-400 hover:text-white">
-                    {link.label}
-                  </Link>
-                )
-              )}
-            </nav>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-lg mb-4">{footer.contactTitle}</h3>
-            <div className="text-gray-400 space-y-2">
-              {footer.contactLines.map((line) => (
-                <p key={line}>{line}</p>
-              ))}
-            </div>
-            <p className="mt-4">
-              <span className="font-semibold">{footer.emailLabel}:</span>{' '}
-              <a href={`mailto:${footer.emailValue}`} className="text-gray-300 hover:text-white">
-                {footer.emailValue}
-              </a>
-            </p>
-            <p>
-              <span className="font-semibold">{footer.phoneLabel}:</span>{' '}
-              <a href={`tel:${footer.phoneValue}`} className="text-gray-300 hover:text-white">
-                {footer.phoneValue}
-              </a>
-            </p>
-          </div>
-
-          <div>
-            <h3 className="font-bold text-lg mb-4">{footer.stayConnectedTitle}</h3>
-            <p className="text-gray-400 mb-4">{footer.stayConnectedBody}</p>
-            {socialLinks.filter((link) => !!link.href).length > 0 ? (
-              <div className="flex items-center justify-center md:justify-start gap-4">
-                {socialLinks
-                  .filter((link) => !!link.href)
-                  .map(({ key, href, Icon }) => (
-                    <a key={key} href={href} className="text-gray-400 hover:text-white" target="_blank" rel="noreferrer">
-                      <Icon className="w-6 h-6" />
-                    </a>
-                  ))}
+                </dd>
               </div>
-            ) : (
-              <p className="text-gray-500 italic">{footer.socialFallback}</p>
-            )}
+              <div>
+                <dt className="font-semibold text-white">Location</dt>
+                <dd>{siteConfig.address}</dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-white">More information</dt>
+                <dd>
+                  <Link className="rounded-sm hover:text-gold-400" href="/contact">
+                    Visit the contact page
+                  </Link>
+                </dd>
+              </div>
+            </dl>
           </div>
         </div>
-      </div>
-      <div className="bg-black bg-opacity-20">
-        <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500">
-          <p>
-            &copy; {currentYear} {footer.rights}
-          </p>
-          <div className="flex gap-4 mt-4 sm:mt-0">
-            <Link key="footer-privacy" href="/privacy" className="hover:text-white">
-              {footer.privacy}
-            </Link>
-            <Link key="footer-terms" href="/terms" className="hover:text-white">
-              {footer.terms}
-            </Link>
-          </div>
+
+        <div className="mt-12 flex flex-col gap-4 border-t border-white/12 pt-6 text-sm text-white/64 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} {siteConfig.legalName}. All rights reserved.</p>
+          <p>Official Somali Post digital service.</p>
         </div>
       </div>
     </footer>
   );
-};
+}
+
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: Array<{ href: string; label: string }>;
+}) {
+  return (
+    <div>
+      <h2 className="text-sm font-bold uppercase tracking-[0.18em] text-gold-400">{title}</h2>
+      <nav className="mt-5 grid gap-3" aria-label={`${title} footer links`}>
+        {links.map((link) => (
+          <Link key={link.href} href={link.href} className="rounded-sm text-base text-white/76 transition hover:text-gold-400">
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+    </div>
+  );
+}

@@ -9,23 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@react-email/components": "^1.0.1",
-    "@react-email/render": "^2.0.0",
-    "@supabase/supabase-js": "^2.81.1",
-    "@types/react-datepicker": "^6.2.0",
+    "@fontsource-variable/manrope": "^5.2.8",
     "@vercel/analytics": "^1.6.1",
-    "@vis.gl/react-google-maps": "^1.7.1",
     "next": "^16.0.10",
-    "nodemailer": "^7.0.10",
     "react": "19.2.0",
-    "react-datepicker": "^8.9.0",
-    "react-dom": "19.2.0",
-    "react-email": "^5.0.4",
-    "react-phone-number-input": "^3.4.13"
+    "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/nodemailer": "^7.0.3",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "autoprefixer": "^10.4.22",
