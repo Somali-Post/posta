@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { SiteShell } from '@/components/layout/SiteShell';
+import { SocialLinks } from '@/components/ui/SocialLinks';
 import { Card, PageHero, Section } from '@/components/ui/Section';
+import { Reveal } from '@/components/ui/Reveal';
 import { siteConfig } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -15,47 +16,87 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Contact Somali Post"
-        description="Use the official email and location details below for Somali Post enquiries. Additional contact channels will be published when officially confirmed."
+        description="Use the official telephone, WhatsApp, email and location details below for Somali Post enquiries."
       />
       <Section title="Contact information" compact>
         <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
-          <Card>
-            <dl className="grid gap-6 text-base text-ink-muted">
-              <div>
-                <dt className="font-bold text-ink">Official email</dt>
-                <dd className="mt-1">
-                  <a className="font-semibold text-navy-900 hover:text-gold-500" href={`mailto:${siteConfig.email}`}>
-                    {siteConfig.email}
-                  </a>
-                </dd>
+          <Reveal>
+            <Card>
+              <dl className="grid gap-6 text-base text-ink-muted">
+                <div>
+                  <dt className="font-bold text-ink">Telephone</dt>
+                  <dd className="mt-1">
+                    <a
+                      className="font-semibold whitespace-nowrap text-navy-900 hover:text-gold-500"
+                      href={siteConfig.contact.phoneHref}
+                    >
+                      {siteConfig.contact.phoneDisplay}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-bold text-ink">WhatsApp</dt>
+                  <dd className="mt-1">
+                    <a className="font-semibold text-navy-900 hover:text-gold-500" href={siteConfig.contact.whatsappHref}>
+                      Contact Somali Post on WhatsApp
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-bold text-ink">Official email</dt>
+                  <dd className="mt-1">
+                    <a className="font-semibold text-navy-900 hover:text-gold-500" href={`mailto:${siteConfig.email}`}>
+                      {siteConfig.email}
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="font-bold text-ink">Location</dt>
+                  <dd className="mt-1">{siteConfig.address}</dd>
+                </div>
+              </dl>
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+                <a href={siteConfig.contact.phoneHref} className="btn-primary">
+                  Call Somali Post
+                </a>
+                <a href={siteConfig.contact.whatsappHref} className="btn-secondary">
+                  Contact Somali Post on WhatsApp
+                </a>
               </div>
-              <div>
-                <dt className="font-bold text-ink">Location</dt>
-                <dd className="mt-1">{siteConfig.address}</dd>
-              </div>
-              <div>
-                <dt className="font-bold text-ink">Service guidance</dt>
-                <dd className="mt-1">
-                  For postal address guidance, receiving mail, tracking and P.O. Box enquiries, use the relevant service
-                  pages on this website.
-                </dd>
-              </div>
-            </dl>
-          </Card>
+            </Card>
+          </Reveal>
 
-          <Card className="bg-surface-soft shadow-none">
-            <h2 className="text-xl font-bold text-navy-950">Online enquiry form</h2>
-            <p className="mt-3 text-base leading-7 text-ink-muted">
-              The website enquiry form is not active in this phase. It will remain unavailable until a secure backend
-              with server-side validation, rate limiting and spam protection is implemented.
-            </p>
-            <Link
-              href="/help"
-              className="mt-6 inline-flex rounded-full bg-navy-950 px-6 py-3 text-base font-bold text-white hover:bg-navy-900"
-            >
-              Visit Help Centre
-            </Link>
-          </Card>
+          <div className="grid gap-6">
+            <Reveal delay={80}>
+              <Card className="bg-surface-soft shadow-none">
+                <h2 className="text-xl font-bold text-navy-950">Official social accounts</h2>
+                <p className="mt-3 text-base leading-7 text-ink-muted">
+                  Follow Somali Post through the confirmed official social-media accounts.
+                </p>
+                <SocialLinks className="mt-5 text-navy-950" />
+              </Card>
+            </Reveal>
+
+            <Reveal delay={140}>
+              <Card className="interactive-card">
+                <h2 className="text-xl font-bold text-navy-950">Contacting us about a postal item</h2>
+                <p className="mt-3 text-base leading-7 text-ink-muted">
+                  Please have the tracking number, recipient&apos;s full name and a reachable telephone number available
+                  when contacting Somali Post.
+                </p>
+              </Card>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <Card className="interactive-card">
+                <h2 className="text-xl font-bold text-navy-950">P.O. Box enquiries</h2>
+                <p className="mt-3 text-base leading-7 text-ink-muted">
+                  Call or contact Somali Post on WhatsApp to confirm the current requirements and begin a P.O. Box
+                  application.
+                </p>
+              </Card>
+            </Reveal>
+          </div>
         </div>
       </Section>
     </SiteShell>

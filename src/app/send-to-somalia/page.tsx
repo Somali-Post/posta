@@ -9,25 +9,25 @@ export const metadata: Metadata = {
 };
 
 const checklist = [
-  'Write the recipient full name clearly.',
+  "Write the recipient's full name clearly.",
   'Include city or town.',
   'Include district or neighbourhood where available.',
   'Include a building, street or recognisable landmark.',
   'Use BN1011 as the current interim postal code.',
   'Include an active recipient mobile or WhatsApp number.',
-  'Include the sender return address.',
+  "Include the sender's return address.",
 ];
 
 const faqs = [
   {
     question: 'Can I send mail without a postcode?',
     answer:
-      'For mail routed through Somali Post, use BN1011 as the current interim postal code while Somalia continues developing its national postcode system.',
+      'When a postcode is requested, use BN1011 as the current interim code for mail routed through Somali Post.',
   },
   {
     question: 'Is BN1011 used for every Somali city?',
     answer:
-      'BN1011 is an interim routing code for mail routed through Somali Post. It is not a geographically allocated final national postcode system.',
+      'For now, BN1011 may be used as the interim code for mail routed through Somali Post, together with the correct city or town. It does not identify a specific geographical area.',
   },
   {
     question: 'Is a recipient telephone number required?',
@@ -88,7 +88,7 @@ DISTRICT OR NEIGHBOURHOOD
 CITY OR TOWN
 BN1011
 SOMALIA
-MOBILE / WHATSAPP: +252 ...`}
+MOBILE / WHATSAPP: +252 61 XXX XXXX`}
             </pre>
           </Card>
           <Card>
@@ -100,7 +100,7 @@ HODAN DISTRICT
 MOGADISHU
 BN1011
 SOMALIA
-MOBILE / WHATSAPP: +252 ...`}
+MOBILE / WHATSAPP: +252 61 XXX XXXX`}
             </pre>
           </Card>
         </div>
@@ -145,7 +145,7 @@ MOBILE / WHATSAPP: +252 ...`}
           </p>
           <Link
             href="/services/receiving"
-            className="inline-flex justify-center rounded-full bg-navy-950 px-6 py-3 text-base font-bold text-white hover:bg-navy-900"
+            className="btn-navy"
           >
             Receiving guidance
           </Link>

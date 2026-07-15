@@ -5,7 +5,7 @@ import { TrackingClient } from '@/components/tracking/TrackingClient';
 
 export const metadata: Metadata = {
   title: 'Track an Item',
-  description: 'Track inbound international postal items through the existing Somali Post tracking service.',
+  description: 'Enter a 13-character S10 tracking number to view available updates for supported international postal items.',
 };
 
 export default function TrackPage() {
@@ -14,7 +14,7 @@ export default function TrackPage() {
       <PageHero
         eyebrow="Tracking"
         title="Track an Item"
-        description="Enter a valid S10 tracking number to check available Somali Post tracking updates."
+        description="Enter a 13-character S10 tracking number to view available updates for supported international postal items."
       />
       <TrackingClient />
     </SiteShell>

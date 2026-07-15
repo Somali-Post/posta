@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteShell } from '@/components/layout/SiteShell';
 import { Card, PageHero, Section } from '@/components/ui/Section';
+import { siteConfig } from '@/lib/site';
 
 export const metadata: Metadata = {
   title: 'Receiving International Mail',
@@ -9,10 +10,10 @@ export const metadata: Metadata = {
 };
 
 const processSteps = [
-  ['Arrival at the inward office of exchange', 'The item reaches the Somali Post inbound exchange process.'],
-  ['Postal and customs processing', 'Postal handling and customs requirements may affect when the item becomes available.'],
-  ['Recipient contact', 'Somali Post may use the recipient mobile or WhatsApp number supplied on the item.'],
-  ['Collection or final handover', 'The item is collected or handed over according to operational arrangements.'],
+  ['Arrival at the inward office of exchange', "The item arrives through Somali Post's inbound international mail process."],
+  ['Postal and customs processing', 'The item is processed according to postal handling and any applicable customs requirements.'],
+  ['Recipient contact', 'Somali Post may use the mobile or WhatsApp number written on the item to contact the recipient.'],
+  ['Collection or final handover', 'Somali Post contacts the recipient to arrange collection or final handover according to the service available.'],
 ];
 
 const preparation = [
@@ -37,7 +38,7 @@ export default function ReceivingPage() {
         <div className="grid gap-4 md:grid-cols-4">
           {processSteps.map(([title, body], index) => (
             <Card key={title} className="relative">
-              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-gold-500 text-sm font-black text-navy-950">
+              <span className="flex h-10 w-10 items-center justify-center rounded-full bg-action-gold text-sm font-black text-navy-950">
                 {index + 1}
               </span>
               <h2 className="mt-5 text-xl font-bold leading-tight text-navy-950">{title}</h2>
@@ -60,8 +61,8 @@ export default function ReceivingPage() {
           <div className="mt-7 rounded-3xl border border-gold-400/50 bg-gold-400/12 p-6">
             <h2 className="text-xl font-bold text-navy-950">Processing note</h2>
             <p className="mt-3 text-lg leading-8 text-navy-950">
-              Processing and customs requirements may affect item availability. Somali Post should not be assumed to
-              provide a fixed processing time unless one is officially confirmed.
+              Processing times vary depending on transport, postal handling, customs requirements and the information
+              provided with the item.
             </p>
           </div>
         </Section>
@@ -69,19 +70,24 @@ export default function ReceivingPage() {
 
       <Section title="Next steps" compact>
         <div className="grid gap-4 md:grid-cols-3">
-          {[
-            ['/track', 'Track an Item'],
-            ['/contact', 'Contact Somali Post'],
-            ['/send-to-somalia', 'View Address Guidance'],
-          ].map(([href, label]) => (
-            <Link
-              key={href}
-              href={href}
-              className="rounded-full bg-navy-950 px-6 py-4 text-center text-base font-bold text-white transition hover:bg-navy-900"
-            >
-              {label}
-            </Link>
-          ))}
+          <Link
+            href="/track"
+            className="btn-navy py-4"
+          >
+            Track an Item
+          </Link>
+          <a
+            href={siteConfig.contact.phoneHref}
+            className="btn-navy py-4"
+          >
+            Call Somali Post
+          </a>
+          <a
+            href={siteConfig.contact.whatsappHref}
+            className="btn-primary py-4"
+          >
+            Contact Somali Post on WhatsApp
+          </a>
         </div>
       </Section>
     </SiteShell>

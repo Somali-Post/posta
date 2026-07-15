@@ -136,7 +136,7 @@ export function TrackingClient() {
           <button
             type="submit"
             disabled={isLoading}
-            className="rounded-full bg-gold-500 px-7 py-3 text-sm font-bold text-navy-950 transition hover:bg-gold-400 disabled:cursor-not-allowed disabled:bg-ink-muted disabled:text-white md:mt-8"
+            className="btn-primary px-7 py-3 text-sm disabled:cursor-not-allowed disabled:bg-ink-muted disabled:text-white disabled:shadow-none md:mt-8"
           >
             {isLoading ? 'Checking...' : 'Track Item'}
           </button>
@@ -145,9 +145,14 @@ export function TrackingClient() {
 
       <div className="mt-8">
         {isLoading && (
-          <Card>
-            <p className="text-lg font-semibold text-navy-950">Checking tracking updates...</p>
-            <p className="mt-2 text-sm text-ink-muted">Please wait while Somali Post checks the tracking service.</p>
+          <Card aria-live="polite">
+            <div className="flex items-start gap-4">
+              <span className="mt-1 h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-navy-900/20 border-t-navy-900 motion-reduce:animate-none" />
+              <div>
+                <p className="text-lg font-semibold text-navy-950">Checking tracking updates...</p>
+                <p className="mt-2 text-sm text-ink-muted">Please wait while Somali Post looks for available updates.</p>
+              </div>
+            </div>
           </Card>
         )}
 
@@ -168,7 +173,7 @@ export function TrackingClient() {
           <Card>
             <p className="text-lg font-semibold text-navy-950">Enter a tracking number to begin.</p>
             <p className="mt-2 text-sm text-ink-muted">
-              The redesigned page continues to use the existing Somali Post tracking backend.
+              Enter the 13-character tracking number shown on your receipt or dispatch confirmation.
             </p>
           </Card>
         )}
@@ -187,7 +192,7 @@ function GuidanceCard({ title, body }: { title: string; body: string }) {
         href={UPU_GTT_URL}
         target="_blank"
         rel="noreferrer"
-        className="mt-6 inline-flex items-center gap-3 rounded-2xl border border-border px-4 py-3 text-sm font-bold text-navy-900 transition hover:border-gold-500"
+        className="mt-6 inline-flex items-center gap-3 rounded-2xl border border-border px-4 py-3 text-sm font-bold text-navy-900 transition hover:-translate-y-0.5 hover:border-gold-500 hover:shadow-card active:translate-y-0"
       >
         <Image src="/images/upu-logo.png" alt="UPU" width={28} height={28} />
         UPU Global Track & Trace
@@ -217,11 +222,15 @@ function TrackingResult({ data }: { data: TrackingData }) {
       <Card>
         <h2 className="text-2xl font-bold text-navy-950">Tracking history</h2>
         <ol className="mt-6 space-y-6 border-l-2 border-navy-900 pl-6">
-          {data.history.map((event) => {
+          {data.history.map((event, index) => {
             const info = getEventInfo(event.code, 'en');
             return (
-              <li key={`${event.timestamp}-${event.code}`} className="relative">
-                <span className="absolute -left-[33px] top-1 h-4 w-4 rounded-full border-4 border-white bg-gold-500" />
+              <li
+                key={`${event.timestamp}-${event.code}`}
+                className="reveal-visible relative motion-safe:animate-[historyIn_520ms_ease-out_both]"
+                style={{ animationDelay: `${index * 70}ms` }}
+              >
+                <span className="absolute -left-[33px] top-1 h-4 w-4 rounded-full border-4 border-white bg-action-gold" />
                 <p className="text-lg font-bold text-navy-950">{info?.label || event.status}</p>
                 {(info?.explanation || event.explanation) && (
                   <p className="mt-1 text-sm leading-6 text-ink-muted">{info?.explanation || event.explanation}</p>
