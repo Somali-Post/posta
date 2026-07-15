@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { SocialLinks } from '@/components/ui/SocialLinks';
 import { serviceLinks, siteConfig } from '@/lib/site';
 
 const informationLinks = [
@@ -25,13 +26,17 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.25fr_1fr_1fr_1fr] lg:gap-12">
           <div>
             <Link href="/" className="inline-flex items-center gap-3.5 rounded-xl">
-              <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white">
-                <Image src="/images/somali-post-logo.png" alt="Somali Post logo" width={46} height={46} />
-              </span>
+              <Image
+                src="/images/logo-bird.png"
+                alt="Somali Post logo"
+                width={600}
+                height={416}
+                className="h-14 w-auto shrink-0 object-contain"
+              />
               <span className="text-lg font-bold">{siteConfig.legalName}</span>
             </Link>
             <p className="mt-5 max-w-sm text-base leading-7 text-white/72">
-              Somalia&apos;s national postal operator, restoring inbound international postal exchange and rebuilding modern
+              Somalia&apos;s national postal operator, restoring inbound international postal exchange and modernising
               national postal services.
             </p>
             <p className="mt-4 text-base font-semibold text-white/88">{siteConfig.address}</p>
@@ -56,6 +61,22 @@ export function Footer() {
                 <dd>{siteConfig.address}</dd>
               </div>
               <div>
+                <dt className="font-semibold text-white">Telephone</dt>
+                <dd>
+                  <a className="rounded-sm whitespace-nowrap hover:text-gold-400" href={siteConfig.contact.phoneHref}>
+                    {siteConfig.contact.phoneDisplay}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="font-semibold text-white">WhatsApp</dt>
+                <dd>
+                  <a className="rounded-sm hover:text-gold-400" href={siteConfig.contact.whatsappHref}>
+                    Contact Somali Post on WhatsApp
+                  </a>
+                </dd>
+              </div>
+              <div>
                 <dt className="font-semibold text-white">More information</dt>
                 <dd>
                   <Link className="rounded-sm hover:text-gold-400" href="/contact">
@@ -64,6 +85,7 @@ export function Footer() {
                 </dd>
               </div>
             </dl>
+            <SocialLinks className="mt-6 text-white/76" />
           </div>
         </div>
 

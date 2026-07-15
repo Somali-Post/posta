@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Analytics } from '@vercel/analytics/react';
+import { AnalyticsGate } from '@/components/analytics/AnalyticsGate';
 import { siteConfig } from '@/lib/site';
 import '@fontsource-variable/manrope';
 import './globals.css';
@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     title: `${siteConfig.name} | Somalia's National Postal Service`,
     description: siteConfig.description,
@@ -61,6 +58,8 @@ export default function RootLayout({
               name: siteConfig.legalName,
               url: siteConfig.url,
               email: siteConfig.email,
+              telephone: siteConfig.contact.phoneDisplay,
+              sameAs: siteConfig.socialLinks.map((link) => link.href),
               address: {
                 '@type': 'PostalAddress',
                 addressLocality: 'Mogadishu',
@@ -70,7 +69,7 @@ export default function RootLayout({
           }}
         />
         {children}
-        <Analytics />
+        <AnalyticsGate />
       </body>
     </html>
   );

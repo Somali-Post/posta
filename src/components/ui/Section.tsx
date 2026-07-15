@@ -1,3 +1,5 @@
+import { Reveal } from '@/components/ui/Reveal';
+
 export function Section({
   eyebrow,
   title,
@@ -14,12 +16,14 @@ export function Section({
   return (
     <section className={`container-site ${compact ? 'py-12 md:py-14' : 'py-14 md:py-[4.5rem]'} ${className}`}>
       <div className="max-w-4xl">
-        {eyebrow && (
-          <p className="mb-3 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-gold-500">{eyebrow}</p>
-        )}
-        <h2 className="text-balance text-[clamp(1.75rem,3vw,2.45rem)] font-bold leading-tight tracking-tight text-navy-950">
-          {title}
-        </h2>
+        <Reveal>
+          {eyebrow && (
+            <p className="mb-3 text-[0.8rem] font-bold uppercase tracking-[0.18em] text-gold-500">{eyebrow}</p>
+          )}
+          <h2 className="text-balance text-[clamp(1.75rem,3vw,2.45rem)] font-bold leading-tight tracking-tight text-navy-950">
+            {title}
+          </h2>
+        </Reveal>
       </div>
       {children && <div className="mt-8">{children}</div>}
     </section>

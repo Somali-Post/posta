@@ -19,6 +19,11 @@ const config: Config = {
           500: '#D9AE21',
           400: '#E8C44C',
         },
+        action: {
+          gold: '#F5C518',
+          'gold-hover': '#FFD34E',
+          'gold-active': '#DDAE00',
+        },
         surface: {
           DEFAULT: '#FFFFFF',
           soft: '#F6F8FC',
@@ -35,6 +40,7 @@ const config: Config = {
       boxShadow: {
         soft: '0 18px 50px rgba(16, 35, 79, 0.10)',
         card: '0 10px 30px rgba(16, 35, 79, 0.08)',
+        action: '0 12px 24px rgba(245, 197, 24, 0.28)',
       },
     },
   },
