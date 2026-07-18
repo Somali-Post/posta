@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import HomeHero from '@/components/home/HomeHero';
 import { SiteShell } from '@/components/layout/SiteShell';
 import { Badge, Card, Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Reveal';
@@ -16,21 +17,25 @@ const quickActions = [
   {
     href: '/track',
     title: 'Track an Item',
+    body: 'View available postal events using an S10 tracking number.',
     icon: TrackIcon,
   },
   {
     href: '/send-to-somalia',
     title: 'Send Mail to Somalia',
+    body: 'Clear official guidance for sending and receiving mail.',
     icon: AddressIcon,
   },
   {
     href: '/services/receiving',
     title: 'Receive an Item',
+    body: 'Inbound international postal exchange is operational.',
     icon: MailIcon,
   },
   {
     href: '/contact',
     title: 'Contact Somali Post',
+    body: 'Official telephone, WhatsApp and email contact routes.',
     icon: ContactIcon,
   },
 ];
@@ -77,65 +82,10 @@ const statusItems = [
 export default function HomePage() {
   return (
     <SiteShell>
-      <section className="relative overflow-hidden bg-white">
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(16,35,79,0.05)_1px,transparent_1px),linear-gradient(0deg,rgba(16,35,79,0.04)_1px,transparent_1px)] bg-[size:42px_42px]" />
-        <div className="container-site grid gap-10 pb-12 pt-10 md:pb-16 lg:grid-cols-[0.98fr_1.02fr] lg:gap-14 lg:pt-14">
-          <Reveal className="flex flex-col justify-center">
-            <p className="text-[0.82rem] font-bold uppercase tracking-[0.2em] text-gold-500">
-              Somalia&apos;s National Postal Service
-            </p>
-            <h1 className="mt-5 max-w-3xl text-balance text-[clamp(2.45rem,5.3vw,4rem)] font-bold leading-[1.02] tracking-tight text-navy-950">
-              Connecting Somalia through trusted postal services
-            </h1>
-            <p className="mt-6 max-w-2xl text-[1.08rem] leading-8 text-ink-muted md:text-xl md:leading-9">
-              Receive international mail, track postal items and access official guidance for sending mail to Somalia.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/track"
-                className="btn-primary px-7 py-3.5"
-              >
-                Track an Item
-              </Link>
-              <Link
-                href="/send-to-somalia"
-                className="btn-secondary px-7 py-3.5"
-              >
-                How to Send Mail to Somalia
-              </Link>
-            </div>
-          </Reveal>
-
-          <Reveal className="relative min-h-[480px] lg:min-h-[560px]" delay={90}>
-            <div className="absolute inset-x-0 top-8 h-[360px] overflow-hidden rounded-[2rem] border border-border shadow-soft sm:inset-x-8 lg:h-[410px]">
-              <Image
-                src="/images/parcel-service.jpg"
-                alt="Postal parcels prepared for service"
-                fill
-                className="object-cover"
-                priority
-                sizes="(min-width: 1024px) 48vw, 92vw"
-              />
-            </div>
-            <Card className="absolute bottom-8 left-0 right-6 bg-white/95 backdrop-blur-sm sm:right-16">
-              <Badge>Inbound mail</Badge>
-              <p className="mt-4 text-[clamp(1.35rem,2vw,1.8rem)] font-bold leading-tight text-navy-950">
-                Arrival at inward office of exchange
-              </p>
-              <p className="mt-3 text-base leading-7 text-ink-muted">
-                Tracking updates appear as postal events are received from participating postal operators.
-              </p>
-            </Card>
-            <Reveal className="absolute right-0 top-0 rounded-3xl border border-border bg-white p-5 shadow-card" delay={180}>
-              <p className="text-xs font-bold uppercase tracking-[0.18em] text-ink-muted">Interim postal code</p>
-              <p className="mt-2 text-4xl font-black tracking-tight text-navy-950">BN1011</p>
-            </Reveal>
-          </Reveal>
-        </div>
-      </section>
+      <HomeHero />
 
       <Section title="Quick actions" compact>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 md:gap-4">
           {quickActions.map((action, index) => {
             const Icon = action.icon;
             return (
@@ -150,6 +100,7 @@ export default function HomePage() {
                 <span className="mt-4 block text-[0.98rem] font-extrabold leading-snug text-navy-950 md:text-lg">
                   {action.title}
                 </span>
+                {action.body && <span className="mt-2 block text-sm leading-6 text-ink-muted">{action.body}</span>}
                 </Link>
               </Reveal>
             );
@@ -299,6 +250,7 @@ MOBILE / WHATSAPP: RECIPIENT PHONE NUMBER`}
     </SiteShell>
   );
 }
+
 
 function TrackIcon({ className }: { className?: string }) {
   return (
