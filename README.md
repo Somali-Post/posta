@@ -67,6 +67,10 @@ npm run lint
 npm run build
 ```
 
+## Homepage Hero Direction
+
+The approved homepage hero uses the parcel-service photograph with an HTML BN1011 badge and interactive inbound-mail card. Earlier flattened and SVG postal-network hero experiments were abandoned.
+
 ## Deployment Precautions
 
 - Confirm `TRACKING_API_TOKEN` is configured in the hosting environment.

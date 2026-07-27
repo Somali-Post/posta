@@ -173,7 +173,7 @@ MOBILE / WHATSAPP: RECIPIENT PHONE NUMBER`}
             <div className="relative min-h-[280px] overflow-hidden bg-navy-950 md:min-h-[360px]">
               <div className="absolute inset-5 overflow-hidden rounded-3xl border border-white/15">
                 <Image
-                  src="/images/pudo-point.png"
+                  src="/images/pudo-point.webp"
                   alt="Postal pickup and drop-off concept"
                   fill
                   sizes="(min-width: 768px) 34vw, 92vw"

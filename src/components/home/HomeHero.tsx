@@ -39,7 +39,7 @@ export default function HomeHero() {
         <div className="parcel-hero__visual">
           <div className="parcel-hero__image-frame">
             <Image
-              src="/images/parcel-service.jpg"
+              src="/images/parcel-service.webp"
               alt="Parcels prepared for international postal processing"
               fill
               priority

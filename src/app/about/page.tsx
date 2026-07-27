@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteShell } from '@/components/layout/SiteShell';
-import { Badge, Card, PageHero, Section } from '@/components/ui/Section';
+import { Card, PageHero, Section } from '@/components/ui/Section';
 import { Reveal } from '@/components/ui/Reveal';
 
 export const metadata: Metadata = {
@@ -43,7 +43,9 @@ export default function AboutPage() {
           </Reveal>
           <Reveal delay={80}>
             <div className="rounded-3xl bg-navy-950 p-7 text-white shadow-soft">
-              <Badge>Somali Postal Service</Badge>
+              <span className="inline-flex rounded-full bg-action-gold px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-navy-950">
+                Somali Postal Service
+              </span>
               <p className="mt-5 text-2xl font-bold leading-tight">Official national postal operator</p>
               <p className="mt-3 leading-7 text-white/72">
                 Somali Post provides public postal guidance, supports inbound international exchange and prepares new

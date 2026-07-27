@@ -38,7 +38,7 @@ export default function RugPudoPage() {
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border shadow-card">
               <Image
-                src="/images/pudo-point.png"
+                src="/images/pudo-point.webp"
                 alt="Postal pickup and drop-off service point concept"
                 fill
                 sizes="(min-width: 1024px) 34vw, 92vw"

@@ -95,7 +95,7 @@ MOBILE / WHATSAPP: +252 61 XXX XXXX`}
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-gold-500">Fictional sample label</p>
             <pre className="mt-4 whitespace-pre-wrap rounded-2xl bg-surface-soft p-6 text-[1rem] font-semibold leading-8 text-navy-950 md:text-lg">
 {`AMINA HASSAN
-NEAR CENTRAL MARKET, BUILDING 12
+NEAR HAYATT MALL, TALEEX
 HODAN DISTRICT
 MOGADISHU
 BN1011
