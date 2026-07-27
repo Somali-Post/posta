@@ -1,113 +1,50 @@
-"use client";
-
 import Image from "next/image";
+import Link from "next/link";
 import {
   ArrowRight,
+  Box,
   CheckCircle2,
-  Menu,
-  Phone,
+  Clock3,
+  MapPin,
+  PackageCheck,
   Search,
-  X,
 } from "lucide-react";
-import { useState } from "react";
+import { ContactBand } from "@/components/contact-band";
 
-const navigation = [
-  { label: "Services", href: "#services" },
-  { label: "Send mail", href: "/send-to-somalia" },
-  { label: "Receive mail", href: "/receive-mail" },
-  { label: "About us", href: "/about" },
-  { label: "Contact", href: "/contact" },
+const services = [
+  {
+    icon: PackageCheck,
+    title: "International mail receiving",
+    text: "Guidance for recipients expecting supported postal items from abroad.",
+    href: "/receive-mail",
+    action: "Receiving guidance",
+  },
+  {
+    icon: Search,
+    title: "Online tracking",
+    text: "View available postal events using a 13-character S10 tracking number.",
+    href: "/track",
+    action: "Track an item",
+  },
+  {
+    icon: Box,
+    title: "P.O. Box enquiries",
+    text: "Ask about a secure and consistent postal address through Somali Post.",
+    href: "/po-box",
+    action: "P.O. Box guidance",
+  },
+  {
+    icon: MapPin,
+    title: "RUG PUDO",
+    text: "Somali Post's pickup and drop-off network is currently in development.",
+    href: "/rug-pudo",
+    action: "View planned service",
+  },
 ];
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
-    <main>
-      <header className="siteHeader">
-        <div className="serviceBar">
-          <div className="shell serviceBarInner">
-            <p>
-              <span className="statusDot" aria-hidden="true" />
-              Inbound international postal exchange is operational
-            </p>
-            <a href="tel:+252611003239">
-              <Phone size={14} strokeWidth={2.25} aria-hidden="true" />
-              +252 61 100 3239
-            </a>
-          </div>
-        </div>
-
-        <nav className="primaryNav" aria-label="Main navigation">
-          <div className="shell navInner">
-            <a className="brand" href="/" aria-label="Somali Post home">
-              <Image
-                src="/navlogo.png"
-                alt="Somali Post - Connecting Somalia"
-                width={447}
-                height={139}
-                priority
-                unoptimized
-              />
-            </a>
-
-            <div className="desktopNav">
-              <div className="navLinks">
-                {navigation.map((item) => (
-                  <a key={item.label} href={item.href}>
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-              <a className="navAction" href="/track">
-                <Search size={17} strokeWidth={2.25} aria-hidden="true" />
-                Track item
-              </a>
-            </div>
-
-            <button
-              className="menuButton"
-              type="button"
-              aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-navigation"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              {menuOpen ? (
-                <X size={25} aria-hidden="true" />
-              ) : (
-                <Menu size={25} aria-hidden="true" />
-              )}
-            </button>
-          </div>
-
-          <div
-            className={`mobileNav ${menuOpen ? "mobileNavOpen" : ""}`}
-            id="mobile-navigation"
-          >
-            <div className="shell mobileNavInner">
-              {navigation.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                className="navAction"
-                href="/track"
-                onClick={() => setMenuOpen(false)}
-              >
-                <Search size={17} strokeWidth={2.25} aria-hidden="true" />
-                Track item
-              </a>
-            </div>
-          </div>
-        </nav>
-      </header>
-
+    <main id="main-content">
       <section className="hero" aria-labelledby="hero-title">
         <div className="heroMedia" aria-hidden="true">
           <Image
@@ -143,7 +80,6 @@ export default function Home() {
                     id="tracking-number"
                     name="number"
                     type="text"
-                    inputMode="text"
                     autoComplete="off"
                     maxLength={13}
                     placeholder="Enter 13-character S10 number"
@@ -157,52 +93,128 @@ export default function Home() {
               </div>
               <p id="tracking-hint">Example: RR123456785DE</p>
             </form>
-
-            <div className="heroLinks">
-              <a href="/send-to-somalia">
-                How to send mail to Somalia
-                <ArrowRight size={17} strokeWidth={2.25} aria-hidden="true" />
-              </a>
-              <a
-                href="https://wa.me/252611003239"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Contact us on WhatsApp
-              </a>
-            </div>
-
-            <div className="trustPoints" aria-label="Service information">
-              <p>
-                <CheckCircle2 size={17} aria-hidden="true" />
-                Official national postal operator
-              </p>
-              <p>
-                <CheckCircle2 size={17} aria-hidden="true" />
-                International mail receiving restored
-              </p>
-            </div>
           </div>
         </div>
       </section>
 
-      <section className="quickAccess" id="services" aria-label="Quick access">
+      <section className="quickAccess" aria-label="Quick access">
         <div className="shell quickAccessInner">
-          <p>Start here</p>
-          <a href="/track">
-            Track an item
-            <ArrowRight size={16} aria-hidden="true" />
-          </a>
-          <a href="/send-to-somalia">
-            Address mail to Somalia
-            <ArrowRight size={16} aria-hidden="true" />
-          </a>
-          <a href="/receive-mail">
-            Receive international mail
-            <ArrowRight size={16} aria-hidden="true" />
+          <div className="serviceAssurance">
+            <CheckCircle2 size={18} aria-hidden="true" />
+            <span>
+              <strong>Official national operator</strong>
+              Inbound exchange restored
+            </span>
+          </div>
+          <Link href="/send-to-somalia">
+            Send mail to Somalia
+            <ArrowRight size={17} aria-hidden="true" />
+          </Link>
+          <a
+            href="https://wa.me/252611003239"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Contact us on WhatsApp
+            <ArrowRight size={17} aria-hidden="true" />
           </a>
         </div>
       </section>
+
+      <section className="sectionBlock" id="services">
+        <div className="shell">
+          <div className="sectionHeading splitHeading">
+            <div>
+              <p className="sectionLabel">Available guidance and services</p>
+              <h2>Postal services available now</h2>
+            </div>
+            <p>
+              Clear information for receiving mail, tracking items and accessing
+              Somali Post services.
+            </p>
+          </div>
+          <div className="serviceGrid">
+            {services.map((service) => {
+              const Icon = service.icon;
+
+              return (
+                <article className="serviceCard" key={service.title}>
+                  <Icon size={25} aria-hidden="true" />
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                  <Link href={service.href}>
+                    {service.action}
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </Link>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="addressBand">
+        <div className="shell addressBandInner">
+          <div className="addressCopy">
+            <p className="sectionLabel">Sending mail to Somalia</p>
+            <h2>Use BN1011 with a complete recipient address</h2>
+            <p>
+              BN1011 is the current interim postal routing code for mail sent
+              through Somali Post. It is not the final national postcode system.
+            </p>
+            <div className="noticeLine">
+              <CheckCircle2 size={20} aria-hidden="true" />
+              A reachable recipient mobile or WhatsApp number is essential.
+            </div>
+            <Link className="textAction" href="/send-to-somalia">
+              Read the addressing guide
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="addressLabel" aria-label="Recommended address format">
+            <p>RECIPIENT&apos;S FULL NAME</p>
+            <p>HOUSE, BUSINESS, STREET OR NEAREST LANDMARK</p>
+            <p>DISTRICT OR NEIGHBOURHOOD</p>
+            <p>CITY OR TOWN</p>
+            <strong>BN1011</strong>
+            <p>SOMALIA</p>
+            <p>MOBILE / WHATSAPP: RECIPIENT PHONE NUMBER</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sectionBlock restorationSection">
+        <div className="shell restorationGrid">
+          <div>
+            <p className="sectionLabel">National service restoration</p>
+            <h2>Building clearer, more accessible postal support</h2>
+            <p>
+              Somali Post has restored inbound international postal exchange
+              and is modernising services for people, businesses and public
+              institutions.
+            </p>
+          </div>
+          <div className="restorationPoints">
+            <article>
+              <PackageCheck size={23} aria-hidden="true" />
+              <h3>Inbound exchange restored</h3>
+              <p>Supported items can arrive through recognised postal channels.</p>
+            </article>
+            <article>
+              <Search size={23} aria-hidden="true" />
+              <h3>Track supported items</h3>
+              <p>View postal events supplied by participating postal operators.</p>
+            </article>
+            <article>
+              <Clock3 size={23} aria-hidden="true" />
+              <h3>Services being modernised</h3>
+              <p>New services will be announced when operationally confirmed.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <ContactBand />
     </main>
   );
 }

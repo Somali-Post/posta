@@ -20,3 +20,8 @@ npm run dev
 npm run build
 npm test
 ```
+
+## Tracking configuration
+
+Set `UPU_PTT_TOKEN` in the local environment and in the production Sites
+environment. Tracking remains safely unavailable when the token is missing.
